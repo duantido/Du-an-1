@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 24, 2019 1:10:14 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entity.TaiKhoan" table="TaiKhoan" schema="dbo" catalog="dn1" optimistic-lock="version">
+        <id name="tenDangNhap" type="string">
+            <column name="TenDangNhap" length="50" />
+            <generator class="assigned" />
+        </id>
+        <property name="matKhau" type="string">
+            <column name="MatKhau" length="50" not-null="true" />
+        </property>
+        <property name="vaiTro" type="boolean">
+            <column name="VaiTro" not-null="true" />
+        </property>
+        <property name="thoiGian" type="java.lang.Integer">
+            <column name="ThoiGian" />
+        </property>
+        <property name="soCau" type="java.lang.Integer">
+            <column name="SoCau" />
+        </property>
+        <property name="tien" type="java.lang.Integer">
+            <column name="Tien" />
+        </property>
+    </class>
+</hibernate-mapping>

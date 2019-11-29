@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 24, 2019 1:10:14 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entity.CauHoi" table="CauHoi" schema="dbo" catalog="dn1" optimistic-lock="version">
+        <id name="stt" type="int">
+            <column name="STT" />
+            <generator class="assigned" />
+        </id>
+        <property name="maCauHoi" type="int">
+            <column name="MaCauHoi" not-null="true" />
+        </property>
+        <property name="tenCauHoi" type="string">
+            <column name="TenCauHoi" />
+        </property>
+        <property name="maChiTietCh" type="int">
+            <column name="MaChiTietCH" not-null="true" />
+        </property>
+        <property name="a" type="string">
+            <column name="A" />
+        </property>
+        <property name="b" type="string">
+            <column name="B" />
+        </property>
+        <property name="c" type="string">
+            <column name="C" />
+        </property>
+        <property name="d" type="string">
+            <column name="D" />
+        </property>
+        <property name="dapAnDung" type="string">
+            <column name="DapAnDung" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
