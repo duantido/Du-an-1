@@ -33,7 +33,8 @@ public class MainFarme extends javax.swing.JFrame {
         pnlBXH.setVisible(false);
         mp3Main.play();
     }
-
+    
+    
     public void setting() {
         pnlMain.setVisible(false);
         pnlSetting.setVisible(true);

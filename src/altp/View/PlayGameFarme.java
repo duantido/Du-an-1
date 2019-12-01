@@ -28,14 +28,16 @@ public class PlayGameFarme extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame1ư
      */
-    int count = 0;
-    int count1 = 0;
     String[] questionImages = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "00"};
     String[] questionImages1 = {"05", "10", "15", "00"};
-    int maCauHoi = 1;
     MP3Player mp3SanSang = ShareHelper.musicPlayer("Audio/sanSang.mp3");
+
+    int count = 0;
+    int count1 = 0;
+    int maCauHoi = 1;
     List<CauHoi> list = null;
     String dapAn = null;
+    String dung = null;
 
     public PlayGameFarme(String i) {
         initComponents();
@@ -44,6 +46,11 @@ public class PlayGameFarme extends javax.swing.JFrame {
         showMark();
         showTableQuestion(i);
         lblQuestion.setBackground(new Color(0, 0, 0, 64));
+    }
+
+    void playShowMoney() {
+        lblMarkPlay.setIcon(new ImageIcon(getClass().getResource("/hinh/" + (maCauHoi - 1) + ".png")));
+
     }
 
     public void showTableQuestion(String i) {
@@ -110,91 +117,202 @@ public class PlayGameFarme extends javax.swing.JFrame {
         t1.start();
     }
 
-    Thread t2 = new Thread() {
-        @Override
-        public void run() {
-            try {
-                for (int i = 0; i < 10; i++) {
-                    lblImagesAnswerB.setIcon(new ImageIcon(getClass().getResource("/image/dapanA.png")));
-                    Thread.sleep(150);
-                    lblImagesAnswerA.setIcon(new ImageIcon(getClass().getResource("/image/dapanAchon.png")));
+    void playTime() {
+        Thread time = new Thread() {
+            @Override
+            public void run() {
+                int count = 30;
+                for (int i = count; i >= 0; i--) {
+                    try {
+                        lblTime.setText(i + "");
+                        Thread.sleep(1000);
+                        if (dapAn != null) {
+                            i = 0;
+                        }
+                        if (i == 0 && dapAn == null) {
+                            JOptionPane.showMessageDialog(null, "Ban da het gio");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        break;
+                    }
                 }
-
-            } catch (Exception e) {
             }
-        }
-    };
-
-    void check() {
-        CauHoi ch = list.get(0);
-        if (ch.getDapAnDung().equals(dapAn)) {
-//            t2.start();
-            JOptionPane.showMessageDialog(this, "Đúng");
-            maCauHoi++;
-
-            if (maCauHoi == 15) {
-                JOptionPane.showMessageDialog(null, "Ban da chien thang");
-            }
-            playGame(maCauHoi);
-            lblMarkPlay.setIcon(new ImageIcon(getClass().getResource("/image/0" + (maCauHoi-1) + ".png")));
-        } else {
-            JOptionPane.showMessageDialog(this, "Sai");
-            pnlPlay.setVisible(false);
-            pnlHome.setVisible(true);
-        }
+        };
+        time.start();
     }
-    
+
+    void showQuesion(int maCauHoi) {
+        list = CauHoiDAO.layCauHoi(maCauHoi);
+        for (CauHoi ch : list) {
+            lblQuestion.setText(ch.getTenCauHoi().toString());
+            lblA.setText(ch.getA().toString());
+            lblB.setText(ch.getB().toString());
+            lblC.setText(ch.getC().toString());
+            lblD.setText(ch.getD().toString());
+        }
+       
+    }
+
     void playGame(int macauhoi) {
-        Thread t1 = new Thread() {
+        Thread play = new Thread() {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(4000);
                     dapAn = null;
-                    Thread t1 = new Thread() {
-                        @Override
-                        public void run() {
-                            int count = 30;
-                            for (int i = count; i >= 0; i--) {
-                                try {
-                                    lblTime.setText(i + "");
-                                    Thread.sleep(1000);
-                                    if (dapAn != null) {
-                                        i = 0;
-                                    }
-                                    if(i==0 && dapAn==null){
-                                        JOptionPane.showMessageDialog(null, "Ban da het gio");
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    break;
-                                }
-                            }
-                        }
-                    };
-                    t1.start();
-                    list = CauHoiDAO.layCauHoi(macauhoi);
-                    for (CauHoi ch : list) {
-                        lblQuestion.setText(ch.getTenCauHoi().toString());
-                        lblA.setText(ch.getA().toString());
-                        lblB.setText(ch.getB().toString());
-                        lblC.setText(ch.getC().toString());
-                        lblD.setText(ch.getD().toString());
-                    }
-                } catch (Exception e) {
+                    Thread.sleep(3000);
+                    playTime();
+                    showQuesion(macauhoi);
 
+                } catch (Exception e) {
+                    System.out.println(e);
                 }
+            }
+        };
+        play.start();
+    }
+
+    void Adung(ImageIcon[] DAdung) {
+        Thread t2 = new Thread() {
+            @Override
+            public void run() {
+                for (int i = 1; i < 50; i++) {
+                    try {
+                        if (i % 2 == 0) {
+                            lblImagesAnswerA.setIcon(DAdung[0]);
+                            Thread.sleep(100);
+                        } else {
+                            lblImagesAnswerA.setIcon(DAdung[1]);
+                            Thread.sleep(100);
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                }
+            }
+
+        };
+        t2.start();
+    }
+
+    void Bdung(ImageIcon[] DAdung) {
+        Thread t2 = new Thread() {
+            @Override
+            public void run() {
+                for (int i = 1; i < 50; i++) {
+                    try {
+                        if (i % 2 == 0) {
+                            lblImagesAnswerB.setIcon(DAdung[0]);
+                            Thread.sleep(100);
+                        } else {
+                            lblImagesAnswerB.setIcon(DAdung[1]);
+                            Thread.sleep(100);
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                }
+            }
+
+        };
+        t2.start();
+    }
+
+    void Cdung(ImageIcon[] DAdung) {
+        Thread t2 = new Thread() {
+            @Override
+            public void run() {
+                for (int i = 1; i < 50; i++) {
+                    try {
+                        if (i % 2 == 0) {
+                            lblImagesAnswerC.setIcon(DAdung[0]);
+                            Thread.sleep(100);
+                        } else {
+                            lblImagesAnswerC.setIcon(DAdung[1]);
+                            Thread.sleep(100);
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                }
+            }
+
+        };
+        t2.start();
+    }
+
+    void Ddung(ImageIcon[] DAdung) {
+        Thread t2 = new Thread() {
+            @Override
+            public void run() {
+                for (int i = 1; i < 50; i++) {
+                    try {
+                        if (i % 2 == 0) {
+                            lblImagesAnswerD.setIcon(DAdung[0]);
+                            Thread.sleep(100);
+                        } else {
+                            lblImagesAnswerD.setIcon(DAdung[1]);
+                            Thread.sleep(100);
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                }
+            }
+
+        };
+        t2.start();
+    }
+
+    void nhaynhay(String DA) {
+        Thread t1 = new Thread() {
+            @Override
+            public void run() {
+                ImageIcon[] DAdung = new ImageIcon[2];
+                DAdung[0] = new ImageIcon(getClass().getResource("/hinh/" + DA + ".png"));
+                DAdung[1] = new ImageIcon(getClass().getResource("/hinh/" + DA + "dung.png"));
+                if (DA == "A") {
+                    Adung(DAdung);
+                } else if (DA == "B") {
+                    Bdung(DAdung);
+                } else if (DA == "C") {
+                    Cdung(DAdung);
+                } else if (DA == "D") {
+                    Ddung(DAdung);
+                }
+
             }
         };
         t1.start();
     }
 
-    void checkDapAn(String dapAn
-    ) {
+    void check() {
         CauHoi ch = list.get(0);
-        if (ch.getDapAnDung().equals(dapAn)) {
 
-        }
+        Thread check = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(3000);
+                    nhaynhay(dapAn);
+                    System.out.println(ch.getDapAnDung());
+                    if (ch.getDapAnDung().equals(dapAn)) {
+                        JOptionPane.showMessageDialog(null, "dung" + ch.getDapAnDung());
+                        maCauHoi++;
+                        playGame(maCauHoi);
+                        playShowMoney();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "sai" + ch.getDapAnDung());
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+
+            }
+
+        };
+        check.start();
+
     }
 
     /**
@@ -406,6 +524,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
 
     private void lblPlayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPlayMouseClicked
         // TODO add your handling code here:
+
         MainFarme farme = new MainFarme();
         farme.mp3CauHoi.stop();
         mp3SanSang.play();
@@ -418,56 +537,72 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblImagesAnswerAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagesAnswerAMouseClicked
         // TODO add your handling code here:
         dapAn = "A";
-//        lblImagesAnswerA.setIcon(new ImageIcon(getClass().getResource("/image/dapanAchon.png")));
+         CauHoi ch = list.get(0);
+        dung = ch.getDapAnDung();
+        lblImagesAnswerA.setIcon(new ImageIcon(getClass().getResource("/hinh/A.png")));
         check();
     }//GEN-LAST:event_lblImagesAnswerAMouseClicked
 
     private void lblAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAMouseClicked
         // TODO add your handling code here:
         dapAn = "A";
-//        lblImagesAnswerA.setIcon(new ImageIcon(getClass().getResource("/image/dapanAchon.png")));
+         CauHoi ch = list.get(0);
+        dung = ch.getDapAnDung();
+        lblImagesAnswerA.setIcon(new ImageIcon(getClass().getResource("/hinh/A.png")));
         check();
     }//GEN-LAST:event_lblAMouseClicked
 
     private void lblImagesAnswerBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagesAnswerBMouseClicked
         // TODO add your handling code here:
         dapAn = "B";
-//        lblImagesAnswerB.setIcon(new ImageIcon(getClass().getResource("/image/dapanBchon.png")));
+         CauHoi ch = list.get(0);
+        dung = ch.getDapAnDung();
+        lblImagesAnswerB.setIcon(new ImageIcon(getClass().getResource("/hinh/B.png")));
         check();
     }//GEN-LAST:event_lblImagesAnswerBMouseClicked
 
     private void lblBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBMouseClicked
         // TODO add your handling code here:
         dapAn = "B";
-//        lblImagesAnswerB.setIcon(new ImageIcon(getClass().getResource("/image/dapanBchon.png")));
+         CauHoi ch = list.get(0);
+        dung = ch.getDapAnDung();
+        lblImagesAnswerB.setIcon(new ImageIcon(getClass().getResource("/hinh/B.png")));
         check();
     }//GEN-LAST:event_lblBMouseClicked
 
     private void lblImagesAnswerCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagesAnswerCMouseClicked
         // TODO add your handling code here:
         dapAn = "C";
-//        lblImagesAnswerC.setIcon(new ImageIcon(getClass().getResource("/image/dapanCchon.png")));
+         CauHoi ch = list.get(0);
+        dung = ch.getDapAnDung();
+        lblImagesAnswerC.setIcon(new ImageIcon(getClass().getResource("/hinh/C.png")));
         check();
     }//GEN-LAST:event_lblImagesAnswerCMouseClicked
 
     private void lblCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCMouseClicked
         // TODO add your handling code here:
         dapAn = "C";
-//        lblImagesAnswerC.setIcon(new ImageIcon(getClass().getResource("/image/dapanCchon.png")));
+         CauHoi ch = list.get(0);
+        dung = ch.getDapAnDung();
+        lblImagesAnswerC.setIcon(new ImageIcon(getClass().getResource("/hinh/C.png")));
         check();
     }//GEN-LAST:event_lblCMouseClicked
 
     private void lblImagesAnswerDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagesAnswerDMouseClicked
         // TODO add your handling code here:
         dapAn = "D";
-//        lblImagesAnswerD.setIcon(new ImageIcon(getClass().getResource("/image/dapanDchon.png")));
+         CauHoi ch = list.get(0);
+        dung = ch.getDapAnDung();
+        lblImagesAnswerD.setIcon(new ImageIcon(getClass().getResource("/hinh/D.png")));
         check();
     }//GEN-LAST:event_lblImagesAnswerDMouseClicked
 
     private void lblDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDMouseClicked
         // TODO add your handling code here:
         dapAn = "D";
-//        lblImagesAnswerD.setIcon(new ImageIcon(getClass().getResource("/image/dapanDchon.png")));
+         CauHoi ch = list.get(0);
+        dung = ch.getDapAnDung();
+        lblImagesAnswerD.setIcon(new ImageIcon(getClass().getResource("/hinh/D.png")));
         check();
     }//GEN-LAST:event_lblDMouseClicked
 
