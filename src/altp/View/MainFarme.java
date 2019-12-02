@@ -336,7 +336,7 @@ public class MainFarme extends javax.swing.JFrame {
         // TODO add your handling code here:
         setting();
     }//GEN-LAST:event_lblOptionMouseClicked
-
+    
     private void txtPassWordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassWordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPassWordActionPerformed

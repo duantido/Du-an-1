@@ -37,7 +37,6 @@ public class PlayGameFarme extends javax.swing.JFrame {
     int maCauHoi = 1;
     List<CauHoi> list = null;
     String dapAn = null;
-    String dung = null;
 
     public PlayGameFarme(String i) {
         initComponents();
@@ -50,7 +49,6 @@ public class PlayGameFarme extends javax.swing.JFrame {
 
     void playShowMoney() {
         lblMarkPlay.setIcon(new ImageIcon(getClass().getResource("/hinh/" + (maCauHoi - 1) + ".png")));
-
     }
 
     public void showTableQuestion(String i) {
@@ -151,16 +149,15 @@ public class PlayGameFarme extends javax.swing.JFrame {
             lblC.setText(ch.getC().toString());
             lblD.setText(ch.getD().toString());
         }
-       
-    }
 
+    }
+ 
     void playGame(int macauhoi) {
         Thread play = new Thread() {
             @Override
             public void run() {
                 try {
                     dapAn = null;
-                    Thread.sleep(3000);
                     playTime();
                     showQuesion(macauhoi);
 
@@ -171,95 +168,55 @@ public class PlayGameFarme extends javax.swing.JFrame {
         };
         play.start();
     }
-
-    void Adung(ImageIcon[] DAdung) {
+    void DADung(ImageIcon[] DADung) {
         Thread t2 = new Thread() {
             @Override
             public void run() {
-                for (int i = 1; i < 50; i++) {
+                CauHoi ch = list.get(0);
+                for (int i = 1; i < 14; i++) {
                     try {
-                        if (i % 2 == 0) {
-                            lblImagesAnswerA.setIcon(DAdung[0]);
-                            Thread.sleep(100);
-                        } else {
-                            lblImagesAnswerA.setIcon(DAdung[1]);
-                            Thread.sleep(100);
+                        if (ch.getDapAnDung().matches("A")) {
+                            if (i % 2 == 0) {
+                                lblImagesAnswerA.setIcon(DADung[0]);
+                                Thread.sleep(100);
+                            } else {
+                                lblImagesAnswerA.setIcon(DADung[1]);
+                                Thread.sleep(100);
+                            }
                         }
+                        if (ch.getDapAnDung().matches("B")) {
+                            if (i % 2 == 0) {
+                                lblImagesAnswerB.setIcon(DADung[0]);
+                                Thread.sleep(100);
+                            } else {
+                                lblImagesAnswerB.setIcon(DADung[1]);
+                                Thread.sleep(100);
+                            }
+                        }
+                        if (ch.getDapAnDung().matches("C")) {
+                            if (i % 2 == 0) {
+                                lblImagesAnswerC.setIcon(DADung[0]);
+                                Thread.sleep(100);
+                            } else {
+                                lblImagesAnswerC.setIcon(DADung[1]);
+                                Thread.sleep(100);
+                            }
+                        }
+                        if (ch.getDapAnDung().matches("D")) {
+                            if (i % 2 == 0) {
+                                lblImagesAnswerD.setIcon(DADung[0]);
+                                Thread.sleep(100);
+                            } else {
+                                lblImagesAnswerD.setIcon(DADung[1]);
+                                Thread.sleep(100);
+                            }
+                        }
+
                     } catch (Exception e) {
                         System.out.println(e);
                     }
                 }
             }
-
-        };
-        t2.start();
-    }
-
-    void Bdung(ImageIcon[] DAdung) {
-        Thread t2 = new Thread() {
-            @Override
-            public void run() {
-                for (int i = 1; i < 50; i++) {
-                    try {
-                        if (i % 2 == 0) {
-                            lblImagesAnswerB.setIcon(DAdung[0]);
-                            Thread.sleep(100);
-                        } else {
-                            lblImagesAnswerB.setIcon(DAdung[1]);
-                            Thread.sleep(100);
-                        }
-                    } catch (Exception e) {
-                        System.out.println(e);
-                    }
-                }
-            }
-
-        };
-        t2.start();
-    }
-
-    void Cdung(ImageIcon[] DAdung) {
-        Thread t2 = new Thread() {
-            @Override
-            public void run() {
-                for (int i = 1; i < 50; i++) {
-                    try {
-                        if (i % 2 == 0) {
-                            lblImagesAnswerC.setIcon(DAdung[0]);
-                            Thread.sleep(100);
-                        } else {
-                            lblImagesAnswerC.setIcon(DAdung[1]);
-                            Thread.sleep(100);
-                        }
-                    } catch (Exception e) {
-                        System.out.println(e);
-                    }
-                }
-            }
-
-        };
-        t2.start();
-    }
-
-    void Ddung(ImageIcon[] DAdung) {
-        Thread t2 = new Thread() {
-            @Override
-            public void run() {
-                for (int i = 1; i < 50; i++) {
-                    try {
-                        if (i % 2 == 0) {
-                            lblImagesAnswerD.setIcon(DAdung[0]);
-                            Thread.sleep(100);
-                        } else {
-                            lblImagesAnswerD.setIcon(DAdung[1]);
-                            Thread.sleep(100);
-                        }
-                    } catch (Exception e) {
-                        System.out.println(e);
-                    }
-                }
-            }
-
         };
         t2.start();
     }
@@ -271,19 +228,17 @@ public class PlayGameFarme extends javax.swing.JFrame {
                 ImageIcon[] DAdung = new ImageIcon[2];
                 DAdung[0] = new ImageIcon(getClass().getResource("/hinh/" + DA + ".png"));
                 DAdung[1] = new ImageIcon(getClass().getResource("/hinh/" + DA + "dung.png"));
-                if (DA == "A") {
-                    Adung(DAdung);
-                } else if (DA == "B") {
-                    Bdung(DAdung);
-                } else if (DA == "C") {
-                    Cdung(DAdung);
-                } else if (DA == "D") {
-                    Ddung(DAdung);
-                }
-
+                DADung(DAdung);
             }
         };
         t1.start();
+    }
+
+    void setBackgroungAswer() {
+        lblImagesAnswerA.setIcon(new ImageIcon(getClass().getResource("/image/dapanA.png")));
+        lblImagesAnswerB.setIcon(new ImageIcon(getClass().getResource("/image/dapanB.png")));
+        lblImagesAnswerC.setIcon(new ImageIcon(getClass().getResource("/image/dapanC.png")));
+        lblImagesAnswerD.setIcon(new ImageIcon(getClass().getResource("/image/dapanD.png")));
     }
 
     void check() {
@@ -294,20 +249,21 @@ public class PlayGameFarme extends javax.swing.JFrame {
             public void run() {
                 try {
                     Thread.sleep(3000);
-                    nhaynhay(dapAn);
+                    nhaynhay(ch.getDapAnDung());
+                    Thread.sleep(3000);
                     System.out.println(ch.getDapAnDung());
                     if (ch.getDapAnDung().equals(dapAn)) {
-                        JOptionPane.showMessageDialog(null, "dung" + ch.getDapAnDung());
+//                        JOptionPane.showMessageDialog(null, "dung" + ch.getDapAnDung());
                         maCauHoi++;
+                        setBackgroungAswer();
                         playGame(maCauHoi);
                         playShowMoney();
                     } else {
-                        JOptionPane.showMessageDialog(null, "sai" + ch.getDapAnDung());
+//                        JOptionPane.showMessageDialog(null, "sai" + ch.getDapAnDung());
                     }
                 } catch (Exception e) {
                     System.out.println(e);
                 }
-
             }
 
         };
@@ -412,6 +368,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
         lblQuestion.setForeground(new java.awt.Color(255, 255, 255));
         lblQuestion.setLineWrap(true);
         lblQuestion.setRows(5);
+        lblQuestion.setWrapStyleWord(true);
         pnlPlay.add(lblQuestion);
         lblQuestion.setBounds(380, 310, 340, 80);
 
@@ -537,8 +494,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblImagesAnswerAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagesAnswerAMouseClicked
         // TODO add your handling code here:
         dapAn = "A";
-         CauHoi ch = list.get(0);
-        dung = ch.getDapAnDung();
+        CauHoi ch = list.get(0);
         lblImagesAnswerA.setIcon(new ImageIcon(getClass().getResource("/hinh/A.png")));
         check();
     }//GEN-LAST:event_lblImagesAnswerAMouseClicked
@@ -546,8 +502,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAMouseClicked
         // TODO add your handling code here:
         dapAn = "A";
-         CauHoi ch = list.get(0);
-        dung = ch.getDapAnDung();
+        CauHoi ch = list.get(0);
         lblImagesAnswerA.setIcon(new ImageIcon(getClass().getResource("/hinh/A.png")));
         check();
     }//GEN-LAST:event_lblAMouseClicked
@@ -555,8 +510,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblImagesAnswerBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagesAnswerBMouseClicked
         // TODO add your handling code here:
         dapAn = "B";
-         CauHoi ch = list.get(0);
-        dung = ch.getDapAnDung();
+        CauHoi ch = list.get(0);
         lblImagesAnswerB.setIcon(new ImageIcon(getClass().getResource("/hinh/B.png")));
         check();
     }//GEN-LAST:event_lblImagesAnswerBMouseClicked
@@ -564,8 +518,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBMouseClicked
         // TODO add your handling code here:
         dapAn = "B";
-         CauHoi ch = list.get(0);
-        dung = ch.getDapAnDung();
+        CauHoi ch = list.get(0);
         lblImagesAnswerB.setIcon(new ImageIcon(getClass().getResource("/hinh/B.png")));
         check();
     }//GEN-LAST:event_lblBMouseClicked
@@ -573,8 +526,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblImagesAnswerCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagesAnswerCMouseClicked
         // TODO add your handling code here:
         dapAn = "C";
-         CauHoi ch = list.get(0);
-        dung = ch.getDapAnDung();
+        CauHoi ch = list.get(0);
         lblImagesAnswerC.setIcon(new ImageIcon(getClass().getResource("/hinh/C.png")));
         check();
     }//GEN-LAST:event_lblImagesAnswerCMouseClicked
@@ -582,8 +534,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCMouseClicked
         // TODO add your handling code here:
         dapAn = "C";
-         CauHoi ch = list.get(0);
-        dung = ch.getDapAnDung();
+        CauHoi ch = list.get(0);
         lblImagesAnswerC.setIcon(new ImageIcon(getClass().getResource("/hinh/C.png")));
         check();
     }//GEN-LAST:event_lblCMouseClicked
@@ -591,8 +542,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblImagesAnswerDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagesAnswerDMouseClicked
         // TODO add your handling code here:
         dapAn = "D";
-         CauHoi ch = list.get(0);
-        dung = ch.getDapAnDung();
+        CauHoi ch = list.get(0);
         lblImagesAnswerD.setIcon(new ImageIcon(getClass().getResource("/hinh/D.png")));
         check();
     }//GEN-LAST:event_lblImagesAnswerDMouseClicked
@@ -600,8 +550,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDMouseClicked
         // TODO add your handling code here:
         dapAn = "D";
-         CauHoi ch = list.get(0);
-        dung = ch.getDapAnDung();
+        CauHoi ch = list.get(0);
         lblImagesAnswerD.setIcon(new ImageIcon(getClass().getResource("/hinh/D.png")));
         check();
     }//GEN-LAST:event_lblDMouseClicked
