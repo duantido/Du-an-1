@@ -37,13 +37,15 @@ public class PlayGameFarme extends javax.swing.JFrame {
     int maCauHoi = 1;
     List<CauHoi> list = null;
     String dapAn = null;
+    MP3Player mp3;
 
-    public PlayGameFarme(String i) {
+    public PlayGameFarme(String i, MP3Player mp3) {
         initComponents();
         setSize(1180, 700);
         setLocationRelativeTo(null);
         showMark();
         showTableQuestion(i);
+        this.mp3 = mp3;
         lblQuestion.setBackground(new Color(0, 0, 0, 64));
         lblTT.setVisible(false);
         lblShare.setVisible(false);
@@ -146,16 +148,57 @@ public class PlayGameFarme extends javax.swing.JFrame {
         time.start();
     }
 
+    void setStatusFalse() {
+        lblA.setVisible(false);
+        lblB.setVisible(false);
+        lblC.setVisible(false);
+        lblD.setVisible(false);
+        lblImagesAnswerA.setVisible(false);
+        lblImagesAnswerB.setVisible(false);
+        lblImagesAnswerC.setVisible(false);
+        lblImagesAnswerD.setVisible(false);
+    }
+
+    void setStatusTrue() {
+        lblA.setVisible(true);
+        lblB.setVisible(true);
+        lblC.setVisible(true);
+        lblD.setVisible(true);
+        lblImagesAnswerA.setVisible(true);
+        lblImagesAnswerB.setVisible(true);
+        lblImagesAnswerC.setVisible(true);
+        lblImagesAnswerD.setVisible(true);
+        lblA.setText("");
+        lblB.setText("");
+        lblC.setText("");
+        lblD.setText("");
+    }
+
     void showQuesion(int maCauHoi) {
         list = CauHoiDAO.layCauHoi(maCauHoi);
-        for (CauHoi ch : list) {
-            lblQuestion.setText(ch.getTenCauHoi().toString());
-            lblA.setText(ch.getA().toString());
-            lblB.setText(ch.getB().toString());
-            lblC.setText(ch.getC().toString());
-            lblD.setText(ch.getD().toString());
-        }
-
+        Thread show = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    for (CauHoi ch : list) {
+                        setStatusTrue();
+                        lblQuestion.setText(ch.getTenCauHoi().toString());
+                        Thread.sleep(2000);
+                        lblA.setText(ch.getA().toString());
+                        Thread.sleep(1000);
+                        lblB.setText(ch.getB().toString());
+                        Thread.sleep(1000);
+                        lblC.setText(ch.getC().toString());
+                        Thread.sleep(1000);
+                        lblD.setText(ch.getD().toString());
+                        Thread.sleep(1000);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+        };
+        show.start();
     }
 
     void playGame(int macauhoi) {
@@ -163,9 +206,12 @@ public class PlayGameFarme extends javax.swing.JFrame {
             @Override
             public void run() {
                 try {
+                    if (maCauHoi == 1) {
+                        Thread.sleep(5000);
+                    }
                     dapAn = null;
-                    playTime();
                     showQuesion(macauhoi);
+                    playTime();
 
                 } catch (Exception e) {
                     System.out.println(e);
@@ -320,6 +366,11 @@ public class PlayGameFarme extends javax.swing.JFrame {
         jButton7.setText("C");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setLayout(new java.awt.CardLayout());
 
@@ -508,13 +559,11 @@ public class PlayGameFarme extends javax.swing.JFrame {
 
     private void lblPlayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPlayMouseClicked
         // TODO add your handling code here:
-
-        MainFarme farme = new MainFarme();
-        farme.mp3CauHoi.stop();
         mp3SanSang.play();
-        farme.mp3Main.stop();
+        mp3.stop();
         pnlHome.setVisible(false);
         pnlPlay.setVisible(true);
+        setStatusFalse();
         playGame(maCauHoi);
     }//GEN-LAST:event_lblPlayMouseClicked
 
@@ -593,6 +642,10 @@ public class PlayGameFarme extends javax.swing.JFrame {
         mn.setVisible(true);
         pnlHome.setVisible(true);
     }//GEN-LAST:event_lblHomeMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
