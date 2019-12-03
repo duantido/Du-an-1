@@ -32,6 +32,7 @@ public class MainFarme extends javax.swing.JFrame {
         pnlMain.setVisible(true);
         pnlBXH.setVisible(false);
         mp3Main.play();
+        pnlBxh.setVisible(false);
     }
     
     
@@ -52,12 +53,15 @@ public class MainFarme extends javax.swing.JFrame {
         pnlHome = new javax.swing.JPanel();
         pnlMain = new javax.swing.JPanel();
         lblOption = new javax.swing.JLabel();
+        pnlBxh = new javax.swing.JPanel();
+        lblDong = new javax.swing.JLabel();
+        lblBxh1 = new javax.swing.JLabel();
         lblBXH = new javax.swing.JLabel();
         lblHightMoney = new javax.swing.JLabel();
         lblHightSentences = new javax.swing.JLabel();
         lbltotalSentences = new javax.swing.JLabel();
         lblPlay = new javax.swing.JLabel();
-        btnLogin = new javax.swing.JButton();
+        lblLogin = new javax.swing.JLabel();
         lblBackgroundMain = new javax.swing.JLabel();
         pnlLogin = new javax.swing.JPanel();
         txtPassWord = new javax.swing.JTextField();
@@ -99,6 +103,24 @@ public class MainFarme extends javax.swing.JFrame {
         pnlMain.add(lblOption);
         lblOption.setBounds(1080, 590, 60, 60);
 
+        pnlBxh.setLayout(null);
+
+        lblDong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dong.png"))); // NOI18N
+        lblDong.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDongMouseClicked(evt);
+            }
+        });
+        pnlBxh.add(lblDong);
+        lblDong.setBounds(60, 550, 280, 50);
+
+        lblBxh1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/bxh1.png"))); // NOI18N
+        pnlBxh.add(lblBxh1);
+        lblBxh1.setBounds(0, 0, 390, 605);
+
+        pnlMain.add(pnlBxh);
+        pnlBxh.setBounds(440, 70, 390, 600);
+
         lblBXH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/bxh.png"))); // NOI18N
         lblBXH.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -106,7 +128,7 @@ public class MainFarme extends javax.swing.JFrame {
             }
         });
         pnlMain.add(lblBXH);
-        lblBXH.setBounds(50, 540, 117, 94);
+        lblBXH.setBounds(140, 550, 117, 94);
 
         lblHightMoney.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblHightMoney.setForeground(new java.awt.Color(255, 255, 255));
@@ -120,7 +142,7 @@ public class MainFarme extends javax.swing.JFrame {
         lblHightSentences.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/top.png"))); // NOI18N
         lblHightSentences.setText("Câu cao nhất");
         pnlMain.add(lblHightSentences);
-        lblHightSentences.setBounds(820, 30, 150, 36);
+        lblHightSentences.setBounds(830, 30, 150, 36);
 
         lbltotalSentences.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbltotalSentences.setForeground(new java.awt.Color(255, 255, 255));
@@ -138,14 +160,14 @@ public class MainFarme extends javax.swing.JFrame {
         pnlMain.add(lblPlay);
         lblPlay.setBounds(390, 530, 388, 99);
 
-        btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/login.jpg"))); // NOI18N
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
+        lblLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logologin1.png"))); // NOI18N
+        lblLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblLoginMouseClicked(evt);
             }
         });
-        pnlMain.add(btnLogin);
-        btnLogin.setBounds(40, 30, 80, 40);
+        pnlMain.add(lblLogin);
+        lblLogin.setBounds(50, 40, 190, 60);
 
         lblBackgroundMain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/background.jpg"))); // NOI18N
         pnlMain.add(lblBackgroundMain);
@@ -317,14 +339,8 @@ public class MainFarme extends javax.swing.JFrame {
     private void lblBXHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBXHMouseClicked
         // TODO add your handling code here:
         pnlMain.setVisible(false);
-        pnlBXH.setVisible(true);
+        pnlBxh.setVisible(true);
     }//GEN-LAST:event_lblBXHMouseClicked
-
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
-        pnlMain.setVisible(false);
-        pnlLogin.setVisible(true);
-    }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountActionPerformed
         // TODO add your handling code here:
@@ -375,6 +391,18 @@ public class MainFarme extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLoginAcountActionPerformed
 
+    private void lblDongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDongMouseClicked
+        // TODO add your handling code here:
+        pnlBxh.setVisible(false);
+        pnlMain.setVisible(true);
+    }//GEN-LAST:event_lblDongMouseClicked
+
+    private void lblLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLoginMouseClicked
+        // TODO add your handling code here:
+        pnlMain.setVisible(false);
+        pnlLogin.setVisible(true);
+    }//GEN-LAST:event_lblLoginMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -415,7 +443,6 @@ public class MainFarme extends javax.swing.JFrame {
     private javax.swing.JLabel IconBackground3;
     private javax.swing.JButton btnAccount;
     private javax.swing.JButton btnAccount1;
-    private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnLoginAcount;
     private javax.swing.JButton btnLoginMain;
     private javax.swing.JScrollPane jScrollPane1;
@@ -425,16 +452,20 @@ public class MainFarme extends javax.swing.JFrame {
     private javax.swing.JLabel lblBackgroundLogin;
     private javax.swing.JLabel lblBackgroundMain;
     private javax.swing.JLabel lblBackgroundMain1;
+    private javax.swing.JLabel lblBxh1;
+    private javax.swing.JLabel lblDong;
     private javax.swing.JLabel lblHightMoney;
     private javax.swing.JLabel lblHightSentences;
     private javax.swing.JLabel lblIconBackground1;
     private javax.swing.JLabel lblIconBackground2;
     private javax.swing.JLabel lblIconBackground3;
+    private javax.swing.JLabel lblLogin;
     private javax.swing.JLabel lblOption;
     private javax.swing.JLabel lblPlay;
     private javax.swing.JLabel lbltotalSentences;
     private javax.swing.JPanel pnlAccount;
     private javax.swing.JPanel pnlBXH;
+    private javax.swing.JPanel pnlBxh;
     private javax.swing.JPanel pnlHome;
     private javax.swing.JPanel pnlLogin;
     private javax.swing.JPanel pnlMain;

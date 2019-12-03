@@ -45,6 +45,9 @@ public class PlayGameFarme extends javax.swing.JFrame {
         showMark();
         showTableQuestion(i);
         lblQuestion.setBackground(new Color(0, 0, 0, 64));
+        lblTT.setVisible(false);
+        lblShare.setVisible(false);
+        lblHome.setVisible(false);
     }
 
     void playShowMoney() {
@@ -128,7 +131,10 @@ public class PlayGameFarme extends javax.swing.JFrame {
                             i = 0;
                         }
                         if (i == 0 && dapAn == null) {
-                            JOptionPane.showMessageDialog(null, "Ban da het gio");
+//                            JOptionPane.showMessageDialog(null, "Ban da het gio");
+                            lblTT.setVisible(true);
+                            lblShare.setVisible(true);
+                            lblHome.setVisible(true);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -151,7 +157,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
         }
 
     }
- 
+
     void playGame(int macauhoi) {
         Thread play = new Thread() {
             @Override
@@ -168,6 +174,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
         };
         play.start();
     }
+
     void DADung(ImageIcon[] DADung) {
         Thread t2 = new Thread() {
             @Override
@@ -290,6 +297,9 @@ public class PlayGameFarme extends javax.swing.JFrame {
         lblPlay = new javax.swing.JLabel();
         lblBackground = new javax.swing.JLabel();
         pnlPlay = new javax.swing.JPanel();
+        lblHome = new javax.swing.JLabel();
+        lblShare = new javax.swing.JLabel();
+        lblTT = new javax.swing.JLabel();
         btn50Play = new javax.swing.JLabel();
         btnCallPlay = new javax.swing.JLabel();
         lblQuestion = new javax.swing.JTextArea();
@@ -347,6 +357,23 @@ public class PlayGameFarme extends javax.swing.JFrame {
         jPanel1.add(pnlHome, "card3");
 
         pnlPlay.setLayout(null);
+
+        lblHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/home.png"))); // NOI18N
+        lblHome.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblHomeMouseClicked(evt);
+            }
+        });
+        pnlPlay.add(lblHome);
+        lblHome.setBounds(490, 520, 90, 40);
+
+        lblShare.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/share.png"))); // NOI18N
+        pnlPlay.add(lblShare);
+        lblShare.setBounds(590, 520, 90, 40);
+
+        lblTT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/thanhtich.png"))); // NOI18N
+        pnlPlay.add(lblTT);
+        lblTT.setBounds(300, 210, 580, 410);
 
         btn50Play.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/5050.png"))); // NOI18N
         btn50Play.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -469,7 +496,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
         lblBackgroundPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/background.jpg"))); // NOI18N
         lblBackgroundPlay.setText("fa");
         pnlPlay.add(lblBackgroundPlay);
-        lblBackgroundPlay.setBounds(0, 0, 1180, 700);
+        lblBackgroundPlay.setBounds(-10, -10, 1180, 700);
 
         jPanel1.add(pnlPlay, "card2");
 
@@ -560,6 +587,13 @@ public class PlayGameFarme extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn50PlayMouseClicked
 
+    private void lblHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomeMouseClicked
+        // TODO add your handling code here:
+        MainFarme mn = new MainFarme();
+        mn.setVisible(true);
+        pnlHome.setVisible(true);
+    }//GEN-LAST:event_lblHomeMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -630,6 +664,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private javax.swing.JLabel lblBackgroundPlay;
     private javax.swing.JLabel lblC;
     private javax.swing.JLabel lblD;
+    private javax.swing.JLabel lblHome;
     private javax.swing.JLabel lblImageQuestion;
     private javax.swing.JLabel lblImagesAnswerA;
     private javax.swing.JLabel lblImagesAnswerB;
@@ -639,6 +674,8 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private javax.swing.JLabel lblMarkPlay;
     private javax.swing.JLabel lblPlay;
     private javax.swing.JTextArea lblQuestion;
+    private javax.swing.JLabel lblShare;
+    private javax.swing.JLabel lblTT;
     private javax.swing.JLabel lblTime;
     private javax.swing.JPanel pnlHome;
     private javax.swing.JPanel pnlPlay;
