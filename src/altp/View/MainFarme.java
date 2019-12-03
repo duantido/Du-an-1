@@ -23,7 +23,7 @@ public class MainFarme extends javax.swing.JFrame {
      */
     String i = "0";
     MP3Player mp3Main = ShareHelper.musicPlayer("Audio/audioMain.wav");
-    MP3Player mp3CauHoi = ShareHelper.musicPlayer("Audio/mocCauHoi.mp3");
+    MP3Player mp3CauHoi = ShareHelper.musicPlayer("Audio/mocCauHoi.wav");
      
     public MainFarme() {
         initComponents();
@@ -130,6 +130,15 @@ public class MainFarme extends javax.swing.JFrame {
         lbltotalSentences.setBounds(1000, 30, 140, 36);
 
         lblPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/play.png"))); // NOI18N
+        lblPlay.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                lblPlayAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
         lblPlay.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblPlayMouseClicked(evt);
@@ -311,7 +320,7 @@ public class MainFarme extends javax.swing.JFrame {
         // TODO add your handling code here:
         mp3Main.stop();
         mp3CauHoi.play();
-        new PlayGameFarme(i).setVisible(true);
+        new PlayGameFarme(i,mp3CauHoi).setVisible(true);
     }//GEN-LAST:event_lblPlayMouseClicked
 
     private void lblBXHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBXHMouseClicked
@@ -374,6 +383,10 @@ public class MainFarme extends javax.swing.JFrame {
     private void btnLoginAcountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginAcountActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLoginAcountActionPerformed
+
+    private void lblPlayAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblPlayAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblPlayAncestorAdded
 
     /**
      * @param args the command line arguments

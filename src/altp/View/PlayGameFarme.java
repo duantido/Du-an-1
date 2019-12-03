@@ -37,16 +37,17 @@ public class PlayGameFarme extends javax.swing.JFrame {
     int maCauHoi = 1;
     List<CauHoi> list = null;
     String dapAn = null;
-
-    public PlayGameFarme(String i) {
+    MP3Player mp3 ;
+    public PlayGameFarme(String i,MP3Player mp3) {
         initComponents();
         setSize(1180, 700);
         setLocationRelativeTo(null);
         showMark();
         showTableQuestion(i);
+        this.mp3 = mp3;
         lblQuestion.setBackground(new Color(0, 0, 0, 64));
     }
-
+    
     void playShowMoney() {
         lblMarkPlay.setIcon(new ImageIcon(getClass().getResource("/hinh/" + (maCauHoi - 1) + ".png")));
     }
@@ -270,7 +271,6 @@ public class PlayGameFarme extends javax.swing.JFrame {
         check.start();
 
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -309,7 +309,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
 
         jButton7.setText("C");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setLayout(new java.awt.CardLayout());
 
@@ -481,11 +481,8 @@ public class PlayGameFarme extends javax.swing.JFrame {
 
     private void lblPlayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPlayMouseClicked
         // TODO add your handling code here:
-
-        MainFarme farme = new MainFarme();
-        farme.mp3CauHoi.stop();
         mp3SanSang.play();
-        farme.mp3Main.stop();
+        mp3.stop();
         pnlHome.setVisible(false);
         pnlPlay.setVisible(true);
         playGame(maCauHoi);
