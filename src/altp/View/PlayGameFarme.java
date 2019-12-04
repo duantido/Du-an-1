@@ -538,7 +538,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
         pgB = new javax.swing.JProgressBar();
         pgA = new javax.swing.JProgressBar();
         pgD = new javax.swing.JProgressBar();
-        jLabel1 = new javax.swing.JLabel();
+        lblExitTroGiup = new javax.swing.JLabel();
         lblBackgroudTroGiup = new javax.swing.JLabel();
         pnlResult = new javax.swing.JPanel();
         lblHome = new javax.swing.JLabel();
@@ -562,15 +562,10 @@ public class PlayGameFarme extends javax.swing.JFrame {
         lblImagesAnswerD = new javax.swing.JLabel();
         lbl5050Play = new javax.swing.JLabel();
         lblCallPlay = new javax.swing.JLabel();
-        lblQuesionPlay = new javax.swing.JLabel();
+        lblQuesion = new javax.swing.JLabel();
         lblBackgroundPlay = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
-        });
 
         pnlMain.setLayout(new java.awt.CardLayout());
 
@@ -659,16 +654,16 @@ public class PlayGameFarme extends javax.swing.JFrame {
         pnlTroGiup.add(pgD);
         pgD.setBounds(430, 120, 50, 200);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel1.setText("X");
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblExitTroGiup.setFont(new java.awt.Font("Tahoma", 3, 48)); // NOI18N
+        lblExitTroGiup.setForeground(new java.awt.Color(255, 0, 0));
+        lblExitTroGiup.setText("X");
+        lblExitTroGiup.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
+                lblExitTroGiupMouseClicked(evt);
             }
         });
-        pnlTroGiup.add(jLabel1);
-        jLabel1.setBounds(510, 40, 40, 40);
+        pnlTroGiup.add(lblExitTroGiup);
+        lblExitTroGiup.setBounds(510, 40, 40, 40);
 
         lblBackgroudTroGiup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/troGiup.png"))); // NOI18N
         pnlTroGiup.add(lblBackgroudTroGiup);
@@ -690,11 +685,6 @@ public class PlayGameFarme extends javax.swing.JFrame {
         lblHome.setBounds(180, 300, 90, 40);
 
         lblShare.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/share.png"))); // NOI18N
-        lblShare.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblShareMouseClicked(evt);
-            }
-        });
         pnlResult.add(lblShare);
         lblShare.setBounds(290, 300, 90, 40);
 
@@ -839,14 +829,15 @@ public class PlayGameFarme extends javax.swing.JFrame {
         pnlPlay.add(lblCallPlay);
         lblCallPlay.setBounds(960, 360, 70, 70);
 
-        lblQuesionPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/question.png"))); // NOI18N
-        lblQuesionPlay.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblQuesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/question.png"))); // NOI18N
+        lblQuesion.setText("jLabel2");
+        lblQuesion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblQuesionPlayMouseClicked(evt);
+                lblQuesionMouseClicked(evt);
             }
         });
-        pnlPlay.add(lblQuesionPlay);
-        lblQuesionPlay.setBounds(960, 460, 70, 70);
+        pnlPlay.add(lblQuesion);
+        lblQuesion.setBounds(960, 460, 70, 60);
 
         lblBackgroundPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/background.jpg"))); // NOI18N
         lblBackgroundPlay.setText("fa");
@@ -935,9 +926,9 @@ public class PlayGameFarme extends javax.swing.JFrame {
         check();
     }//GEN-LAST:event_lblDMouseClicked
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
         // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowClosing
+    }                                  
 
     private void lbl5050PlayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl5050PlayMouseClicked
         // TODO add your handling code here:
@@ -947,30 +938,29 @@ public class PlayGameFarme extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lbl5050PlayMouseClicked
 
-    private void lblQuesionPlayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQuesionPlayMouseClicked
+    private void lblHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomeMouseClicked
+        // TODO add your handling code here:
+        MainFarme mn = new MainFarme();
+        mn.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lblHomeMouseClicked
+
+    private void lblExitTroGiupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitTroGiupMouseClicked
+        // TODO add your handling code here:
+        pnlTroGiup.setVisible(false);
+    }//GEN-LAST:event_lblExitTroGiupMouseClicked
+
+    private void lblQuesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblQuesionMouseClicked
         // TODO add your handling code here:
         int a = JOptionPane.showConfirmDialog(this, "Bạn muốn sử đụng trợ giúp hỏi ý kiến khán giả", "Thong Bao", JOptionPane.YES_NO_OPTION);
         if (a == JOptionPane.YES_OPTION) {
             pnlTroGiup.setVisible(true);
             helpWhat();
         }
-    }//GEN-LAST:event_lblQuesionPlayMouseClicked
+    }//GEN-LAST:event_lblQuesionMouseClicked
 
-    private void lblShareMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblShareMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblShareMouseClicked
 
-    private void lblHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomeMouseClicked
-        // TODO add your handling code here:
-        MainFarme mn = new MainFarme();
-        mn.setVisible(true);
-        pnlHome.setVisible(true);
-    }//GEN-LAST:event_lblHomeMouseClicked
-
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        // TODO add your handling code here:
-        pnlTroGiup.setVisible(false);
-    }//GEN-LAST:event_jLabel1MouseClicked
+                                   
 
     /**
      * @param args the command line arguments
@@ -1031,7 +1021,6 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private javax.swing.JLabel btn50;
     private javax.swing.JLabel btnCall;
     private javax.swing.JLabel btnGround;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lbl5050Play;
     private javax.swing.JLabel lblA;
     private javax.swing.JLabel lblB;
@@ -1043,6 +1032,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private javax.swing.JLabel lblCallPlay;
     private javax.swing.JLabel lblCauHoi;
     private javax.swing.JLabel lblD;
+    private javax.swing.JLabel lblExitTroGiup;
     private javax.swing.JLabel lblHome;
     private javax.swing.JLabel lblImageIcon;
     private javax.swing.JLabel lblImageIcon1;
@@ -1054,7 +1044,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private javax.swing.JLabel lblMark;
     private javax.swing.JLabel lblMarkPlay;
     private javax.swing.JLabel lblPlay;
-    private javax.swing.JLabel lblQuesionPlay;
+    private javax.swing.JLabel lblQuesion;
     private javax.swing.JTextArea lblQuestion;
     private javax.swing.JLabel lblShare;
     private javax.swing.JLabel lblTien;

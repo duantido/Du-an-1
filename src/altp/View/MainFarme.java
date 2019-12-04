@@ -24,20 +24,25 @@ public class MainFarme extends javax.swing.JFrame {
     String i = "0";
     MP3Player mp3Main = ShareHelper.musicPlayer("Audio/audioMain.wav");
     MP3Player mp3CauHoi = ShareHelper.musicPlayer("Audio/mocCauHoi.wav");
-     
+
     public MainFarme() {
         initComponents();
         setSize(1180, 700);
         setLocationRelativeTo(null);
-        pnlMain.setVisible(true);
+        setVisibleMain();
         mp3Main.play();
-        pnlBxh.setVisible(false);
     }
-    
-    
+
     public void setting() {
         pnlMain.setVisible(false);
         pnlSetting.setVisible(true);
+    }
+
+    void setVisibleMain() {
+        pnlMain.setVisible(true);
+        pnlBxh.setVisible(false);
+        pnlLogin.setVisible(false);
+        pnlAccount.setVisible(false);
     }
 
     /**
@@ -52,8 +57,27 @@ public class MainFarme extends javax.swing.JFrame {
         pnlHome = new javax.swing.JPanel();
         pnlMain = new javax.swing.JPanel();
         lblOption = new javax.swing.JLabel();
+        pnlLogin = new javax.swing.JPanel();
+        txtUserLogin = new javax.swing.JTextField();
+        lblLoginUser = new javax.swing.JLabel();
+        lblLoginPassword = new javax.swing.JLabel();
+        txtPasswordLogin = new javax.swing.JPasswordField();
+        btnLogin = new javax.swing.JButton();
+        btnLoginAccout = new javax.swing.JButton();
+        lblBackLogin = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lblBackgroundLoginn = new javax.swing.JLabel();
+        pnlAccount = new javax.swing.JPanel();
+        lblTitleDangKi = new javax.swing.JLabel();
+        lblBackDangKi = new javax.swing.JLabel();
+        btnAccout = new javax.swing.JButton();
+        txtPassLogin = new javax.swing.JTextField();
+        lblAccoutPassword = new javax.swing.JLabel();
+        lblLoginAccout = new javax.swing.JLabel();
+        txtPasswordAccount = new javax.swing.JPasswordField();
+        lblBackgroundAccout = new javax.swing.JLabel();
         pnlBxh = new javax.swing.JPanel();
-        lblDong = new javax.swing.JLabel();
+        lblDongBXH = new javax.swing.JLabel();
         lblBxh1 = new javax.swing.JLabel();
         lblBXH = new javax.swing.JLabel();
         lblHightMoney = new javax.swing.JLabel();
@@ -62,18 +86,6 @@ public class MainFarme extends javax.swing.JFrame {
         lblPlay = new javax.swing.JLabel();
         lblLogin = new javax.swing.JLabel();
         lblBackgroundMain = new javax.swing.JLabel();
-        pnlLogin = new javax.swing.JPanel();
-        txtPassWord = new javax.swing.JTextField();
-        txtUser = new javax.swing.JTextField();
-        btnAccount = new javax.swing.JButton();
-        btnLoginMain = new javax.swing.JButton();
-        lblBackgroundLogin = new javax.swing.JLabel();
-        pnlAccount = new javax.swing.JPanel();
-        txtPassAccount = new javax.swing.JTextField();
-        txtUserAccount = new javax.swing.JTextField();
-        btnAccount1 = new javax.swing.JButton();
-        btnLoginAcount = new javax.swing.JButton();
-        lblBackgroundAccount = new javax.swing.JLabel();
         pnlSetting = new javax.swing.JPanel();
         lblIconBackground3 = new javax.swing.JLabel();
         IconBackground2 = new javax.swing.JLabel();
@@ -85,6 +97,8 @@ public class MainFarme extends javax.swing.JFrame {
         lblBackgroundMain1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("AI LÀ TRIỆU PHÚ ");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         pnlHome.setLayout(new java.awt.CardLayout());
 
@@ -99,19 +113,136 @@ public class MainFarme extends javax.swing.JFrame {
         pnlMain.add(lblOption);
         lblOption.setBounds(1080, 590, 60, 60);
 
-        pnlBxh.setLayout(null);
+        pnlLogin.setBackground(new java.awt.Color(0, 0, 0,0));
+        pnlLogin.setPreferredSize(new java.awt.Dimension(500, 500));
+        pnlLogin.setLayout(null);
 
-        lblDong.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblDongMouseClicked(evt);
+        txtUserLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUserLoginActionPerformed(evt);
             }
         });
-        pnlBxh.add(lblDong);
-        lblDong.setBounds(60, 550, 270, 40);
+        pnlLogin.add(txtUserLogin);
+        txtUserLogin.setBounds(220, 180, 310, 40);
+
+        lblLoginUser.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblLoginUser.setForeground(new java.awt.Color(255, 255, 255));
+        lblLoginUser.setText("Tài khoản");
+        pnlLogin.add(lblLoginUser);
+        lblLoginUser.setBounds(100, 180, 100, 40);
+
+        lblLoginPassword.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblLoginPassword.setForeground(new java.awt.Color(255, 255, 255));
+        lblLoginPassword.setText("Mật khẩu");
+        pnlLogin.add(lblLoginPassword);
+        lblLoginPassword.setBounds(100, 250, 100, 30);
+        pnlLogin.add(txtPasswordLogin);
+        txtPasswordLogin.setBounds(220, 250, 310, 40);
+
+        btnLogin.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        btnLogin.setText("Đăng Nhập");
+        pnlLogin.add(btnLogin);
+        btnLogin.setBounds(240, 310, 130, 50);
+
+        btnLoginAccout.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        btnLoginAccout.setText("Đăng kí");
+        btnLoginAccout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginAccoutActionPerformed(evt);
+            }
+        });
+        pnlLogin.add(btnLoginAccout);
+        btnLoginAccout.setBounds(390, 310, 110, 50);
+
+        lblBackLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/iconBack.png"))); // NOI18N
+        lblBackLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBackLoginMouseClicked(evt);
+            }
+        });
+        pnlLogin.add(lblBackLogin);
+        lblBackLogin.setBounds(600, 420, 70, 60);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logologin1.png"))); // NOI18N
+        pnlLogin.add(jLabel2);
+        jLabel2.setBounds(280, 110, 200, 50);
+
+        lblBackgroundLoginn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/loginBoxBg.png"))); // NOI18N
+        pnlLogin.add(lblBackgroundLoginn);
+        lblBackgroundLoginn.setBounds(0, 0, 720, 500);
+
+        pnlMain.add(pnlLogin);
+        pnlLogin.setBounds(250, 110, 720, 500);
+
+        pnlAccount.setBackground(new java.awt.Color(0,0,0,0));
+        pnlAccount.setPreferredSize(new java.awt.Dimension(705, 507));
+        pnlAccount.setLayout(null);
+
+        lblTitleDangKi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logoDangki.png"))); // NOI18N
+        pnlAccount.add(lblTitleDangKi);
+        lblTitleDangKi.setBounds(280, 110, 200, 50);
+
+        lblBackDangKi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/iconBack.png"))); // NOI18N
+        lblBackDangKi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBackDangKiMouseClicked(evt);
+            }
+        });
+        pnlAccount.add(lblBackDangKi);
+        lblBackDangKi.setBounds(600, 420, 70, 60);
+
+        btnAccout.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        btnAccout.setText("Đăng kí");
+        btnAccout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAccoutActionPerformed(evt);
+            }
+        });
+        pnlAccount.add(btnAccout);
+        btnAccout.setBounds(310, 320, 120, 40);
+
+        txtPassLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPassLoginActionPerformed(evt);
+            }
+        });
+        pnlAccount.add(txtPassLogin);
+        txtPassLogin.setBounds(220, 180, 310, 40);
+
+        lblAccoutPassword.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblAccoutPassword.setForeground(new java.awt.Color(255, 255, 255));
+        lblAccoutPassword.setText("Mật khẩu");
+        pnlAccount.add(lblAccoutPassword);
+        lblAccoutPassword.setBounds(100, 250, 100, 30);
+
+        lblLoginAccout.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblLoginAccout.setForeground(new java.awt.Color(255, 255, 255));
+        lblLoginAccout.setText("Tài khoản");
+        pnlAccount.add(lblLoginAccout);
+        lblLoginAccout.setBounds(100, 180, 100, 40);
+        pnlAccount.add(txtPasswordAccount);
+        txtPasswordAccount.setBounds(220, 250, 310, 40);
+
+        lblBackgroundAccout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/loginBoxBg.png"))); // NOI18N
+        pnlAccount.add(lblBackgroundAccout);
+        lblBackgroundAccout.setBounds(0, 0, 700, 500);
+
+        pnlMain.add(pnlAccount);
+        pnlAccount.setBounds(255, 110, 710, 500);
+
+        pnlBxh.setLayout(null);
+
+        lblDongBXH.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblDongBXHMouseClicked(evt);
+            }
+        });
+        pnlBxh.add(lblDongBXH);
+        lblDongBXH.setBounds(60, 550, 270, 40);
 
         lblBxh1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/bxh1.png"))); // NOI18N
         pnlBxh.add(lblBxh1);
-        lblBxh1.setBounds(0, 0, 390, 605);
+        lblBxh1.setBounds(0, 0, 390, 600);
 
         pnlMain.add(pnlBxh);
         pnlBxh.setBounds(440, 70, 390, 600);
@@ -123,7 +254,7 @@ public class MainFarme extends javax.swing.JFrame {
             }
         });
         pnlMain.add(lblBXH);
-        lblBXH.setBounds(140, 550, 117, 94);
+        lblBXH.setBounds(70, 550, 117, 94);
 
         lblHightMoney.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblHightMoney.setForeground(new java.awt.Color(255, 255, 255));
@@ -173,75 +304,14 @@ public class MainFarme extends javax.swing.JFrame {
         pnlMain.add(lblLogin);
         lblLogin.setBounds(50, 40, 190, 60);
 
+        lblBackgroundMain.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblBackgroundMain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/background.jpg"))); // NOI18N
         pnlMain.add(lblBackgroundMain);
         lblBackgroundMain.setBounds(0, 0, 1180, 700);
 
         pnlHome.add(pnlMain, "card2");
 
-        pnlLogin.setLayout(null);
-
-        txtPassWord.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPassWordActionPerformed(evt);
-            }
-        });
-        pnlLogin.add(txtPassWord);
-        txtPassWord.setBounds(320, 480, 370, 40);
-        pnlLogin.add(txtUser);
-        txtUser.setBounds(320, 400, 370, 40);
-
-        btnAccount.setText("Đăng ký");
-        btnAccount.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAccountActionPerformed(evt);
-            }
-        });
-        pnlLogin.add(btnAccount);
-        btnAccount.setBounds(500, 540, 130, 50);
-
-        btnLoginMain.setText("Đăng nhập");
-        pnlLogin.add(btnLoginMain);
-        btnLoginMain.setBounds(330, 540, 130, 50);
-
-        lblBackgroundLogin.setBackground(new java.awt.Color(255, 255, 255));
-        lblBackgroundLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dangnhap.png"))); // NOI18N
-        pnlLogin.add(lblBackgroundLogin);
-        lblBackgroundLogin.setBounds(-570, 0, 1750, 700);
-
-        pnlHome.add(pnlLogin, "card4");
-
-        pnlAccount.setLayout(null);
-        pnlAccount.add(txtPassAccount);
-        txtPassAccount.setBounds(290, 470, 370, 40);
-        pnlAccount.add(txtUserAccount);
-        txtUserAccount.setBounds(290, 400, 370, 40);
-
-        btnAccount1.setText("Đăng ký");
-        btnAccount1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAccount1ActionPerformed(evt);
-            }
-        });
-        pnlAccount.add(btnAccount1);
-        btnAccount1.setBounds(460, 550, 130, 50);
-
-        btnLoginAcount.setText("Đăng nhập");
-        btnLoginAcount.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginAcountActionPerformed(evt);
-            }
-        });
-        pnlAccount.add(btnLoginAcount);
-        btnLoginAcount.setBounds(300, 550, 130, 50);
-
-        lblBackgroundAccount.setBackground(new java.awt.Color(255, 255, 255));
-        lblBackgroundAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dangky.png"))); // NOI18N
-        pnlAccount.add(lblBackgroundAccount);
-        lblBackgroundAccount.setBounds(-590, 0, 1770, 700);
-
-        pnlHome.add(pnlAccount, "card4");
-
+        pnlSetting.setPreferredSize(new java.awt.Dimension(500, 500));
         pnlSetting.setLayout(null);
 
         lblIconBackground3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -313,33 +383,19 @@ public class MainFarme extends javax.swing.JFrame {
         // TODO add your handling code here:
         mp3Main.stop();
         mp3CauHoi.play();
-        new PlayGameFarme(i,mp3CauHoi).setVisible(true);
+        new PlayGameFarme(i, mp3CauHoi).setVisible(true);
     }//GEN-LAST:event_lblPlayMouseClicked
 
     private void lblBXHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBXHMouseClicked
         // TODO add your handling code here:
-        pnlMain.setVisible(false);
         pnlBxh.setVisible(true);
+        lblLogin.setVisible(false);
     }//GEN-LAST:event_lblBXHMouseClicked
-
-    private void btnAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountActionPerformed
-        // TODO add your handling code here:
-        pnlLogin.setVisible(false);
-        pnlAccount.setVisible(true);
-    }//GEN-LAST:event_btnAccountActionPerformed
 
     private void lblOptionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblOptionMouseClicked
         // TODO add your handling code here:
         setting();
     }//GEN-LAST:event_lblOptionMouseClicked
-    
-    private void txtPassWordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassWordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPassWordActionPerformed
-
-    private void btnAccount1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccount1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAccount1ActionPerformed
 
     private void IconBackground1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IconBackground1MouseClicked
         // TODO add your handling code here:
@@ -367,25 +423,53 @@ public class MainFarme extends javax.swing.JFrame {
         pnlSetting.setVisible(false);
     }//GEN-LAST:event_lblBackMouseClicked
 
-    private void btnLoginAcountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginAcountActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnLoginAcountActionPerformed
-
     private void lblLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLoginMouseClicked
         // TODO add your handling code here:
-        pnlMain.setVisible(false);
         pnlLogin.setVisible(true);
+        lblBXH.setVisible(false);
     }//GEN-LAST:event_lblLoginMouseClicked
 
     private void lblPlayAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblPlayAncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_lblPlayAncestorAdded
 
-    private void lblDongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDongMouseClicked
+    private void lblDongBXHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDongBXHMouseClicked
         // TODO add your handling code here:
         pnlBxh.setVisible(false);
-    }//GEN-LAST:event_lblDongMouseClicked
+        lblLogin.setVisible(true);
+    }//GEN-LAST:event_lblDongBXHMouseClicked
 
+    private void txtUserLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUserLoginActionPerformed
+
+    private void lblBackLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackLoginMouseClicked
+        // TODO add your handling code here:
+        pnlLogin.setVisible(false);
+        lblBXH.setVisible(true);
+    }//GEN-LAST:event_lblBackLoginMouseClicked
+
+    private void lblBackDangKiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackDangKiMouseClicked
+        // TODO add your handling code here:
+        pnlAccount.setVisible(false);
+        pnlLogin.setVisible(true);
+    }//GEN-LAST:event_lblBackDangKiMouseClicked
+
+    private void txtPassLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPassLoginActionPerformed
+
+    private void btnAccoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccoutActionPerformed
+        // TODO add your handling code here:
+        pnlAccount.setVisible(false);
+        pnlLogin.setVisible(true);
+    }//GEN-LAST:event_btnAccoutActionPerformed
+
+    private void btnLoginAccoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginAccoutActionPerformed
+        // TODO add your handling code here:
+        pnlAccount.setVisible(true);
+        pnlLogin.setVisible(false);
+    }//GEN-LAST:event_btnLoginAccoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -425,26 +509,33 @@ public class MainFarme extends javax.swing.JFrame {
     private javax.swing.JLabel IconBackground1;
     private javax.swing.JLabel IconBackground2;
     private javax.swing.JLabel IconBackground3;
-    private javax.swing.JButton btnAccount;
-    private javax.swing.JButton btnAccount1;
-    private javax.swing.JButton btnLoginAcount;
-    private javax.swing.JButton btnLoginMain;
+    private javax.swing.JButton btnAccout;
+    private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnLoginAccout;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblAccoutPassword;
     private javax.swing.JLabel lblBXH;
     private javax.swing.JLabel lblBack;
-    private javax.swing.JLabel lblBackgroundAccount;
-    private javax.swing.JLabel lblBackgroundLogin;
+    private javax.swing.JLabel lblBackDangKi;
+    private javax.swing.JLabel lblBackLogin;
+    private javax.swing.JLabel lblBackgroundAccout;
+    private javax.swing.JLabel lblBackgroundLoginn;
     private javax.swing.JLabel lblBackgroundMain;
     private javax.swing.JLabel lblBackgroundMain1;
     private javax.swing.JLabel lblBxh1;
-    private javax.swing.JLabel lblDong;
+    private javax.swing.JLabel lblDongBXH;
     private javax.swing.JLabel lblHightMoney;
     private javax.swing.JLabel lblHightSentences;
     private javax.swing.JLabel lblIconBackground1;
     private javax.swing.JLabel lblIconBackground2;
     private javax.swing.JLabel lblIconBackground3;
     private javax.swing.JLabel lblLogin;
+    private javax.swing.JLabel lblLoginAccout;
+    private javax.swing.JLabel lblLoginPassword;
+    private javax.swing.JLabel lblLoginUser;
     private javax.swing.JLabel lblOption;
     private javax.swing.JLabel lblPlay;
+    private javax.swing.JLabel lblTitleDangKi;
     private javax.swing.JLabel lbltotalSentences;
     private javax.swing.JPanel pnlAccount;
     private javax.swing.JPanel pnlBxh;
@@ -452,9 +543,9 @@ public class MainFarme extends javax.swing.JFrame {
     private javax.swing.JPanel pnlLogin;
     private javax.swing.JPanel pnlMain;
     private javax.swing.JPanel pnlSetting;
-    private javax.swing.JTextField txtPassAccount;
-    private javax.swing.JTextField txtPassWord;
-    private javax.swing.JTextField txtUser;
-    private javax.swing.JTextField txtUserAccount;
+    private javax.swing.JTextField txtPassLogin;
+    private javax.swing.JPasswordField txtPasswordAccount;
+    private javax.swing.JPasswordField txtPasswordLogin;
+    private javax.swing.JTextField txtUserLogin;
     // End of variables declaration//GEN-END:variables
 }
