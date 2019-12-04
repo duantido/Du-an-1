@@ -35,6 +35,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     int count = 0;
     int count1 = 0;
     int maCauHoi = 1;
+    int monney = 0;
     List<CauHoi> list = null;
     String dapAn = null;
     MP3Player mp3;
@@ -45,11 +46,8 @@ public class PlayGameFarme extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         showMark();
         showTableQuestion(i);
+        pnlResult.setVisible(false);
         this.mp3 = mp3;
-        lblQuestion.setBackground(new Color(0, 0, 0, 64));
-        lblTT.setVisible(false);
-        lblShare.setVisible(false);
-        lblHome.setVisible(false);
     }
 
     void playShowMoney() {
@@ -133,10 +131,10 @@ public class PlayGameFarme extends javax.swing.JFrame {
                             i = 0;
                         }
                         if (i == 0 && dapAn == null) {
-//                            JOptionPane.showMessageDialog(null, "Ban da het gio");
-                            lblTT.setVisible(true);
-                            lblShare.setVisible(true);
-                            lblHome.setVisible(true);
+                            if(maCauHoi == 1){
+                                Monney();
+                            }
+                            pnlResult.setVisible(true);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -294,9 +292,61 @@ public class PlayGameFarme extends javax.swing.JFrame {
         lblImagesAnswerD.setIcon(new ImageIcon(getClass().getResource("/image/dapanD.png")));
     }
 
+    void Monney() {
+        if (maCauHoi == 1) {
+            monney = 0;
+        }
+        if (maCauHoi == 2) {
+            monney = monney + 200;
+        }
+        if (maCauHoi == 3) {
+            monney = monney + 200;
+        }
+        if (maCauHoi == 4) {
+            monney = monney + 200;
+        }
+        if (maCauHoi == 5) {
+            monney = monney + 400;
+        }
+        if (maCauHoi == 6) {
+            monney = monney + 1000;
+        }
+        if (maCauHoi == 7) {
+            monney = monney + 1000;
+        }
+        if (maCauHoi == 8) {
+            monney = monney + 3000;
+        }
+        if (maCauHoi == 9) {
+            monney = monney + 4000;
+        }
+        if (maCauHoi == 10) {
+            monney = monney + 4000;
+        }
+        if (maCauHoi == 11) {
+            monney = monney + 8000;
+        }
+        if (maCauHoi == 12) {
+            monney = monney + 8000;
+        }
+        if (maCauHoi == 13) {
+            monney = monney + 10000;
+        }
+        if (maCauHoi == 14) {
+            monney = monney + 20000;
+        }
+        if (maCauHoi == 15) {
+            monney = monney + 25000;
+        }
+        if (maCauHoi > 16) {
+            monney = monney + 75000;
+        }
+        lblTien.setText("Tiền thưởng :" + monney);
+        lblCauHoi.setText("Câu hỏi :" + (maCauHoi-1));
+    }
+
     void check() {
         CauHoi ch = list.get(0);
-
         Thread check = new Thread() {
             @Override
             public void run() {
@@ -304,26 +354,22 @@ public class PlayGameFarme extends javax.swing.JFrame {
                     Thread.sleep(3000);
                     nhaynhay(ch.getDapAnDung());
                     Thread.sleep(3000);
-                    System.out.println(ch.getDapAnDung());
                     if (ch.getDapAnDung().equals(dapAn)) {
-//                        JOptionPane.showMessageDialog(null, "dung" + ch.getDapAnDung());
                         maCauHoi++;
+                        Monney();
                         setBackgroungAswer();
                         playGame(maCauHoi);
                         playShowMoney();
                     } else {
-//                        JOptionPane.showMessageDialog(null, "sai" + ch.getDapAnDung());
+                        pnlResult.setVisible(true);        
                     }
                 } catch (Exception e) {
                     System.out.println(e);
                 }
             }
-
         };
         check.start();
-
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -334,7 +380,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton7 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        pnlMain = new javax.swing.JPanel();
         pnlHome = new javax.swing.JPanel();
         btn50 = new javax.swing.JLabel();
         btnCall = new javax.swing.JLabel();
@@ -343,9 +389,14 @@ public class PlayGameFarme extends javax.swing.JFrame {
         lblPlay = new javax.swing.JLabel();
         lblBackground = new javax.swing.JLabel();
         pnlPlay = new javax.swing.JPanel();
+        pnlResult = new javax.swing.JPanel();
         lblHome = new javax.swing.JLabel();
         lblShare = new javax.swing.JLabel();
-        lblTT = new javax.swing.JLabel();
+        lblTien = new javax.swing.JLabel();
+        lblCauHoi = new javax.swing.JLabel();
+        lblImageIcon = new javax.swing.JLabel();
+        lblImageIcon1 = new javax.swing.JLabel();
+        lblBackgroundTT = new javax.swing.JLabel();
         btn50Play = new javax.swing.JLabel();
         btnCallPlay = new javax.swing.JLabel();
         lblQuestion = new javax.swing.JTextArea();
@@ -356,6 +407,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
         lblB = new javax.swing.JLabel();
         lblC = new javax.swing.JLabel();
         lblD = new javax.swing.JLabel();
+        lblToTuVan = new javax.swing.JLabel();
         lblImageQuestion = new javax.swing.JLabel();
         lblImagesAnswerA = new javax.swing.JLabel();
         lblImagesAnswerB = new javax.swing.JLabel();
@@ -372,7 +424,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setLayout(new java.awt.CardLayout());
+        pnlMain.setLayout(new java.awt.CardLayout());
 
         pnlHome.setLayout(null);
 
@@ -405,9 +457,12 @@ public class PlayGameFarme extends javax.swing.JFrame {
         pnlHome.add(lblBackground);
         lblBackground.setBounds(0, 0, 1180, 700);
 
-        jPanel1.add(pnlHome, "card3");
+        pnlMain.add(pnlHome, "card3");
 
         pnlPlay.setLayout(null);
+
+        pnlResult.setBackground(new Color(0,0,0,0));
+        pnlResult.setLayout(null);
 
         lblHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/home.png"))); // NOI18N
         lblHome.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -415,16 +470,43 @@ public class PlayGameFarme extends javax.swing.JFrame {
                 lblHomeMouseClicked(evt);
             }
         });
-        pnlPlay.add(lblHome);
-        lblHome.setBounds(490, 520, 90, 40);
+        pnlResult.add(lblHome);
+        lblHome.setBounds(180, 300, 90, 40);
 
         lblShare.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/share.png"))); // NOI18N
-        pnlPlay.add(lblShare);
-        lblShare.setBounds(590, 520, 90, 40);
+        lblShare.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblShareMouseClicked(evt);
+            }
+        });
+        pnlResult.add(lblShare);
+        lblShare.setBounds(290, 300, 90, 40);
 
-        lblTT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/thanhtich.png"))); // NOI18N
-        pnlPlay.add(lblTT);
-        lblTT.setBounds(300, 210, 580, 410);
+        lblTien.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblTien.setForeground(new java.awt.Color(255, 255, 255));
+        pnlResult.add(lblTien);
+        lblTien.setBounds(180, 130, 200, 40);
+
+        lblCauHoi.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblCauHoi.setForeground(new java.awt.Color(255, 255, 255));
+        pnlResult.add(lblCauHoi);
+        lblCauHoi.setBounds(180, 210, 200, 40);
+
+        lblImageIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/iconLbl.png"))); // NOI18N
+        pnlResult.add(lblImageIcon);
+        lblImageIcon.setBounds(170, 120, 220, 60);
+
+        lblImageIcon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/iconLbl.png"))); // NOI18N
+        pnlResult.add(lblImageIcon1);
+        lblImageIcon1.setBounds(170, 200, 220, 60);
+
+        lblBackgroundTT.setBackground(java.awt.Color.white);
+        lblBackgroundTT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/thanhtich.png"))); // NOI18N
+        pnlResult.add(lblBackgroundTT);
+        lblBackgroundTT.setBounds(0, 0, 580, 410);
+
+        pnlPlay.add(pnlResult);
+        pnlResult.setBounds(320, 170, 580, 410);
 
         btn50Play.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/5050.png"))); // NOI18N
         btn50Play.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -502,8 +584,11 @@ public class PlayGameFarme extends javax.swing.JFrame {
         });
         pnlPlay.add(lblD);
         lblD.setBounds(650, 560, 160, 30);
+        pnlPlay.add(lblToTuVan);
+        lblToTuVan.setBounds(960, 130, 60, 70);
 
         lblImageQuestion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/cauhoi.png"))); // NOI18N
+        lblQuestion.setBackground(new Color(0, 0, 0, 0));
         lblImageQuestion.setText("addddddddddđ");
         pnlPlay.add(lblImageQuestion);
         lblImageQuestion.setBounds(360, 280, 450, 140);
@@ -547,11 +632,11 @@ public class PlayGameFarme extends javax.swing.JFrame {
         lblBackgroundPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/background.jpg"))); // NOI18N
         lblBackgroundPlay.setText("fa");
         pnlPlay.add(lblBackgroundPlay);
-        lblBackgroundPlay.setBounds(-10, -10, 1180, 700);
+        lblBackgroundPlay.setBounds(0, 0, 1180, 700);
 
-        jPanel1.add(pnlPlay, "card2");
+        pnlMain.add(pnlPlay, "card2");
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(pnlMain, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -647,6 +732,11 @@ public class PlayGameFarme extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
 
+    private void lblShareMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblShareMouseClicked
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_lblShareMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -710,14 +800,17 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private javax.swing.JLabel btnGround;
     private javax.swing.JLabel btnGroundPlay;
     private javax.swing.JButton jButton7;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblA;
     private javax.swing.JLabel lblB;
     private javax.swing.JLabel lblBackground;
     private javax.swing.JLabel lblBackgroundPlay;
+    private javax.swing.JLabel lblBackgroundTT;
     private javax.swing.JLabel lblC;
+    private javax.swing.JLabel lblCauHoi;
     private javax.swing.JLabel lblD;
     private javax.swing.JLabel lblHome;
+    private javax.swing.JLabel lblImageIcon;
+    private javax.swing.JLabel lblImageIcon1;
     private javax.swing.JLabel lblImageQuestion;
     private javax.swing.JLabel lblImagesAnswerA;
     private javax.swing.JLabel lblImagesAnswerB;
@@ -728,9 +821,12 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private javax.swing.JLabel lblPlay;
     private javax.swing.JTextArea lblQuestion;
     private javax.swing.JLabel lblShare;
-    private javax.swing.JLabel lblTT;
+    private javax.swing.JLabel lblTien;
     private javax.swing.JLabel lblTime;
+    private javax.swing.JLabel lblToTuVan;
     private javax.swing.JPanel pnlHome;
+    private javax.swing.JPanel pnlMain;
     private javax.swing.JPanel pnlPlay;
+    private javax.swing.JPanel pnlResult;
     // End of variables declaration//GEN-END:variables
 }

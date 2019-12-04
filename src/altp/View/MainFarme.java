@@ -30,7 +30,6 @@ public class MainFarme extends javax.swing.JFrame {
         setSize(1180, 700);
         setLocationRelativeTo(null);
         pnlMain.setVisible(true);
-        pnlBXH.setVisible(false);
         mp3Main.play();
         pnlBxh.setVisible(false);
     }
@@ -75,9 +74,6 @@ public class MainFarme extends javax.swing.JFrame {
         btnAccount1 = new javax.swing.JButton();
         btnLoginAcount = new javax.swing.JButton();
         lblBackgroundAccount = new javax.swing.JLabel();
-        pnlBXH = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblGridView = new javax.swing.JTable();
         pnlSetting = new javax.swing.JPanel();
         lblIconBackground3 = new javax.swing.JLabel();
         IconBackground2 = new javax.swing.JLabel();
@@ -105,14 +101,13 @@ public class MainFarme extends javax.swing.JFrame {
 
         pnlBxh.setLayout(null);
 
-        lblDong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dong.png"))); // NOI18N
         lblDong.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblDongMouseClicked(evt);
             }
         });
         pnlBxh.add(lblDong);
-        lblDong.setBounds(60, 550, 280, 50);
+        lblDong.setBounds(60, 550, 270, 40);
 
         lblBxh1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/bxh1.png"))); // NOI18N
         pnlBxh.add(lblBxh1);
@@ -247,30 +242,6 @@ public class MainFarme extends javax.swing.JFrame {
 
         pnlHome.add(pnlAccount, "card4");
 
-        pnlBXH.setLayout(new java.awt.BorderLayout());
-
-        tblGridView.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Top Đại Gia", "Top Kỉ Lục Gia", "Top Tri Thức Gia"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tblGridView);
-
-        pnlBXH.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
-        pnlHome.add(pnlBXH, "card3");
-
         pnlSetting.setLayout(null);
 
         lblIconBackground3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -400,12 +371,6 @@ public class MainFarme extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLoginAcountActionPerformed
 
-    private void lblDongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDongMouseClicked
-        // TODO add your handling code here:
-        pnlBxh.setVisible(false);
-        pnlMain.setVisible(true);
-    }//GEN-LAST:event_lblDongMouseClicked
-
     private void lblLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLoginMouseClicked
         // TODO add your handling code here:
         pnlMain.setVisible(false);
@@ -415,6 +380,11 @@ public class MainFarme extends javax.swing.JFrame {
     private void lblPlayAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lblPlayAncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_lblPlayAncestorAdded
+
+    private void lblDongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDongMouseClicked
+        // TODO add your handling code here:
+        pnlBxh.setVisible(false);
+    }//GEN-LAST:event_lblDongMouseClicked
 
 
     /**
@@ -459,7 +429,6 @@ public class MainFarme extends javax.swing.JFrame {
     private javax.swing.JButton btnAccount1;
     private javax.swing.JButton btnLoginAcount;
     private javax.swing.JButton btnLoginMain;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblBXH;
     private javax.swing.JLabel lblBack;
     private javax.swing.JLabel lblBackgroundAccount;
@@ -478,13 +447,11 @@ public class MainFarme extends javax.swing.JFrame {
     private javax.swing.JLabel lblPlay;
     private javax.swing.JLabel lbltotalSentences;
     private javax.swing.JPanel pnlAccount;
-    private javax.swing.JPanel pnlBXH;
     private javax.swing.JPanel pnlBxh;
     private javax.swing.JPanel pnlHome;
     private javax.swing.JPanel pnlLogin;
     private javax.swing.JPanel pnlMain;
     private javax.swing.JPanel pnlSetting;
-    private javax.swing.JTable tblGridView;
     private javax.swing.JTextField txtPassAccount;
     private javax.swing.JTextField txtPassWord;
     private javax.swing.JTextField txtUser;
