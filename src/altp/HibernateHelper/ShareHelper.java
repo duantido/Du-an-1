@@ -6,6 +6,7 @@
 package altp.HibernateHelper;
 
 import static com.sun.javafx.scene.control.skin.Utils.getResource;
+import entity.CauHoi;
 import jaco.mp3.player.MP3Player;
 import java.io.File;
 import javax.swing.ImageIcon;
@@ -23,5 +24,25 @@ public class ShareHelper {
     public static MP3Player musicPlayer(String path){
         MP3Player mp3player = new MP3Player(new File(path));
         return mp3player;
+    }
+    /**
+     * Đối tượng này chứa thông tin người sử dụng sau khi đăng nhập
+     */
+    public static CauHoi USER = null;
+
+    /**
+     * Xóa thông tin của người sử dụng khi yêu cầu đăng xuất
+     */
+    public static void logoff() {
+        ShareHelper.USER = null;
+    }
+
+    /**
+     * Kiểm tra xem đăng nhập hay chưa
+     *
+     * @return đăng nhập hay chưa
+     */
+    public static boolean authenticated() {
+        return ShareHelper.USER != null;
     }
 }

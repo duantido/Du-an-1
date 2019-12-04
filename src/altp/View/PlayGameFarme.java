@@ -379,7 +379,6 @@ public class PlayGameFarme extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton7 = new javax.swing.JButton();
         pnlMain = new javax.swing.JPanel();
         pnlHome = new javax.swing.JPanel();
         btn50 = new javax.swing.JLabel();
@@ -414,8 +413,6 @@ public class PlayGameFarme extends javax.swing.JFrame {
         lblImagesAnswerC = new javax.swing.JLabel();
         lblImagesAnswerD = new javax.swing.JLabel();
         lblBackgroundPlay = new javax.swing.JLabel();
-
-        jButton7.setText("C");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -725,11 +722,12 @@ public class PlayGameFarme extends javax.swing.JFrame {
         // TODO add your handling code here:
         MainFarme mn = new MainFarme();
         mn.setVisible(true);
-        pnlHome.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_lblHomeMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
     private void lblShareMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblShareMouseClicked
@@ -799,7 +797,6 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private javax.swing.JLabel btnCallPlay;
     private javax.swing.JLabel btnGround;
     private javax.swing.JLabel btnGroundPlay;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel lblA;
     private javax.swing.JLabel lblB;
     private javax.swing.JLabel lblBackground;
