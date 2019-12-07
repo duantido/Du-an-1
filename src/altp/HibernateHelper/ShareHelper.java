@@ -7,6 +7,7 @@ package altp.HibernateHelper;
 
 import static com.sun.javafx.scene.control.skin.Utils.getResource;
 import entity.CauHoi;
+import entity.TaiKhoan;
 import jaco.mp3.player.MP3Player;
 import java.io.File;
 import javax.swing.ImageIcon;
@@ -28,7 +29,7 @@ public class ShareHelper {
     /**
      * Đối tượng này chứa thông tin người sử dụng sau khi đăng nhập
      */
-    public static CauHoi USER = null;
+    public static TaiKhoan USER = null;
 
     /**
      * Xóa thông tin của người sử dụng khi yêu cầu đăng xuất

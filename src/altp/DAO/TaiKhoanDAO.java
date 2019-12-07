@@ -6,6 +6,8 @@
 package altp.DAO;
 
 import entity.TaiKhoan;
+import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import utils.HibernateUtil;
 
@@ -14,22 +16,42 @@ import utils.HibernateUtil;
  * @author longn
  */
 public class TaiKhoanDAO {
-    public boolean insert(TaiKhoan tk){
-        Session session = HibernateUtil.getSessionFactory().openSession();
+
+    public static List<TaiKhoan> layTaiKhoan(String name, String pass) {
+        try {
+            List<TaiKhoan> list = null;
+            Session session = HibernateUtil.getSessionFactory().openSession();
+
+            String sql = "from TaiKhoan where tenDangNhap = :name and matKhau = :pass";
+            session.beginTransaction();
+            Query query = session.createQuery(sql);
+            query.setParameter("name", name);
+            query.setParameter("pass", pass);
+            list = query.list();
+            session.close();
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean insert(TaiKhoan tk) {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
             session.getTransaction().begin();
             session.save(tk);
             session.getTransaction().commit();
-            session.close();
             return true;
         } catch (Exception e) {
             session.getTransaction().rollback();
             e.printStackTrace();
             return false;
         }
-        
+
     }
-    public boolean update(TaiKhoan tk){
+
+    public boolean update(TaiKhoan tk) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.getTransaction().begin();
@@ -43,7 +65,8 @@ public class TaiKhoanDAO {
             return false;
         }
     }
-    public boolean delete(TaiKhoan tk){
+
+    public boolean delete(TaiKhoan tk) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
             session.getTransaction().begin();

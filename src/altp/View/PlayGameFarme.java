@@ -6,6 +6,7 @@
 package altp.View;
 
 import altp.DAO.CauHoiDAO;
+import altp.DAO.TaiKhoanDAO;
 import altp.HibernateHelper.RanDomHelper;
 import altp.HibernateHelper.ShareHelper;
 import entity.CauHoi;
@@ -17,6 +18,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import altp.view.*;
+import entity.TaiKhoan;
 import jaco.mp3.player.MP3Player;
 import java.awt.Color;
 
@@ -33,6 +35,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     String[] questionImages1 = {"05", "10", "15", "00"};
     MP3Player mp3SanSang = ShareHelper.musicPlayer("Audio/sanSang.mp3");
     MP3Player mp35050 = ShareHelper.musicPlayer("Audio/music5050.mp3");
+    int timeMax;
     int count = 0;
     int count1 = 0;
     int maCauHoi = 1;
@@ -40,8 +43,9 @@ public class PlayGameFarme extends javax.swing.JFrame {
     List<CauHoi> list = null;
     String dapAn = null;
     MP3Player mp3;
+    MP3Player mp3Main;
 
-    public PlayGameFarme(String i, MP3Player mp3) {
+    public PlayGameFarme(String i, MP3Player mp3, MP3Player mp3Main) {
         initComponents();
         setSize(1180, 700);
         setLocationRelativeTo(null);
@@ -50,6 +54,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
         pnlResult.setVisible(false);
         pnlTroGiup.setVisible(false);
         this.mp3 = mp3;
+        this.mp3Main = mp3Main;
     }
 
     void playShowMoney() {
@@ -130,6 +135,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
                         lblTime.setText(i + "");
                         Thread.sleep(1000);
                         if (dapAn != null) {
+                            timeMax = i;
                             i = 0;
                         }
                         if (i == 0 && dapAn == null) {
@@ -508,7 +514,24 @@ public class PlayGameFarme extends javax.swing.JFrame {
 
                 }
             }
-        };help.start();
+        };
+        help.start();
+    }
+
+    void updateUser() {
+        if (ShareHelper.USER != null) {
+            TaiKhoan taiKhoan = null;
+            if (timeMax > ShareHelper.USER.getThoiGian()) {
+                taiKhoan = new TaiKhoan(ShareHelper.USER.getTenDangNhap(), ShareHelper.USER.getMatKhau(), ShareHelper.USER.isVaiTro(), timeMax, ShareHelper.USER.getSoCau(), ShareHelper.USER.getTien() + monney);
+            }
+            if (maCauHoi > ShareHelper.USER.getSoCau()) {
+                taiKhoan = new TaiKhoan(ShareHelper.USER.getTenDangNhap(), ShareHelper.USER.getMatKhau(), ShareHelper.USER.isVaiTro(), ShareHelper.USER.getThoiGian(), maCauHoi, ShareHelper.USER.getTien() + monney);
+            } else {
+                taiKhoan = new TaiKhoan(ShareHelper.USER.getTenDangNhap(), ShareHelper.USER.getMatKhau(), ShareHelper.USER.isVaiTro(), ShareHelper.USER.getThoiGian(), ShareHelper.USER.getSoCau(), ShareHelper.USER.getTien() + monney);
+            }
+            TaiKhoanDAO dao = new TaiKhoanDAO();
+            dao.update(taiKhoan);
+        }
     }
 
     /**
@@ -565,7 +588,12 @@ public class PlayGameFarme extends javax.swing.JFrame {
         lblQuesion = new javax.swing.JLabel();
         lblBackgroundPlay = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         pnlMain.setLayout(new java.awt.CardLayout());
 
@@ -851,7 +879,6 @@ public class PlayGameFarme extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
     private void lblPlayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPlayMouseClicked
         // TODO add your handling code here:
         mp3SanSang.play();
@@ -926,9 +953,9 @@ public class PlayGameFarme extends javax.swing.JFrame {
         check();
     }//GEN-LAST:event_lblDMouseClicked
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {                                   
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {
         // TODO add your handling code here:
-    }                                  
+    }
 
     private void lbl5050PlayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl5050PlayMouseClicked
         // TODO add your handling code here:
@@ -940,8 +967,8 @@ public class PlayGameFarme extends javax.swing.JFrame {
 
     private void lblHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomeMouseClicked
         // TODO add your handling code here:
-        MainFarme mn = new MainFarme();
-        mn.setVisible(true);
+        updateUser();
+        mp3Main.play();
         this.dispose();
     }//GEN-LAST:event_lblHomeMouseClicked
 
@@ -959,8 +986,10 @@ public class PlayGameFarme extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lblQuesionMouseClicked
 
-
-                                   
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
