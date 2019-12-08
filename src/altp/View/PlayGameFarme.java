@@ -629,8 +629,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
         lblDapAn2.setText(ch.getDapAnDung());
         lblDapAn3.setText(ch.getDapAnDung());
     }
-    
-    
+
     void updateUser() {
         if (ShareHelper.USER != null) {
             TaiKhoan taiKhoan = null;
@@ -639,15 +638,13 @@ public class PlayGameFarme extends javax.swing.JFrame {
             }
             if (maCauHoi > ShareHelper.USER.getSoCau()) {
                 taiKhoan = new TaiKhoan(ShareHelper.USER.getTenDangNhap(), ShareHelper.USER.getMatKhau(), ShareHelper.USER.isVaiTro(), ShareHelper.USER.getThoiGian(), maCauHoi, ShareHelper.USER.getTien() + monney);
-            }else{
+            } else {
                 taiKhoan = new TaiKhoan(ShareHelper.USER.getTenDangNhap(), ShareHelper.USER.getMatKhau(), ShareHelper.USER.isVaiTro(), ShareHelper.USER.getThoiGian(), ShareHelper.USER.getSoCau(), (ShareHelper.USER.getTien() + monney));
             }
-            
-            
-           
+
             TaiKhoanDAO dao = new TaiKhoanDAO();
             dao.update(taiKhoan);
-            
+
         }
 
     }
@@ -1174,15 +1171,21 @@ public class PlayGameFarme extends javax.swing.JFrame {
 
     private void lblHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomeMouseClicked
         // TODO add your handling code here:
-        updateUser();
-        TaiKhoanDAO dao = new TaiKhoanDAO();
-        TaiKhoan tk = dao.findByTaiKhoan(ShareHelper.USER.getTenDangNhap());
-        mainFarme.showUser(tk.getTien().toString(), tk.getSoCau().toString(), tk.getThoiGian().toString());
-        this.setVisible(false);
-        mainFarme.setVisible(true);
-        pnlResult.setVisible(false);
-        maCauHoi=1;
-        
+        if (ShareHelper.USER != null) {
+            updateUser();
+            TaiKhoanDAO dao = new TaiKhoanDAO();
+            TaiKhoan tk = dao.findByTaiKhoan(ShareHelper.USER.getTenDangNhap());
+            mainFarme.showUser(tk.getTien().toString(), tk.getSoCau().toString(), tk.getThoiGian().toString());
+            this.setVisible(false);
+            mainFarme.setVisible(true);
+            pnlResult.setVisible(false);
+            maCauHoi = 1;
+        }else{
+            this.setVisible(false);
+            mainFarme.setVisible(true);
+            pnlResult.setVisible(false);
+            maCauHoi = 1;
+        }
     }//GEN-LAST:event_lblHomeMouseClicked
 
     private void lblExitTroGiupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitTroGiupMouseClicked
