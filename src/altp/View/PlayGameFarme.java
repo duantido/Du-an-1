@@ -633,18 +633,13 @@ public class PlayGameFarme extends javax.swing.JFrame {
     void updateUser() {
         if (ShareHelper.USER != null) {
             TaiKhoan taiKhoan = null;
-            if (timeMax > ShareHelper.USER.getThoiGian()) {
-                taiKhoan = new TaiKhoan(ShareHelper.USER.getTenDangNhap(), ShareHelper.USER.getMatKhau(), ShareHelper.USER.isVaiTro(), timeMax, ShareHelper.USER.getSoCau(), ShareHelper.USER.getTien() + monney);
-            }
             if (maCauHoi > ShareHelper.USER.getSoCau()) {
-                taiKhoan = new TaiKhoan(ShareHelper.USER.getTenDangNhap(), ShareHelper.USER.getMatKhau(), ShareHelper.USER.isVaiTro(), ShareHelper.USER.getThoiGian(), maCauHoi, ShareHelper.USER.getTien() + monney);
+                taiKhoan = new TaiKhoan(ShareHelper.USER.getTenDangNhap(), ShareHelper.USER.getMatKhau(), ShareHelper.USER.isVaiTro(), ShareHelper.USER.getThoiGian(), maCauHoi, (ShareHelper.USER.getTien() + monney));
             } else {
                 taiKhoan = new TaiKhoan(ShareHelper.USER.getTenDangNhap(), ShareHelper.USER.getMatKhau(), ShareHelper.USER.isVaiTro(), ShareHelper.USER.getThoiGian(), ShareHelper.USER.getSoCau(), (ShareHelper.USER.getTien() + monney));
             }
-
             TaiKhoanDAO dao = new TaiKhoanDAO();
             dao.update(taiKhoan);
-
         }
 
     }
