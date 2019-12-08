@@ -35,7 +35,27 @@ public class TaiKhoanDAO {
             return null;
         }
     }
-
+    
+    public static List<TaiKhoan> layBxhTien(){
+        List<TaiKhoan> list = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "from TaiKhoan tk order by tien desc";
+        session.beginTransaction();
+        Query query = session.createQuery(sql);
+        list = query.list();
+        session.close();
+        return list;
+    }
+     public static List<TaiKhoan> layBxhCau(){
+        List<TaiKhoan> list = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String sql = "from TaiKhoan tk order by soCau desc";
+        session.beginTransaction();
+        Query query = session.createQuery(sql);
+        list = query.list();
+        session.close();
+        return list;
+    }
     public static TaiKhoan findByTaiKhoan(String tendn) {
         Session session = HibernateUtil.getSessionFactory().openSession();
        

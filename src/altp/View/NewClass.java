@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package altp.DAO;
+package altp.View;
 
-import altp.HibernateHelper.RanDomHelper;
-import entity.CauHoi;
+import altp.DAO.TaiKhoanDAO;
+import entity.TaiKhoan;
 import java.util.List;
 
 /**
@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class NewClass {
     public static void main(String[] args) {
-        int number = RanDomHelper.ranDomInt(2);
-        System.out.println(number+"a");
+        List<TaiKhoan> list = TaiKhoanDAO.layBxhCau();
+        
     }
 }

@@ -99,6 +99,63 @@ public class MainFarme extends javax.swing.JFrame {
         }
     }
     
+    void showBxhTheoTien(){
+        List<TaiKhoan> list = TaiKhoanDAO.layBxhTien();
+        if(list.get(0) != null){
+            lblname1.setText(list.get(0).getTenDangNhap());
+            lbltien1.setText(list.get(0).getTien().toString());
+            lblcau1.setText(list.get(0).getSoCau().toString());
+        }
+        if(list.get(1) != null){
+            lblname2.setText(list.get(1).getTenDangNhap());
+            lbltien2.setText(list.get(1).getTien().toString());
+            lblcau2.setText(list.get(1).getSoCau().toString());
+        }
+        if(list.get(2) != null){
+            lblname3.setText(list.get(2).getTenDangNhap());
+            lbltien3.setText(list.get(2).getTien().toString());
+            lblcau3.setText(list.get(2).getSoCau().toString());
+        }
+        if(list.get(3) != null){
+            lblname4.setText(list.get(3).getTenDangNhap());
+            lbltien4.setText(list.get(3).getTien().toString());
+            lblcau4.setText(list.get(3).getSoCau().toString());
+        }
+        if(list.get(4) != null){
+            lblname5.setText(list.get(4).getTenDangNhap());
+            lbltien5.setText(list.get(4).getTien().toString());
+            lblcau5.setText(list.get(4).getSoCau().toString());
+        }
+    }
+    void showBxhTheoCau(){
+        List<TaiKhoan> list = TaiKhoanDAO.layBxhCau();
+        
+        if(list.get(0) != null){
+            lblname1.setText(list.get(0).getTenDangNhap());
+            lbltien1.setText(list.get(0).getTien().toString());
+            lblcau1.setText(list.get(0).getSoCau().toString());
+        }
+        if(list.get(1) != null){
+            lblname2.setText(list.get(1).getTenDangNhap());
+            lbltien2.setText(list.get(1).getTien().toString());
+            lblcau2.setText(list.get(1).getSoCau().toString());
+        }
+        if(list.get(2) != null){
+            lblname3.setText(list.get(2).getTenDangNhap());
+            lbltien3.setText(list.get(2).getTien().toString());
+            lblcau3.setText(list.get(2).getSoCau().toString());
+        }
+        if(list.get(3) != null){
+            lblname4.setText(list.get(3).getTenDangNhap());
+            lbltien4.setText(list.get(3).getTien().toString());
+            lblcau4.setText(list.get(3).getSoCau().toString());
+        }
+        if(list.get(4) != null){
+            lblname5.setText(list.get(4).getTenDangNhap());
+            lbltien5.setText(list.get(4).getTien().toString());
+            lblcau5.setText(list.get(4).getSoCau().toString());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is alway^s
@@ -134,8 +191,25 @@ public class MainFarme extends javax.swing.JFrame {
         txtPasswordAccount = new javax.swing.JPasswordField();
         lblBackgroundAccout = new javax.swing.JLabel();
         pnlBxh = new javax.swing.JPanel();
-        lblDongBXH = new javax.swing.JLabel();
+        lblname1 = new javax.swing.JLabel();
+        lblname2 = new javax.swing.JLabel();
+        lblname3 = new javax.swing.JLabel();
+        lblname4 = new javax.swing.JLabel();
+        lblname5 = new javax.swing.JLabel();
+        lbltien1 = new javax.swing.JLabel();
+        lbltien2 = new javax.swing.JLabel();
+        lbltien3 = new javax.swing.JLabel();
+        lbltien4 = new javax.swing.JLabel();
+        lbltien5 = new javax.swing.JLabel();
+        lblcau1 = new javax.swing.JLabel();
+        lblcau2 = new javax.swing.JLabel();
+        lblcau3 = new javax.swing.JLabel();
+        lblcau4 = new javax.swing.JLabel();
+        lblcau5 = new javax.swing.JLabel();
+        lblTopCau = new javax.swing.JLabel();
+        lblTopTien = new javax.swing.JLabel();
         lblBxh1 = new javax.swing.JLabel();
+        lblDongBXH = new javax.swing.JLabel();
         lblBXH = new javax.swing.JLabel();
         lblHightMoney = new javax.swing.JLabel();
         lblHightSentences = new javax.swing.JLabel();
@@ -325,6 +399,122 @@ public class MainFarme extends javax.swing.JFrame {
 
         pnlBxh.setLayout(null);
 
+        lblname1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblname1.setForeground(new java.awt.Color(255, 255, 255));
+        lblname1.setText("long");
+        pnlBxh.add(lblname1);
+        lblname1.setBounds(80, 130, 100, 30);
+
+        lblname2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblname2.setForeground(new java.awt.Color(255, 255, 255));
+        lblname2.setText("long");
+        pnlBxh.add(lblname2);
+        lblname2.setBounds(80, 160, 100, 30);
+
+        lblname3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblname3.setForeground(new java.awt.Color(255, 255, 255));
+        lblname3.setText("long");
+        pnlBxh.add(lblname3);
+        lblname3.setBounds(80, 190, 100, 40);
+
+        lblname4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblname4.setForeground(new java.awt.Color(255, 255, 255));
+        lblname4.setText("long");
+        pnlBxh.add(lblname4);
+        lblname4.setBounds(80, 230, 100, 30);
+
+        lblname5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblname5.setForeground(new java.awt.Color(255, 255, 255));
+        lblname5.setText("long");
+        pnlBxh.add(lblname5);
+        lblname5.setBounds(80, 260, 110, 30);
+
+        lbltien1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lbltien1.setForeground(new java.awt.Color(255, 255, 255));
+        lbltien1.setText("long");
+        pnlBxh.add(lbltien1);
+        lbltien1.setBounds(240, 130, 90, 30);
+
+        lbltien2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lbltien2.setForeground(new java.awt.Color(255, 255, 255));
+        lbltien2.setText("long");
+        pnlBxh.add(lbltien2);
+        lbltien2.setBounds(240, 160, 90, 30);
+
+        lbltien3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lbltien3.setForeground(new java.awt.Color(255, 255, 255));
+        lbltien3.setText("long");
+        pnlBxh.add(lbltien3);
+        lbltien3.setBounds(240, 190, 90, 30);
+
+        lbltien4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lbltien4.setForeground(new java.awt.Color(255, 255, 255));
+        lbltien4.setText("long");
+        pnlBxh.add(lbltien4);
+        lbltien4.setBounds(240, 230, 90, 30);
+
+        lbltien5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lbltien5.setForeground(new java.awt.Color(255, 255, 255));
+        lbltien5.setText("long");
+        pnlBxh.add(lbltien5);
+        lbltien5.setBounds(240, 260, 80, 30);
+
+        lblcau1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblcau1.setForeground(new java.awt.Color(255, 255, 255));
+        lblcau1.setText("long");
+        pnlBxh.add(lblcau1);
+        lblcau1.setBounds(350, 130, 34, 30);
+
+        lblcau2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblcau2.setForeground(new java.awt.Color(255, 255, 255));
+        lblcau2.setText("long");
+        pnlBxh.add(lblcau2);
+        lblcau2.setBounds(350, 160, 34, 30);
+
+        lblcau3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblcau3.setForeground(new java.awt.Color(255, 255, 255));
+        lblcau3.setText("long");
+        pnlBxh.add(lblcau3);
+        lblcau3.setBounds(350, 190, 34, 30);
+
+        lblcau4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblcau4.setForeground(new java.awt.Color(255, 255, 255));
+        lblcau4.setText("long");
+        pnlBxh.add(lblcau4);
+        lblcau4.setBounds(350, 230, 34, 30);
+
+        lblcau5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblcau5.setForeground(new java.awt.Color(255, 255, 255));
+        lblcau5.setText("long");
+        pnlBxh.add(lblcau5);
+        lblcau5.setBounds(350, 260, 34, 30);
+
+        lblTopCau.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
+        lblTopCau.setForeground(new java.awt.Color(255, 255, 255));
+        lblTopCau.setText("Top Trả Lời");
+        lblTopCau.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblTopCauMouseClicked(evt);
+            }
+        });
+        pnlBxh.add(lblTopCau);
+        lblTopCau.setBounds(260, 460, 120, 22);
+
+        lblTopTien.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
+        lblTopTien.setForeground(new java.awt.Color(255, 255, 255));
+        lblTopTien.setText("Top Đại Gia");
+        lblTopTien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblTopTienMouseClicked(evt);
+            }
+        });
+        pnlBxh.add(lblTopTien);
+        lblTopTien.setBounds(10, 460, 120, 22);
+
+        lblBxh1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/bxh1.png"))); // NOI18N
+        pnlBxh.add(lblBxh1);
+        lblBxh1.setBounds(0, 0, 390, 600);
+
         lblDongBXH.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblDongBXHMouseClicked(evt);
@@ -332,10 +522,6 @@ public class MainFarme extends javax.swing.JFrame {
         });
         pnlBxh.add(lblDongBXH);
         lblDongBXH.setBounds(60, 550, 270, 40);
-
-        lblBxh1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/bxh1.png"))); // NOI18N
-        pnlBxh.add(lblBxh1);
-        lblBxh1.setBounds(0, 0, 390, 600);
 
         pnlMain.add(pnlBxh);
         pnlBxh.setBounds(440, 70, 390, 600);
@@ -468,7 +654,7 @@ public class MainFarme extends javax.swing.JFrame {
             }
         });
         pnlSetting.add(lblBack);
-        lblBack.setBounds(1010, 610, 70, 70);
+        lblBack.setBounds(1090, 560, 70, 70);
 
         lblBackgroundMain1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/background.jpg"))); // NOI18N
         pnlSetting.add(lblBackgroundMain1);
@@ -494,6 +680,7 @@ public class MainFarme extends javax.swing.JFrame {
         // TODO add your handling code here:
         pnlBxh.setVisible(true);
         lblLogin.setVisible(false);
+        showBxhTheoTien();
     }//GEN-LAST:event_lblBXHMouseClicked
 
     private void lblOptionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblOptionMouseClicked
@@ -541,6 +728,21 @@ public class MainFarme extends javax.swing.JFrame {
         // TODO add your handling code here:
         pnlBxh.setVisible(false);
         lblLogin.setVisible(true);
+        lblname1.setText("");
+        lblname2.setText("");
+        lblname3.setText("");
+        lblname4.setText("");
+        lblname5.setText("");
+        lbltien1.setText("");
+        lbltien2.setText("");
+        lbltien3.setText("");
+        lbltien4.setText("");
+        lbltien5.setText("");
+        lblcau1.setText("");
+        lblcau2.setText("");
+        lblcau3.setText("");
+        lblcau4.setText("");
+        lblcau5.setText("");
     }//GEN-LAST:event_lblDongBXHMouseClicked
 
     private void txtUserLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserLoginActionPerformed
@@ -612,6 +814,16 @@ public class MainFarme extends javax.swing.JFrame {
         
     }//GEN-LAST:event_formWindowStateChanged
 
+    private void lblTopTienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTopTienMouseClicked
+        // TODO add your handling code here:
+        showBxhTheoTien();
+    }//GEN-LAST:event_lblTopTienMouseClicked
+
+    private void lblTopCauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTopCauMouseClicked
+        // TODO add your handling code here:
+        showBxhTheoCau();
+    }//GEN-LAST:event_lblTopCauMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -681,6 +893,23 @@ public class MainFarme extends javax.swing.JFrame {
     public javax.swing.JLabel lblThoiGian;
     private javax.swing.JLabel lblTitleDangKi;
     public javax.swing.JLabel lblTongTien;
+    private javax.swing.JLabel lblTopCau;
+    private javax.swing.JLabel lblTopTien;
+    private javax.swing.JLabel lblcau1;
+    private javax.swing.JLabel lblcau2;
+    private javax.swing.JLabel lblcau3;
+    private javax.swing.JLabel lblcau4;
+    private javax.swing.JLabel lblcau5;
+    private javax.swing.JLabel lblname1;
+    private javax.swing.JLabel lblname2;
+    private javax.swing.JLabel lblname3;
+    private javax.swing.JLabel lblname4;
+    private javax.swing.JLabel lblname5;
+    private javax.swing.JLabel lbltien1;
+    private javax.swing.JLabel lbltien2;
+    private javax.swing.JLabel lbltien3;
+    private javax.swing.JLabel lbltien4;
+    private javax.swing.JLabel lbltien5;
     private javax.swing.JLabel lbltotalSentences;
     private javax.swing.JPanel pnlAccount;
     private javax.swing.JPanel pnlBxh;

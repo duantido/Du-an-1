@@ -1071,7 +1071,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
             }
         });
         pnlPlay.add(lblBackPlay);
-        lblBackPlay.setBounds(1090, 590, 70, 100);
+        lblBackPlay.setBounds(1080, 550, 70, 100);
 
         lblBackgroundPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/background.jpg"))); // NOI18N
         lblBackgroundPlay.setText("fa");
