@@ -36,6 +36,16 @@ public class TaiKhoanDAO {
         }
     }
 
+    public static TaiKhoan findByTaiKhoan(String tendn) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+       
+            session.beginTransaction();
+            TaiKhoan tk = (TaiKhoan) session.get(TaiKhoan.class, tendn);
+            session.close();
+            return tk;
+       
+    }
+
     public boolean insert(TaiKhoan tk) {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
