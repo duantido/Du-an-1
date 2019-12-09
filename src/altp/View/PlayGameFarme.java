@@ -190,12 +190,12 @@ public class PlayGameFarme extends javax.swing.JFrame {
     }
 
     void showQuesion(int maCauHoi) {
-        list = CauHoiDAO.layCauHoi(maCauHoi);
+        CauHoi ch = CauHoiDAO.layCauHoi(maCauHoi);
         Thread show = new Thread() {
             @Override
             public void run() {
                 try {
-                    for (CauHoi ch : list) {
+                    
                         setStatusTrue();
                         lblQuestion.setText(ch.getTenCauHoi().toString());
                         Thread.sleep(2000);
@@ -207,7 +207,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
                         Thread.sleep(500);
                         lblD.setText(ch.getD().toString());
                         Thread.sleep(500);
-                    }
+                  
                 } catch (Exception e) {
                     System.out.println(e);
                 }

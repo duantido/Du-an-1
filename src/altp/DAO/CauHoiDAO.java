@@ -32,33 +32,29 @@ public class CauHoiDAO extends JDBCConnection implements UserDao {
         return list;
     }
 
-    public static long soCau(int mach) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        String sql = "select count(*) from CauHoi wsere maCauHoi = :mach";
-        session.beginTransaction();
-        Query query = session.createQuery(sql);
-        query.setParameter("mach", mach);
-        long soCau = (long) query.uniqueResult();
-        return soCau;
-
-    }
-
-    public static List<CauHoi> layCauHoi(int mach) {
+//    public static long soCau(int mach) {
+//        Session session = HibernateUtil.getSessionFactory().openSession();
+//        String sql = "select count(*) from CauHoi where maCauHoi = :mach";
+//        session.beginTransaction();
+//        Query query = session.createQuery(sql);
+//        query.setParameter("mach", mach);
+//        long soCau = (long) query.uniqueResult();
+//        return soCau;
+//    }
+    
+    public static CauHoi layCauHoi(int mach) {
         List<CauHoi> list = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
-
-        String sql = "from CauHoi where maCauHoi = :mach and maChiTietCh = :machitietch";
+        String sql = "from CauHoi where maCauHoi = :mach";
         session.beginTransaction();
-        int socau = (int) CauHoiDAO.soCau(mach);
-        int machitietch = RanDomHelper.ranDomInt(socau);
         Query query = session.createQuery(sql);
         query.setParameter("mach", mach);
-        query.setParameter("machitietch", machitietch);
         list = query.list();
-        session.close();
-        return list;
-
+        int random = RanDomHelper.ranDomInt(list.size());
+        CauHoi ch = list.get(random);
+        return ch;
     }
+    
 
     public static boolean insert(CauHoi ch) {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -73,7 +69,6 @@ public class CauHoiDAO extends JDBCConnection implements UserDao {
             e.printStackTrace();
             return false;
         }
-
     }
 
     public static boolean update(CauHoi ch) {
