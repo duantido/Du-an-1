@@ -5,16 +5,26 @@
  */
 package altp.View;
 
+import altp.DAO.CauHoiDAO;
 import altp.DAO.TaiKhoanDAO;
+import altp.DAO.UserDao;
 import altp.HibernateHelper.ShareHelper;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 import altp.view.*;
+import entity.CauHoi;
 import entity.TaiKhoan;
 import jaco.mp3.player.MP3Player;
 import java.io.File;
+import java.io.FileInputStream;
+import java.util.Iterator;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
 
 /**
  *
@@ -29,13 +39,14 @@ public class MainFarme extends javax.swing.JFrame {
     MP3Player mp3Main = ShareHelper.musicPlayer("Audio/audioMain.wav");
     MP3Player mp3CauHoi = ShareHelper.musicPlayer("Audio/mocCauHoi.wav");
     PlayGameFarme mainPlay;
+
     public MainFarme() {
         initComponents();
         setSize(1180, 700);
         setLocationRelativeTo(null);
         mainPlay = new PlayGameFarme(i, mp3CauHoi, mp3Main, this);
-            setVisibleMain();
-            mp3Main.play();
+        setVisibleMain();
+        mp3Main.play();
     }
 
     public void setting() {
@@ -48,15 +59,15 @@ public class MainFarme extends javax.swing.JFrame {
         pnlBxh.setVisible(false);
         pnlLogin.setVisible(false);
         pnlAccount.setVisible(false);
+        pnlInsertDatabase.setVisible(false);
     }
 
     void showUser(String tien, String cau, String thoigian) {
         lblLogin.setVisible(false);
         lblDangXuat.setVisible(true);
-                lblTongTien.setText(tien);
-                lblCaoCaoNhat.setText(cau);
-                lblThoiGian.setText(thoigian);
-       
+        lblTongTien.setText(tien);
+        lblCaoCaoNhat.setText(cau);
+        lblThoiGian.setText(thoigian);
     }
 
     void login() {
@@ -67,15 +78,133 @@ public class MainFarme extends javax.swing.JFrame {
             TaiKhoan taiKhoan = list.get(0);
             if (taiKhoan.getTenDangNhap().equals(name) && taiKhoan.getMatKhau().equals(password)) {
                 ShareHelper.USER = taiKhoan;
-                if (ShareHelper.USER != null) {
-                    showUser(ShareHelper.USER.getTien().toString(),ShareHelper.USER.getSoCau().toString(),ShareHelper.USER.getThoiGian().toString());
+                if (ShareHelper.USER != null && ShareHelper.USER.isVaiTro() == false) {
+                    showUser(ShareHelper.USER.getTien().toString(), ShareHelper.USER.getSoCau().toString(), ShareHelper.USER.getThoiGian().toString());
                     pnlLogin.setVisible(false);
                     lblBXH.setVisible(true);
+                }
+                if (ShareHelper.USER != null && ShareHelper.USER.isVaiTro() == true) {
+                    pnlInsertDatabase.setVisible(true);
+                    fillTableQuestion();
                 }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Thông tin đăng nhập không chính xác!");
         }
+    }
+
+    void fillTableQuestion() {
+        DefaultTableModel model = (DefaultTableModel) TblGriView.getModel();
+        model.setRowCount(0);
+        try {
+            List<CauHoi> lst = CauHoiDAO.fillCauHoi();
+            for (CauHoi ch : lst) {
+                Object[] row = {
+                    ch.getStt(),
+                    ch.getMaCauHoi(),
+                    ch.getTenCauHoi(),
+                    ch.getMaChiTietCh(),
+                    ch.getA(),
+                    ch.getB(),
+                    ch.getC(),
+                    ch.getD(),
+                    ch.getDapAnDung()
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void updateTable() {
+        for (int i = 0; i < TblGriView.getRowCount(); i++) {
+            Integer stt = (Integer) TblGriView.getValueAt(i, 0);
+            Integer maCauHoi = (Integer) TblGriView.getValueAt(i, 1);
+            String tenCauHoi = (String) TblGriView.getValueAt(i, 2);
+            Integer maChiTietCH = (Integer) TblGriView.getValueAt(i, 3);
+            String A = (String) TblGriView.getValueAt(i, 4);
+            String B = (String) TblGriView.getValueAt(i, 5);
+            String C = (String) TblGriView.getValueAt(i, 6);
+            String D = (String) TblGriView.getValueAt(i, 7);
+            String dapAnDung = (String) TblGriView.getValueAt(i, 8);
+            Boolean isDelete = (Boolean) TblGriView.getValueAt(i, 9);
+            if (isDelete) {
+                CauHoi cauHoi = new CauHoi(stt, maCauHoi, maChiTietCH, dapAnDung);
+                CauHoiDAO.delete(cauHoi);
+                fillTableQuestion();
+                JOptionPane.showMessageDialog(this, "Delete thanh cong !");
+            } else {
+                CauHoi cauHoi = new CauHoi(stt, maCauHoi, tenCauHoi, maChiTietCH, A, B, C, D, dapAnDung);
+                CauHoiDAO.update(cauHoi);
+                fillTableQuestion();
+            }
+        }
+    }
+
+    void deleteAllQuestion() {
+        for (int i = 0; i < TblGriView.getRowCount(); i++) {
+            Integer stt = (Integer) TblGriView.getValueAt(i, 0);
+            Integer maCauHoi = (Integer) TblGriView.getValueAt(i, 1);
+            String tenCauHoi = (String) TblGriView.getValueAt(i, 2);
+            Integer maChiTietCH = (Integer) TblGriView.getValueAt(i, 3);
+            String A = (String) TblGriView.getValueAt(i, 4);
+            String B = (String) TblGriView.getValueAt(i, 5);
+            String C = (String) TblGriView.getValueAt(i, 6);
+            String D = (String) TblGriView.getValueAt(i, 7);
+            String dapAnDung = (String) TblGriView.getValueAt(i, 8);
+            CauHoi cauHoi = new CauHoi(stt, maCauHoi, tenCauHoi, maChiTietCH, A, B, C, D, dapAnDung);
+            CauHoiDAO.delete(cauHoi);
+        }
+        fillTableQuestion();
+        JOptionPane.showMessageDialog(this, "Delete thanh cong !");
+    }
+
+    void importFileExel() {
+        try {
+            JFileChooser fileChooser = new JFileChooser();
+            if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                FileInputStream fileInputStream = new FileInputStream(file);
+                try (HSSFWorkbook workbook = new HSSFWorkbook(fileInputStream)) {
+                    HSSFSheet dataSheet = workbook.getSheetAt(0);
+                    Iterator<Row> iterator = dataSheet.iterator();
+                    Row firstRow = iterator.next();
+                    while (iterator.hasNext()) {
+                        Row currentRow = iterator.next();
+                        CauHoi user = new CauHoi();
+                        try {
+                            user.setMaCauHoi(Integer.parseInt(currentRow.getCell(1).getStringCellValue()));
+                        } catch (Exception ex) {
+                            String mach = String.valueOf(Math.round(currentRow.getCell(1).getNumericCellValue()));
+                            user.setMaCauHoi(Integer.parseInt(mach));
+                        }
+                        user.setTenCauHoi(currentRow.getCell(2).getStringCellValue());
+                        try {
+                            user.setMaChiTietCh(Integer.parseInt(currentRow.getCell(3).getStringCellValue()));
+                        } catch (Exception ex) {
+                            String mactch = String.valueOf(Math.round(currentRow.getCell(3).getNumericCellValue()));
+                            user.setMaChiTietCh(Integer.parseInt(mactch));
+                        }
+                        user.setA(currentRow.getCell(4).getStringCellValue());
+                        user.setB(currentRow.getCell(5).getStringCellValue());
+                        user.setC(currentRow.getCell(6).getStringCellValue());
+                        user.setD(currentRow.getCell(7).getStringCellValue());
+                        user.setDapAnDung(currentRow.getCell(8).getStringCellValue());
+
+                        UserDao use = new CauHoiDAO();
+                        use.add(user);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                JOptionPane.showMessageDialog(this, "Thêm thành công !");
+                fillTableQuestion();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     void logoff() {
@@ -93,69 +222,71 @@ public class MainFarme extends javax.swing.JFrame {
             TaiKhoan taiKhoan = new TaiKhoan(name, password, false, 0, 0, 0);
             TaiKhoanDAO dao = new TaiKhoanDAO();
             dao.insert(taiKhoan);
-            JOptionPane.showMessageDialog(this, "Dang ki thanh cong!");
+            JOptionPane.showMessageDialog(this, "Đăng kí thành công!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Dang ki that bai");
         }
     }
-    
-    void showBxhTheoTien(){
+
+    void showBxhTheoTien() {
         List<TaiKhoan> list = TaiKhoanDAO.layBxhTien();
-        if(list.get(0) != null){
+        if (list.get(0) != null) {
             lblname1.setText(list.get(0).getTenDangNhap());
             lbltien1.setText(list.get(0).getTien().toString());
             lblcau1.setText(list.get(0).getSoCau().toString());
         }
-        if(list.get(1) != null){
+        if (list.get(1) != null) {
             lblname2.setText(list.get(1).getTenDangNhap());
             lbltien2.setText(list.get(1).getTien().toString());
             lblcau2.setText(list.get(1).getSoCau().toString());
         }
-        if(list.get(2) != null){
+        if (list.get(2) != null) {
             lblname3.setText(list.get(2).getTenDangNhap());
             lbltien3.setText(list.get(2).getTien().toString());
             lblcau3.setText(list.get(2).getSoCau().toString());
         }
-        if(list.get(3) != null){
+        if (list.get(3) != null) {
             lblname4.setText(list.get(3).getTenDangNhap());
             lbltien4.setText(list.get(3).getTien().toString());
             lblcau4.setText(list.get(3).getSoCau().toString());
         }
-        if(list.get(4) != null){
+        if (list.get(4) != null) {
             lblname5.setText(list.get(4).getTenDangNhap());
             lbltien5.setText(list.get(4).getTien().toString());
             lblcau5.setText(list.get(4).getSoCau().toString());
         }
     }
-    void showBxhTheoCau(){
+
+    void showBxhTheoCau() {
         List<TaiKhoan> list = TaiKhoanDAO.layBxhCau();
-        
-        if(list.get(0) != null){
+
+        if (list.get(0) != null) {
             lblname1.setText(list.get(0).getTenDangNhap());
             lbltien1.setText(list.get(0).getTien().toString());
             lblcau1.setText(list.get(0).getSoCau().toString());
         }
-        if(list.get(1) != null){
+        if (list.get(1) != null) {
             lblname2.setText(list.get(1).getTenDangNhap());
             lbltien2.setText(list.get(1).getTien().toString());
             lblcau2.setText(list.get(1).getSoCau().toString());
         }
-        if(list.get(2) != null){
+        if (list.get(2) != null) {
             lblname3.setText(list.get(2).getTenDangNhap());
             lbltien3.setText(list.get(2).getTien().toString());
             lblcau3.setText(list.get(2).getSoCau().toString());
         }
-        if(list.get(3) != null){
+        if (list.get(3) != null) {
             lblname4.setText(list.get(3).getTenDangNhap());
             lbltien4.setText(list.get(3).getTien().toString());
             lblcau4.setText(list.get(3).getSoCau().toString());
         }
-        if(list.get(4) != null){
+        if (list.get(4) != null) {
             lblname5.setText(list.get(4).getTenDangNhap());
             lbltien5.setText(list.get(4).getTien().toString());
             lblcau5.setText(list.get(4).getSoCau().toString());
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is alway^s
@@ -171,6 +302,14 @@ public class MainFarme extends javax.swing.JFrame {
         lblCaoCaoNhat = new javax.swing.JLabel();
         lblThoiGian = new javax.swing.JLabel();
         lblOption = new javax.swing.JLabel();
+        pnlInsertDatabase = new javax.swing.JPanel();
+        lblTitleThongKe = new javax.swing.JLabel();
+        btnImportFileExel = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TblGriView = new javax.swing.JTable();
+        btnUpdate = new javax.swing.JButton();
+        btnDeleteAll = new javax.swing.JButton();
+        lblBackInsertData = new javax.swing.JLabel();
         pnlLogin = new javax.swing.JPanel();
         txtUserLogin = new javax.swing.JTextField();
         lblLoginUser = new javax.swing.JLabel();
@@ -274,6 +413,88 @@ public class MainFarme extends javax.swing.JFrame {
         });
         pnlMain.add(lblOption);
         lblOption.setBounds(1080, 590, 60, 60);
+
+        pnlInsertDatabase.setLayout(null);
+
+        lblTitleThongKe.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTitleThongKe.setText("Thống kê câu hỏi ");
+        pnlInsertDatabase.add(lblTitleThongKe);
+        lblTitleThongKe.setBounds(50, 30, 140, 20);
+
+        btnImportFileExel.setText("Import File Exel");
+        btnImportFileExel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportFileExelActionPerformed(evt);
+            }
+        });
+        pnlInsertDatabase.add(btnImportFileExel);
+        btnImportFileExel.setBounds(250, 20, 150, 30);
+
+        TblGriView.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "STT", "Ma cau hoi", "Ten cau hoi", "Ma CT Cau Hoi", "A", "B", "C", "D", "Dap An Dung", "Xóa"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, true, true, true, true, true, true, true, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(TblGriView);
+        if (TblGriView.getColumnModel().getColumnCount() > 0) {
+            TblGriView.getColumnModel().getColumn(0).setResizable(false);
+        }
+
+        pnlInsertDatabase.add(jScrollPane1);
+        jScrollPane1.setBounds(10, 60, 1040, 420);
+
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+        pnlInsertDatabase.add(btnUpdate);
+        btnUpdate.setBounds(420, 20, 130, 30);
+
+        btnDeleteAll.setText("DeleteAllQuestion");
+        btnDeleteAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteAllActionPerformed(evt);
+            }
+        });
+        pnlInsertDatabase.add(btnDeleteAll);
+        btnDeleteAll.setBounds(580, 20, 130, 30);
+
+        lblBackInsertData.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblBackInsertData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/iconBack.png"))); // NOI18N
+        lblBackInsertData.setText("Đăng xuất");
+        lblBackInsertData.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBackInsertDataMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblBackInsertDataMouseEntered(evt);
+            }
+        });
+        pnlInsertDatabase.add(lblBackInsertData);
+        lblBackInsertData.setBounds(20, 490, 170, 60);
+
+        pnlMain.add(pnlInsertDatabase);
+        pnlInsertDatabase.setBounds(30, 40, 1070, 560);
 
         pnlLogin.setBackground(new java.awt.Color(0, 0, 0,0));
         pnlLogin.setPreferredSize(new java.awt.Dimension(500, 500));
@@ -595,7 +816,7 @@ public class MainFarme extends javax.swing.JFrame {
         lblBackgroundMain.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblBackgroundMain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/background.jpg"))); // NOI18N
         pnlMain.add(lblBackgroundMain);
-        lblBackgroundMain.setBounds(0, 0, 1180, 700);
+        lblBackgroundMain.setBounds(0, 0, 1170, 700);
 
         pnlHome.add(pnlMain, "card2");
 
@@ -673,7 +894,7 @@ public class MainFarme extends javax.swing.JFrame {
         mp3CauHoi.play();
         new PlayGameFarme(i, mp3CauHoi, mp3Main, this).setVisible(true);
         this.setVisible(false);
-      
+
     }//GEN-LAST:event_lblPlayMouseClicked
 
     private void lblBXHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBXHMouseClicked
@@ -793,12 +1014,7 @@ public class MainFarme extends javax.swing.JFrame {
     }//GEN-LAST:event_lblDangXuatMouseClicked
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
-        // TODO add your handling code here:
-        if (ShareHelper.USER != null) {
-            lblThoiGian.setText(ShareHelper.USER.getThoiGian() + "");
-            lblCaoCaoNhat.setText(ShareHelper.USER.getSoCau() + "");
-            lblTongTien.setText(ShareHelper.USER.getTien() + "");
-        }
+
     }//GEN-LAST:event_formKeyReleased
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -811,7 +1027,7 @@ public class MainFarme extends javax.swing.JFrame {
 
     private void formWindowStateChanged(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowStateChanged
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_formWindowStateChanged
 
     private void lblTopTienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTopTienMouseClicked
@@ -823,6 +1039,38 @@ public class MainFarme extends javax.swing.JFrame {
         // TODO add your handling code here:
         showBxhTheoCau();
     }//GEN-LAST:event_lblTopCauMouseClicked
+
+    private void lblBackInsertDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackInsertDataMouseClicked
+        // TODO add your handling code here:
+        int a = JOptionPane.showConfirmDialog(this, "Bạn thật sự muốn thoát", "Thong Bao", JOptionPane.YES_NO_OPTION);
+        if (a == JOptionPane.YES_OPTION) {
+            logoff();
+            if (ShareHelper.USER == null) {
+                lblLogin.setVisible(true);
+                lblDangXuat.setVisible(false);
+            }
+            pnlInsertDatabase.setVisible(false);
+        }
+    }//GEN-LAST:event_lblBackInsertDataMouseClicked
+
+    private void btnImportFileExelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportFileExelActionPerformed
+        // TODO add your handling code here:
+        importFileExel();
+    }//GEN-LAST:event_btnImportFileExelActionPerformed
+
+    private void lblBackInsertDataMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBackInsertDataMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lblBackInsertDataMouseEntered
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+        updateTable();
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteAllActionPerformed
+        // TODO add your handling code here:
+        deleteAllQuestion();
+    }//GEN-LAST:event_btnDeleteAllActionPerformed
 
     /**
      * @param args the command line arguments
@@ -862,13 +1110,19 @@ public class MainFarme extends javax.swing.JFrame {
     private javax.swing.JLabel IconBackground1;
     private javax.swing.JLabel IconBackground2;
     private javax.swing.JLabel IconBackground3;
+    private javax.swing.JTable TblGriView;
     private javax.swing.JButton btnAccout;
+    private javax.swing.JButton btnDeleteAll;
+    private javax.swing.JButton btnImportFileExel;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnLoginAccout;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAccoutPassword;
     private javax.swing.JLabel lblBXH;
     private javax.swing.JLabel lblBack;
     private javax.swing.JLabel lblBackDangKi;
+    private javax.swing.JLabel lblBackInsertData;
     private javax.swing.JLabel lblBackLogin;
     private javax.swing.JLabel lblBackgroundAccout;
     private javax.swing.JLabel lblBackgroundLoginn;
@@ -892,6 +1146,7 @@ public class MainFarme extends javax.swing.JFrame {
     private javax.swing.JLabel lblPlay;
     public javax.swing.JLabel lblThoiGian;
     private javax.swing.JLabel lblTitleDangKi;
+    private javax.swing.JLabel lblTitleThongKe;
     public javax.swing.JLabel lblTongTien;
     private javax.swing.JLabel lblTopCau;
     private javax.swing.JLabel lblTopTien;
@@ -914,6 +1169,7 @@ public class MainFarme extends javax.swing.JFrame {
     private javax.swing.JPanel pnlAccount;
     private javax.swing.JPanel pnlBxh;
     private javax.swing.JPanel pnlHome;
+    private javax.swing.JPanel pnlInsertDatabase;
     private javax.swing.JPanel pnlLogin;
     private javax.swing.JPanel pnlMain;
     private javax.swing.JPanel pnlSetting;

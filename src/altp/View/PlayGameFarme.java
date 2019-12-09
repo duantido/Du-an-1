@@ -1175,7 +1175,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
             mainFarme.setVisible(true);
             pnlResult.setVisible(false);
             maCauHoi = 1;
-        }else{
+        } else {
             this.setVisible(false);
             mainFarme.setVisible(true);
             pnlResult.setVisible(false);
