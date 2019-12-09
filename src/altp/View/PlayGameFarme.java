@@ -635,7 +635,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
         if (ShareHelper.USER != null) {
             TaiKhoan taiKhoan = null;
             if (maCauHoi > ShareHelper.USER.getSoCau()) {
-                taiKhoan = new TaiKhoan(ShareHelper.USER.getTenDangNhap(), ShareHelper.USER.getMatKhau(), ShareHelper.USER.isVaiTro(), ShareHelper.USER.getThoiGian(), maCauHoi, (ShareHelper.USER.getTien() + monney));
+                taiKhoan = new TaiKhoan(ShareHelper.USER.getTenDangNhap(), ShareHelper.USER.getMatKhau(), ShareHelper.USER.isVaiTro(), ShareHelper.USER.getThoiGian(), maCauHoi-1, (ShareHelper.USER.getTien() + monney));
             } else {
                 taiKhoan = new TaiKhoan(ShareHelper.USER.getTenDangNhap(), ShareHelper.USER.getMatKhau(), ShareHelper.USER.isVaiTro(), ShareHelper.USER.getThoiGian(), ShareHelper.USER.getSoCau(), (ShareHelper.USER.getTien() + monney));
             }
@@ -1102,7 +1102,6 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAMouseClicked
         // TODO add your handling code here:
         dapAn = "A";
-      
         lblImagesAnswerA.setIcon(new ImageIcon(getClass().getResource("/hinh/A.png")));
         check();
     }//GEN-LAST:event_lblAMouseClicked

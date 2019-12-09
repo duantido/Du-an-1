@@ -67,7 +67,7 @@ public class MainFarme extends javax.swing.JFrame {
         lblDangXuat.setVisible(true);
         lblTongTien.setText(tien);
         lblCaoCaoNhat.setText(cau);
-        
+
     }
 
     void login() {
@@ -118,7 +118,8 @@ public class MainFarme extends javax.swing.JFrame {
     }
 
     void updateTable() {
-        for (int i = 0; i < TblGriView.getRowCount(); i++) {
+        try {
+            for (int i = 0; i < TblGriView.getRowCount(); i++) {
             Integer stt = (Integer) TblGriView.getValueAt(i, 0);
             Integer maCauHoi = (Integer) TblGriView.getValueAt(i, 1);
             String tenCauHoi = (String) TblGriView.getValueAt(i, 2);
@@ -140,6 +141,10 @@ public class MainFarme extends javax.swing.JFrame {
                 fillTableQuestion();
             }
         }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Hãy tích vào câu hỏi muốn thay đổi");
+        }
+        
     }
 
     void deleteAllQuestion() {
@@ -211,21 +216,33 @@ public class MainFarme extends javax.swing.JFrame {
         ShareHelper.logoff();
         lblTongTien.setText("");
         lblCaoCaoNhat.setText("");
-       
+
     }
 
     void Account() {
         String name = txtNameAccout.getText();
-        String password = txtPasswordAccount.getText();
-
-        try {
-            TaiKhoan taiKhoan = new TaiKhoan(name, password, false, 0, 0, 0);
-            TaiKhoanDAO dao = new TaiKhoanDAO();
-            dao.insert(taiKhoan);
-            JOptionPane.showMessageDialog(this, "Đăng kí thành công!");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Dang ki that bai");
+        String password = new String(txtPasswordAccount.getPassword());
+        List<TaiKhoan> list = TaiKhoanDAO.layDsTaiKhoan();
+        boolean checkTenDangNhap = true;
+        for (TaiKhoan tk : list) {
+            if (password.equals(tk.getTenDangNhap())) {
+                checkTenDangNhap = false;
+            }
         }
+        if (checkTenDangNhap == true) {
+            try {
+                TaiKhoan taiKhoan = new TaiKhoan(name, password, false, 0, 0, 0);
+                TaiKhoanDAO dao = new TaiKhoanDAO();
+                dao.insert(taiKhoan);
+                JOptionPane.showMessageDialog(this, "Đăng kí thành công!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Dang ki that bai");
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Tên đăng nhập đã tồn tại");
+            checkTenDangNhap=true;
+        }
+
     }
 
     void showBxhTheoTien() {

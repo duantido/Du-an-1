@@ -5,6 +5,7 @@
  */
 package altp.DAO;
 
+import entity.CauHoi;
 import entity.TaiKhoan;
 import java.util.List;
 import org.hibernate.Query;
@@ -21,7 +22,6 @@ public class TaiKhoanDAO {
         try {
             List<TaiKhoan> list = null;
             Session session = HibernateUtil.getSessionFactory().openSession();
-
             String sql = "from TaiKhoan where tenDangNhap = :name and matKhau = :pass";
             session.beginTransaction();
             Query query = session.createQuery(sql);
@@ -36,6 +36,21 @@ public class TaiKhoanDAO {
         }
     }
     
+    public static List<TaiKhoan> layDsTaiKhoan() {
+        try {
+            List<TaiKhoan> list = null;
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            String sql = "from TaiKhoan";
+            session.beginTransaction();
+            Query query = session.createQuery(sql);
+            list = query.list();
+            session.close();
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     public static List<TaiKhoan> layBxhTien(){
         List<TaiKhoan> list = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
