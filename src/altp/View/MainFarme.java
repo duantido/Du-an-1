@@ -67,7 +67,7 @@ public class MainFarme extends javax.swing.JFrame {
         lblDangXuat.setVisible(true);
         lblTongTien.setText(tien);
         lblCaoCaoNhat.setText(cau);
-        lblThoiGian.setText(thoigian);
+        
     }
 
     void login() {
@@ -211,7 +211,7 @@ public class MainFarme extends javax.swing.JFrame {
         ShareHelper.logoff();
         lblTongTien.setText("");
         lblCaoCaoNhat.setText("");
-        lblThoiGian.setText("");
+       
     }
 
     void Account() {
@@ -300,16 +300,7 @@ public class MainFarme extends javax.swing.JFrame {
         pnlMain = new javax.swing.JPanel();
         lblTongTien = new javax.swing.JLabel();
         lblCaoCaoNhat = new javax.swing.JLabel();
-        lblThoiGian = new javax.swing.JLabel();
         lblOption = new javax.swing.JLabel();
-        pnlInsertDatabase = new javax.swing.JPanel();
-        lblTitleThongKe = new javax.swing.JLabel();
-        btnImportFileExel = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        TblGriView = new javax.swing.JTable();
-        btnUpdate = new javax.swing.JButton();
-        btnDeleteAll = new javax.swing.JButton();
-        lblBackInsertData = new javax.swing.JLabel();
         pnlLogin = new javax.swing.JPanel();
         txtUserLogin = new javax.swing.JTextField();
         lblLoginUser = new javax.swing.JLabel();
@@ -320,6 +311,14 @@ public class MainFarme extends javax.swing.JFrame {
         lblBackLogin = new javax.swing.JLabel();
         lblIconDangNhap = new javax.swing.JLabel();
         lblBackgroundLoginn = new javax.swing.JLabel();
+        pnlInsertDatabase = new javax.swing.JPanel();
+        lblTitleThongKe = new javax.swing.JLabel();
+        btnImportFileExel = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TblGriView = new javax.swing.JTable();
+        btnUpdate = new javax.swing.JButton();
+        btnDeleteAll = new javax.swing.JButton();
+        lblBackInsertData = new javax.swing.JLabel();
         pnlAccount = new javax.swing.JPanel();
         lblTitleDangKi = new javax.swing.JLabel();
         lblBackDangKi = new javax.swing.JLabel();
@@ -352,7 +351,6 @@ public class MainFarme extends javax.swing.JFrame {
         lblBXH = new javax.swing.JLabel();
         lblHightMoney = new javax.swing.JLabel();
         lblHightSentences = new javax.swing.JLabel();
-        lbltotalSentences = new javax.swing.JLabel();
         lblPlay = new javax.swing.JLabel();
         lblLogin = new javax.swing.JLabel();
         lblDangXuat = new javax.swing.JLabel();
@@ -400,11 +398,6 @@ public class MainFarme extends javax.swing.JFrame {
         pnlMain.add(lblCaoCaoNhat);
         lblCaoCaoNhat.setBounds(750, 50, 60, 20);
 
-        lblThoiGian.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblThoiGian.setForeground(new java.awt.Color(255, 255, 255));
-        pnlMain.add(lblThoiGian);
-        lblThoiGian.setBounds(960, 50, 70, 20);
-
         lblOption.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/option.png"))); // NOI18N
         lblOption.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -413,6 +406,72 @@ public class MainFarme extends javax.swing.JFrame {
         });
         pnlMain.add(lblOption);
         lblOption.setBounds(1080, 590, 60, 60);
+
+        pnlLogin.setBackground(new java.awt.Color(0, 0, 0,0));
+        pnlLogin.setPreferredSize(new java.awt.Dimension(500, 500));
+        pnlLogin.setLayout(null);
+
+        txtUserLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUserLoginActionPerformed(evt);
+            }
+        });
+        pnlLogin.add(txtUserLogin);
+        txtUserLogin.setBounds(220, 180, 310, 40);
+
+        lblLoginUser.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblLoginUser.setForeground(new java.awt.Color(255, 255, 255));
+        lblLoginUser.setText("Tài khoản");
+        pnlLogin.add(lblLoginUser);
+        lblLoginUser.setBounds(100, 180, 100, 40);
+
+        lblLoginPassword.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblLoginPassword.setForeground(new java.awt.Color(255, 255, 255));
+        lblLoginPassword.setText("Mật khẩu");
+        pnlLogin.add(lblLoginPassword);
+        lblLoginPassword.setBounds(100, 250, 100, 30);
+        pnlLogin.add(txtPasswordLogin);
+        txtPasswordLogin.setBounds(220, 250, 310, 40);
+
+        btnLogin.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        btnLogin.setText("Đăng Nhập");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+        pnlLogin.add(btnLogin);
+        btnLogin.setBounds(240, 310, 130, 50);
+
+        btnLoginAccout.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        btnLoginAccout.setText("Đăng kí");
+        btnLoginAccout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginAccoutActionPerformed(evt);
+            }
+        });
+        pnlLogin.add(btnLoginAccout);
+        btnLoginAccout.setBounds(390, 310, 110, 50);
+
+        lblBackLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/iconBack.png"))); // NOI18N
+        lblBackLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBackLoginMouseClicked(evt);
+            }
+        });
+        pnlLogin.add(lblBackLogin);
+        lblBackLogin.setBounds(600, 420, 70, 60);
+
+        lblIconDangNhap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logologin1.png"))); // NOI18N
+        pnlLogin.add(lblIconDangNhap);
+        lblIconDangNhap.setBounds(280, 110, 200, 50);
+
+        lblBackgroundLoginn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/loginBoxBg.png"))); // NOI18N
+        pnlLogin.add(lblBackgroundLoginn);
+        lblBackgroundLoginn.setBounds(0, 0, 720, 500);
+
+        pnlMain.add(pnlLogin);
+        pnlLogin.setBounds(250, 110, 720, 500);
 
         pnlInsertDatabase.setLayout(null);
 
@@ -495,72 +554,6 @@ public class MainFarme extends javax.swing.JFrame {
 
         pnlMain.add(pnlInsertDatabase);
         pnlInsertDatabase.setBounds(30, 40, 1070, 560);
-
-        pnlLogin.setBackground(new java.awt.Color(0, 0, 0,0));
-        pnlLogin.setPreferredSize(new java.awt.Dimension(500, 500));
-        pnlLogin.setLayout(null);
-
-        txtUserLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUserLoginActionPerformed(evt);
-            }
-        });
-        pnlLogin.add(txtUserLogin);
-        txtUserLogin.setBounds(220, 180, 310, 40);
-
-        lblLoginUser.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lblLoginUser.setForeground(new java.awt.Color(255, 255, 255));
-        lblLoginUser.setText("Tài khoản");
-        pnlLogin.add(lblLoginUser);
-        lblLoginUser.setBounds(100, 180, 100, 40);
-
-        lblLoginPassword.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lblLoginPassword.setForeground(new java.awt.Color(255, 255, 255));
-        lblLoginPassword.setText("Mật khẩu");
-        pnlLogin.add(lblLoginPassword);
-        lblLoginPassword.setBounds(100, 250, 100, 30);
-        pnlLogin.add(txtPasswordLogin);
-        txtPasswordLogin.setBounds(220, 250, 310, 40);
-
-        btnLogin.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        btnLogin.setText("Đăng Nhập");
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
-            }
-        });
-        pnlLogin.add(btnLogin);
-        btnLogin.setBounds(240, 310, 130, 50);
-
-        btnLoginAccout.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        btnLoginAccout.setText("Đăng kí");
-        btnLoginAccout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginAccoutActionPerformed(evt);
-            }
-        });
-        pnlLogin.add(btnLoginAccout);
-        btnLoginAccout.setBounds(390, 310, 110, 50);
-
-        lblBackLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/iconBack.png"))); // NOI18N
-        lblBackLogin.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblBackLoginMouseClicked(evt);
-            }
-        });
-        pnlLogin.add(lblBackLogin);
-        lblBackLogin.setBounds(600, 420, 70, 60);
-
-        lblIconDangNhap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logologin1.png"))); // NOI18N
-        pnlLogin.add(lblIconDangNhap);
-        lblIconDangNhap.setBounds(280, 110, 200, 50);
-
-        lblBackgroundLoginn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/loginBoxBg.png"))); // NOI18N
-        pnlLogin.add(lblBackgroundLoginn);
-        lblBackgroundLoginn.setBounds(0, 0, 720, 500);
-
-        pnlMain.add(pnlLogin);
-        pnlLogin.setBounds(250, 110, 720, 500);
 
         pnlAccount.setBackground(new java.awt.Color(0,0,0,0));
         pnlAccount.setPreferredSize(new java.awt.Dimension(705, 507));
@@ -769,13 +762,6 @@ public class MainFarme extends javax.swing.JFrame {
         lblHightSentences.setText("Câu cao nhất");
         pnlMain.add(lblHightSentences);
         lblHightSentences.setBounds(700, 20, 150, 36);
-
-        lbltotalSentences.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        lbltotalSentences.setForeground(new java.awt.Color(255, 255, 255));
-        lbltotalSentences.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/tongcau.png"))); // NOI18N
-        lbltotalSentences.setText("Thời gian nhanh nhất");
-        pnlMain.add(lbltotalSentences);
-        lbltotalSentences.setBounds(890, 20, 190, 36);
 
         lblPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/play.png"))); // NOI18N
         lblPlay.addAncestorListener(new javax.swing.event.AncestorListener() {
@@ -1144,7 +1130,6 @@ public class MainFarme extends javax.swing.JFrame {
     private javax.swing.JLabel lblLoginUser;
     private javax.swing.JLabel lblOption;
     private javax.swing.JLabel lblPlay;
-    public javax.swing.JLabel lblThoiGian;
     private javax.swing.JLabel lblTitleDangKi;
     private javax.swing.JLabel lblTitleThongKe;
     public javax.swing.JLabel lblTongTien;
@@ -1165,7 +1150,6 @@ public class MainFarme extends javax.swing.JFrame {
     private javax.swing.JLabel lbltien3;
     private javax.swing.JLabel lbltien4;
     private javax.swing.JLabel lbltien5;
-    private javax.swing.JLabel lbltotalSentences;
     private javax.swing.JPanel pnlAccount;
     private javax.swing.JPanel pnlBxh;
     private javax.swing.JPanel pnlHome;

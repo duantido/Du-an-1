@@ -42,6 +42,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     int monney = 0;
     String nameCall = null;
     List<CauHoi> list = null;
+    CauHoi cauhoi;
     String dapAn = null;
     MP3Player mp3;
     MP3Player mp3Main;
@@ -190,22 +191,22 @@ public class PlayGameFarme extends javax.swing.JFrame {
     }
 
     void showQuesion(int maCauHoi) {
-        CauHoi ch = CauHoiDAO.layCauHoi(maCauHoi);
+        cauhoi = CauHoiDAO.layCauHoi(maCauHoi);
         Thread show = new Thread() {
             @Override
             public void run() {
                 try {
                     
                         setStatusTrue();
-                        lblQuestion.setText(ch.getTenCauHoi().toString());
+                        lblQuestion.setText(cauhoi.getTenCauHoi().toString());
                         Thread.sleep(2000);
-                        lblA.setText(ch.getA().toString());
+                        lblA.setText(cauhoi.getA().toString());
                         Thread.sleep(500);
-                        lblB.setText(ch.getB().toString());
+                        lblB.setText(cauhoi.getB().toString());
                         Thread.sleep(500);
-                        lblC.setText(ch.getC().toString());
+                        lblC.setText(cauhoi.getC().toString());
                         Thread.sleep(500);
-                        lblD.setText(ch.getD().toString());
+                        lblD.setText(cauhoi.getD().toString());
                         Thread.sleep(500);
                   
                 } catch (Exception e) {
@@ -255,7 +256,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
         Thread t2 = new Thread() {
             @Override
             public void run() {
-                CauHoi ch = list.get(0);
+                CauHoi ch = cauhoi;
                 for (int i = 1; i < 14; i++) {
                     try {
                         if (ch.getDapAnDung().matches("A")) {
@@ -378,7 +379,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     }
 
     void check() {
-        CauHoi ch = list.get(0);
+        CauHoi ch = cauhoi;
         Thread check = new Thread() {
             @Override
             public void run() {
@@ -410,7 +411,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
                 try {
                     mp35050.play();
                     Thread.sleep(2000);
-                    CauHoi ch = list.get(0);
+                    CauHoi ch = cauhoi;
                     if (ch.getDapAnDung().equals("A")) {
                         int number = RanDomHelper.ranDomInt(3);
                         if (number == 0) {
@@ -509,7 +510,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
             @Override
             public void run() {
                 try {
-                    CauHoi ch = list.get(0);
+                    CauHoi ch = cauhoi;
                     if (ch.getDapAnDung().equals("A")) {
                         int number = 100;
                         int A = RanDomHelper.ranDomInt(number);
@@ -624,7 +625,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     }
 
     void helpTuVan() {
-        CauHoi ch = list.get(0);
+        CauHoi ch = cauhoi;
         lblDapAn1.setText(ch.getDapAnDung());
         lblDapAn2.setText(ch.getDapAnDung());
         lblDapAn3.setText(ch.getDapAnDung());
@@ -1093,7 +1094,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblImagesAnswerAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagesAnswerAMouseClicked
         // TODO add your handling code here:
         dapAn = "A";
-        CauHoi ch = list.get(0);
+        
         lblImagesAnswerA.setIcon(new ImageIcon(getClass().getResource("/hinh/A.png")));
         check();
     }//GEN-LAST:event_lblImagesAnswerAMouseClicked
@@ -1101,7 +1102,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAMouseClicked
         // TODO add your handling code here:
         dapAn = "A";
-        CauHoi ch = list.get(0);
+      
         lblImagesAnswerA.setIcon(new ImageIcon(getClass().getResource("/hinh/A.png")));
         check();
     }//GEN-LAST:event_lblAMouseClicked
@@ -1109,7 +1110,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblImagesAnswerBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagesAnswerBMouseClicked
         // TODO add your handling code here:
         dapAn = "B";
-        CauHoi ch = list.get(0);
+       
         lblImagesAnswerB.setIcon(new ImageIcon(getClass().getResource("/hinh/B.png")));
         check();
     }//GEN-LAST:event_lblImagesAnswerBMouseClicked
@@ -1117,7 +1118,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBMouseClicked
         // TODO add your handling code here:
         dapAn = "B";
-        CauHoi ch = list.get(0);
+      
         lblImagesAnswerB.setIcon(new ImageIcon(getClass().getResource("/hinh/B.png")));
         check();
     }//GEN-LAST:event_lblBMouseClicked
@@ -1125,7 +1126,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblImagesAnswerCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagesAnswerCMouseClicked
         // TODO add your handling code here:
         dapAn = "C";
-        CauHoi ch = list.get(0);
+      
         lblImagesAnswerC.setIcon(new ImageIcon(getClass().getResource("/hinh/C.png")));
         check();
     }//GEN-LAST:event_lblImagesAnswerCMouseClicked
@@ -1133,7 +1134,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCMouseClicked
         // TODO add your handling code here:
         dapAn = "C";
-        CauHoi ch = list.get(0);
+      
         lblImagesAnswerC.setIcon(new ImageIcon(getClass().getResource("/hinh/C.png")));
         check();
     }//GEN-LAST:event_lblCMouseClicked
@@ -1141,7 +1142,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblImagesAnswerDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagesAnswerDMouseClicked
         // TODO add your handling code here:
         dapAn = "D";
-        CauHoi ch = list.get(0);
+      
         lblImagesAnswerD.setIcon(new ImageIcon(getClass().getResource("/hinh/D.png")));
         check();
     }//GEN-LAST:event_lblImagesAnswerDMouseClicked
@@ -1149,7 +1150,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDMouseClicked
         // TODO add your handling code here:
         dapAn = "D";
-        CauHoi ch = list.get(0);
+     
         lblImagesAnswerD.setIcon(new ImageIcon(getClass().getResource("/hinh/D.png")));
         check();
     }//GEN-LAST:event_lblDMouseClicked
