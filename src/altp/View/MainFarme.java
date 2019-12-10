@@ -9,9 +9,7 @@ import altp.DAO.CauHoiDAO;
 import altp.DAO.TaiKhoanDAO;
 import altp.DAO.UserDao;
 import altp.HibernateHelper.ShareHelper;
-import java.awt.Graphics;
 import javax.swing.ImageIcon;
-import altp.view.*;
 import entity.CauHoi;
 import entity.TaiKhoan;
 import jaco.mp3.player.MP3Player;
@@ -39,6 +37,8 @@ public class MainFarme extends javax.swing.JFrame {
     MP3Player mp3Main = ShareHelper.musicPlayer("Audio/audioMain.wav");
     MP3Player mp3CauHoi = ShareHelper.musicPlayer("Audio/mocCauHoi.wav");
     PlayGameFarme mainPlay;
+    String head[] = {"Mã SV", "Họ Tên", "Email", "SDT", "Giới tính", "Địa chỉ"};
+    DefaultTableModel model = new DefaultTableModel(head, 0);
 
     public MainFarme() {
         initComponents();
@@ -60,6 +60,7 @@ public class MainFarme extends javax.swing.JFrame {
         pnlLogin.setVisible(false);
         pnlAccount.setVisible(false);
         pnlInsertDatabase.setVisible(false);
+        pnlQuanLiNguoiDung.setVisible(false);
     }
 
     void showUser(String tien, String cau, String thoigian) {
@@ -246,7 +247,7 @@ public class MainFarme extends javax.swing.JFrame {
         List<TaiKhoan> list = TaiKhoanDAO.layDsTaiKhoan();
         boolean checkTenDangNhap = true;
         for (TaiKhoan tk : list) {
-            if (password.equals(tk.getTenDangNhap())) {
+            if (name.matches(tk.getTenDangNhap())) {
                 checkTenDangNhap = false;
             }
         }
@@ -328,6 +329,81 @@ public class MainFarme extends javax.swing.JFrame {
         }
     }
 
+    void fillTableUser() {
+        DefaultTableModel model = (DefaultTableModel) tblGriViewQuanLiNguoiDung.getModel();
+        model.setRowCount(0);
+        try {
+            List<TaiKhoan> lst = TaiKhoanDAO.layDsTaiKhoan();
+            for (TaiKhoan tk : lst) {
+                Object[] row = {
+                    tk.getTenDangNhap(),
+                    tk.getMatKhau(),
+                    tk.isVaiTro(),
+                    tk.getThoiGian(),
+                    tk.getSoCau(),
+                    tk.getTien()
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void insertUser() {
+        String name = txtUser.getText();
+        String pass = txtPassWord.getText();
+        boolean role = rdoAdmin.isSelected() || !rdoGuest.isSelected();
+        Integer time = Integer.parseInt(txtTime.getText());
+        Integer number = Integer.parseInt(txtNumber.getText());
+        Integer money = Integer.parseInt(txtMonney.getText());
+        TaiKhoan taiKhoan = new TaiKhoan(name, pass, role, time, money, time);
+        TaiKhoanDAO dao = new TaiKhoanDAO();
+        dao.insert(taiKhoan);
+    }
+
+    void UpdateUser() {
+        String name = txtUser.getText();
+        String pass = txtPassWord.getText();
+        boolean role = rdoAdmin.isSelected() || !rdoGuest.isSelected();
+        Integer time = Integer.parseInt(txtTime.getText());
+        Integer number = Integer.parseInt(txtNumber.getText());
+        Integer money = Integer.parseInt(txtMonney.getText());
+        TaiKhoan taiKhoan = new TaiKhoan(name, pass, role, time, money, time);
+        TaiKhoanDAO dao = new TaiKhoanDAO();
+        dao.update(taiKhoan);
+    }
+
+    void DeleteUser() {
+        String name = txtUser.getText();
+        String pass = txtPassWord.getText();
+        boolean role = rdoAdmin.isSelected() || !rdoGuest.isSelected();
+        Integer time = Integer.parseInt(txtTime.getText());
+        Integer number = Integer.parseInt(txtNumber.getText());
+        Integer money = Integer.parseInt(txtMonney.getText());
+        TaiKhoan taiKhoan = new TaiKhoan(name, pass, role, time, money, time);
+        TaiKhoanDAO dao = new TaiKhoanDAO();
+        dao.delete(taiKhoan);
+    }
+    void display(){
+        try {
+            int row = tblGriViewQuanLiNguoiDung.getSelectedRow();
+            txtUser.setText(tblGriViewQuanLiNguoiDung.getValueAt(row, 0).toString());
+            txtPassWord.setText(tblGriViewQuanLiNguoiDung.getValueAt(row, 1).toString());
+            Boolean boo = Boolean.parseBoolean(tblGriViewQuanLiNguoiDung.getValueAt(row,2).toString());
+            if(boo){
+                rdoAdmin.setSelected(true);
+            }
+            else{
+                rdoGuest.setSelected(true);
+            }   
+            txtTime.setText(tblGriViewQuanLiNguoiDung.getValueAt(row, 3).toString());
+            txtNumber.setText(tblGriViewQuanLiNguoiDung.getValueAt(row, 4).toString());
+            txtMonney.setText(tblGriViewQuanLiNguoiDung.getValueAt(row, 5).toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is alway^s
@@ -337,11 +413,42 @@ public class MainFarme extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         pnlHome = new javax.swing.JPanel();
         pnlMain = new javax.swing.JPanel();
         lblTongTien = new javax.swing.JLabel();
         lblCaoCaoNhat = new javax.swing.JLabel();
         lblOption = new javax.swing.JLabel();
+        pnlInsertDatabase = new javax.swing.JPanel();
+        lblTitleThongKe = new javax.swing.JLabel();
+        btnImportFileExel = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TblGriView = new javax.swing.JTable();
+        btnUpdate = new javax.swing.JButton();
+        btnDeleteAll = new javax.swing.JButton();
+        lblBackInsertData = new javax.swing.JLabel();
+        btnManagePlayers = new javax.swing.JButton();
+        pnlQuanLiNguoiDung = new javax.swing.JPanel();
+        lblMonneyUser = new javax.swing.JLabel();
+        lblNameUser = new javax.swing.JLabel();
+        lblPassUser = new javax.swing.JLabel();
+        lblRoleUser = new javax.swing.JLabel();
+        lblTimeUser = new javax.swing.JLabel();
+        lblNumberUser = new javax.swing.JLabel();
+        txtMonney = new javax.swing.JTextField();
+        txtUser = new javax.swing.JTextField();
+        txtPassWord = new javax.swing.JTextField();
+        txtNumber = new javax.swing.JTextField();
+        txtTime = new javax.swing.JTextField();
+        rdoGuest = new javax.swing.JRadioButton();
+        rdoAdmin = new javax.swing.JRadioButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblGriViewQuanLiNguoiDung = new javax.swing.JTable();
+        btnAddUser = new javax.swing.JButton();
+        btnUpdateUser = new javax.swing.JButton();
+        btnDeleteUser = new javax.swing.JButton();
+        btnBackUser = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
         pnlLogin = new javax.swing.JPanel();
         txtUserLogin = new javax.swing.JTextField();
         lblLoginUser = new javax.swing.JLabel();
@@ -352,14 +459,6 @@ public class MainFarme extends javax.swing.JFrame {
         lblBackLogin = new javax.swing.JLabel();
         lblIconDangNhap = new javax.swing.JLabel();
         lblBackgroundLoginn = new javax.swing.JLabel();
-        pnlInsertDatabase = new javax.swing.JPanel();
-        lblTitleThongKe = new javax.swing.JLabel();
-        btnImportFileExel = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        TblGriView = new javax.swing.JTable();
-        btnUpdate = new javax.swing.JButton();
-        btnDeleteAll = new javax.swing.JButton();
-        lblBackInsertData = new javax.swing.JLabel();
         pnlAccount = new javax.swing.JPanel();
         lblTitleDangKi = new javax.swing.JLabel();
         lblBackDangKi = new javax.swing.JLabel();
@@ -448,72 +547,6 @@ public class MainFarme extends javax.swing.JFrame {
         pnlMain.add(lblOption);
         lblOption.setBounds(1080, 590, 60, 60);
 
-        pnlLogin.setBackground(new java.awt.Color(0, 0, 0,0));
-        pnlLogin.setPreferredSize(new java.awt.Dimension(500, 500));
-        pnlLogin.setLayout(null);
-
-        txtUserLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUserLoginActionPerformed(evt);
-            }
-        });
-        pnlLogin.add(txtUserLogin);
-        txtUserLogin.setBounds(220, 180, 310, 40);
-
-        lblLoginUser.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lblLoginUser.setForeground(new java.awt.Color(255, 255, 255));
-        lblLoginUser.setText("Tài khoản");
-        pnlLogin.add(lblLoginUser);
-        lblLoginUser.setBounds(100, 180, 100, 40);
-
-        lblLoginPassword.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lblLoginPassword.setForeground(new java.awt.Color(255, 255, 255));
-        lblLoginPassword.setText("Mật khẩu");
-        pnlLogin.add(lblLoginPassword);
-        lblLoginPassword.setBounds(100, 250, 100, 30);
-        pnlLogin.add(txtPasswordLogin);
-        txtPasswordLogin.setBounds(220, 250, 310, 40);
-
-        btnLogin.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        btnLogin.setText("Đăng Nhập");
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
-            }
-        });
-        pnlLogin.add(btnLogin);
-        btnLogin.setBounds(240, 310, 130, 50);
-
-        btnLoginAccout.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        btnLoginAccout.setText("Đăng kí");
-        btnLoginAccout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginAccoutActionPerformed(evt);
-            }
-        });
-        pnlLogin.add(btnLoginAccout);
-        btnLoginAccout.setBounds(390, 310, 110, 50);
-
-        lblBackLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/iconBack.png"))); // NOI18N
-        lblBackLogin.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblBackLoginMouseClicked(evt);
-            }
-        });
-        pnlLogin.add(lblBackLogin);
-        lblBackLogin.setBounds(600, 420, 70, 60);
-
-        lblIconDangNhap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logologin1.png"))); // NOI18N
-        pnlLogin.add(lblIconDangNhap);
-        lblIconDangNhap.setBounds(280, 110, 200, 50);
-
-        lblBackgroundLoginn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/loginBoxBg.png"))); // NOI18N
-        pnlLogin.add(lblBackgroundLoginn);
-        lblBackgroundLoginn.setBounds(0, 0, 720, 500);
-
-        pnlMain.add(pnlLogin);
-        pnlLogin.setBounds(250, 110, 720, 500);
-
         pnlInsertDatabase.setLayout(null);
 
         lblTitleThongKe.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -593,8 +626,223 @@ public class MainFarme extends javax.swing.JFrame {
         pnlInsertDatabase.add(lblBackInsertData);
         lblBackInsertData.setBounds(20, 490, 170, 60);
 
+        btnManagePlayers.setText("Quan Lí Người Chơi");
+        btnManagePlayers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManagePlayersActionPerformed(evt);
+            }
+        });
+        pnlInsertDatabase.add(btnManagePlayers);
+        btnManagePlayers.setBounds(730, 20, 160, 30);
+
         pnlMain.add(pnlInsertDatabase);
         pnlInsertDatabase.setBounds(30, 40, 1070, 560);
+
+        pnlQuanLiNguoiDung.setLayout(null);
+
+        lblMonneyUser.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblMonneyUser.setText("Tiền");
+        pnlQuanLiNguoiDung.add(lblMonneyUser);
+        lblMonneyUser.setBounds(470, 170, 40, 30);
+
+        lblNameUser.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblNameUser.setText("Tên đăng nhập");
+        pnlQuanLiNguoiDung.add(lblNameUser);
+        lblNameUser.setBounds(100, 30, 100, 30);
+
+        lblPassUser.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblPassUser.setText("Mật Khẩu");
+        pnlQuanLiNguoiDung.add(lblPassUser);
+        lblPassUser.setBounds(100, 100, 90, 30);
+
+        lblRoleUser.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblRoleUser.setText("Vai trò");
+        pnlQuanLiNguoiDung.add(lblRoleUser);
+        lblRoleUser.setBounds(470, 30, 90, 30);
+
+        lblTimeUser.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblTimeUser.setText("Thời gian");
+        pnlQuanLiNguoiDung.add(lblTimeUser);
+        lblTimeUser.setBounds(470, 100, 90, 30);
+
+        lblNumberUser.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblNumberUser.setText("Số câu");
+        pnlQuanLiNguoiDung.add(lblNumberUser);
+        lblNumberUser.setBounds(100, 170, 90, 30);
+        pnlQuanLiNguoiDung.add(txtMonney);
+        txtMonney.setBounds(560, 170, 210, 30);
+        pnlQuanLiNguoiDung.add(txtUser);
+        txtUser.setBounds(200, 30, 210, 30);
+        pnlQuanLiNguoiDung.add(txtPassWord);
+        txtPassWord.setBounds(200, 100, 210, 30);
+        pnlQuanLiNguoiDung.add(txtNumber);
+        txtNumber.setBounds(200, 170, 210, 30);
+        pnlQuanLiNguoiDung.add(txtTime);
+        txtTime.setBounds(560, 100, 210, 30);
+
+        buttonGroup1.add(rdoGuest);
+        rdoGuest.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        rdoGuest.setText("Người chơi");
+        pnlQuanLiNguoiDung.add(rdoGuest);
+        rdoGuest.setBounds(560, 30, 91, 23);
+
+        buttonGroup1.add(rdoAdmin);
+        rdoAdmin.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        rdoAdmin.setText("Quản lí");
+        pnlQuanLiNguoiDung.add(rdoAdmin);
+        rdoAdmin.setBounds(690, 30, 80, 23);
+
+        tblGriViewQuanLiNguoiDung.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Tên đăng nhập", "Mật Khẩu", "Vai trò", "Thời gian", "Số câu", "Tiền"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblGriViewQuanLiNguoiDung.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblGriViewQuanLiNguoiDungMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblGriViewQuanLiNguoiDung);
+
+        pnlQuanLiNguoiDung.add(jScrollPane2);
+        jScrollPane2.setBounds(40, 250, 1000, 280);
+
+        btnAddUser.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnAddUser.setText("Thêm");
+        btnAddUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddUserActionPerformed(evt);
+            }
+        });
+        pnlQuanLiNguoiDung.add(btnAddUser);
+        btnAddUser.setBounds(860, 30, 70, 23);
+
+        btnUpdateUser.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnUpdateUser.setText("Sửa");
+        btnUpdateUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateUserActionPerformed(evt);
+            }
+        });
+        pnlQuanLiNguoiDung.add(btnUpdateUser);
+        btnUpdateUser.setBounds(860, 80, 70, 23);
+
+        btnDeleteUser.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnDeleteUser.setText("Xóa");
+        btnDeleteUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteUserActionPerformed(evt);
+            }
+        });
+        pnlQuanLiNguoiDung.add(btnDeleteUser);
+        btnDeleteUser.setBounds(970, 80, 80, 23);
+
+        btnBackUser.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnBackUser.setText("Trở về");
+        btnBackUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackUserActionPerformed(evt);
+            }
+        });
+        pnlQuanLiNguoiDung.add(btnBackUser);
+        btnBackUser.setBounds(920, 190, 70, 23);
+
+        btnClear.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
+        pnlQuanLiNguoiDung.add(btnClear);
+        btnClear.setBounds(970, 30, 80, 23);
+
+        pnlMain.add(pnlQuanLiNguoiDung);
+        pnlQuanLiNguoiDung.setBounds(30, 40, 1070, 560);
+
+        pnlLogin.setBackground(new java.awt.Color(0, 0, 0,0));
+        pnlLogin.setPreferredSize(new java.awt.Dimension(500, 500));
+        pnlLogin.setLayout(null);
+
+        txtUserLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUserLoginActionPerformed(evt);
+            }
+        });
+        pnlLogin.add(txtUserLogin);
+        txtUserLogin.setBounds(220, 180, 310, 40);
+
+        lblLoginUser.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblLoginUser.setForeground(new java.awt.Color(255, 255, 255));
+        lblLoginUser.setText("Tài khoản");
+        pnlLogin.add(lblLoginUser);
+        lblLoginUser.setBounds(100, 180, 100, 40);
+
+        lblLoginPassword.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblLoginPassword.setForeground(new java.awt.Color(255, 255, 255));
+        lblLoginPassword.setText("Mật khẩu");
+        pnlLogin.add(lblLoginPassword);
+        lblLoginPassword.setBounds(100, 250, 100, 30);
+        pnlLogin.add(txtPasswordLogin);
+        txtPasswordLogin.setBounds(220, 250, 310, 40);
+
+        btnLogin.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        btnLogin.setText("Đăng Nhập");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+        pnlLogin.add(btnLogin);
+        btnLogin.setBounds(240, 310, 130, 50);
+
+        btnLoginAccout.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        btnLoginAccout.setText("Đăng kí");
+        btnLoginAccout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginAccoutActionPerformed(evt);
+            }
+        });
+        pnlLogin.add(btnLoginAccout);
+        btnLoginAccout.setBounds(390, 310, 110, 50);
+
+        lblBackLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/iconBack.png"))); // NOI18N
+        lblBackLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblBackLoginMouseClicked(evt);
+            }
+        });
+        pnlLogin.add(lblBackLogin);
+        lblBackLogin.setBounds(600, 420, 70, 60);
+
+        lblIconDangNhap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logologin1.png"))); // NOI18N
+        pnlLogin.add(lblIconDangNhap);
+        lblIconDangNhap.setBounds(280, 110, 200, 50);
+
+        lblBackgroundLoginn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/loginBoxBg.png"))); // NOI18N
+        pnlLogin.add(lblBackgroundLoginn);
+        lblBackgroundLoginn.setBounds(0, 0, 720, 500);
+
+        pnlMain.add(pnlLogin);
+        pnlLogin.setBounds(250, 110, 720, 500);
 
         pnlAccount.setBackground(new java.awt.Color(0,0,0,0));
         pnlAccount.setPreferredSize(new java.awt.Dimension(705, 507));
@@ -1095,31 +1343,59 @@ public class MainFarme extends javax.swing.JFrame {
         deleteAllQuestion();
     }//GEN-LAST:event_btnDeleteAllActionPerformed
 
+    private void btnManagePlayersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManagePlayersActionPerformed
+        // TODO add your handling code here:
+        pnlQuanLiNguoiDung.setVisible(true);
+        pnlInsertDatabase.setVisible(false);
+        fillTableUser();
+    }//GEN-LAST:event_btnManagePlayersActionPerformed
+
+    private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
+        // TODO add your handling code here:
+        insertUser();
+        fillTableUser();
+    }//GEN-LAST:event_btnAddUserActionPerformed
+
+    private void btnUpdateUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateUserActionPerformed
+        // TODO add your handling code here:
+        UpdateUser();
+        fillTableUser();
+    }//GEN-LAST:event_btnUpdateUserActionPerformed
+
+    private void btnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUserActionPerformed
+        // TODO add your handling code here
+        DeleteUser();
+        fillTableUser();
+    }//GEN-LAST:event_btnDeleteUserActionPerformed
+
+    private void btnBackUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackUserActionPerformed
+        // TODO add your handling code here:
+        pnlQuanLiNguoiDung.setVisible(false);
+        pnlInsertDatabase.setVisible(true);
+    }//GEN-LAST:event_btnBackUserActionPerformed
+
+    private void tblGriViewQuanLiNguoiDungMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGriViewQuanLiNguoiDungMouseClicked
+        // TODO add your handling code here:
+        display();
+    }//GEN-LAST:event_tblGriViewQuanLiNguoiDungMouseClicked
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+        txtTime.setText("");
+        txtPassWord.setText("");
+        txtMonney.setText("");
+        txtNumber.setText("");
+        txtUser.setText("");
+        rdoAdmin.setSelected(false);
+        rdoGuest.setSelected(false);
+        txtTime.setText("");
+    }//GEN-LAST:event_btnClearActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainFarme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainFarme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainFarme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainFarme.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+       
         //</editor-fold>
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1135,12 +1411,20 @@ public class MainFarme extends javax.swing.JFrame {
     private javax.swing.JLabel IconBackground3;
     private javax.swing.JTable TblGriView;
     private javax.swing.JButton btnAccout;
+    private javax.swing.JButton btnAddUser;
+    private javax.swing.JButton btnBackUser;
+    private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDeleteAll;
+    private javax.swing.JButton btnDeleteUser;
     private javax.swing.JButton btnImportFileExel;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnLoginAccout;
+    private javax.swing.JButton btnManagePlayers;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.JButton btnUpdateUser;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAccoutPassword;
     private javax.swing.JLabel lblBXH;
     private javax.swing.JLabel lblBack;
@@ -1165,8 +1449,14 @@ public class MainFarme extends javax.swing.JFrame {
     private javax.swing.JLabel lblLoginAccout;
     private javax.swing.JLabel lblLoginPassword;
     private javax.swing.JLabel lblLoginUser;
+    private javax.swing.JLabel lblMonneyUser;
+    private javax.swing.JLabel lblNameUser;
+    private javax.swing.JLabel lblNumberUser;
     private javax.swing.JLabel lblOption;
+    private javax.swing.JLabel lblPassUser;
     private javax.swing.JLabel lblPlay;
+    private javax.swing.JLabel lblRoleUser;
+    private javax.swing.JLabel lblTimeUser;
     private javax.swing.JLabel lblTitleDangKi;
     private javax.swing.JLabel lblTitleThongKe;
     public javax.swing.JLabel lblTongTien;
@@ -1193,10 +1483,19 @@ public class MainFarme extends javax.swing.JFrame {
     private javax.swing.JPanel pnlInsertDatabase;
     private javax.swing.JPanel pnlLogin;
     private javax.swing.JPanel pnlMain;
+    private javax.swing.JPanel pnlQuanLiNguoiDung;
     private javax.swing.JPanel pnlSetting;
+    private javax.swing.JRadioButton rdoAdmin;
+    private javax.swing.JRadioButton rdoGuest;
+    private javax.swing.JTable tblGriViewQuanLiNguoiDung;
+    private javax.swing.JTextField txtMonney;
     private javax.swing.JTextField txtNameAccout;
+    private javax.swing.JTextField txtNumber;
+    private javax.swing.JTextField txtPassWord;
     private javax.swing.JPasswordField txtPasswordAccount;
     private javax.swing.JPasswordField txtPasswordLogin;
+    private javax.swing.JTextField txtTime;
+    private javax.swing.JTextField txtUser;
     private javax.swing.JTextField txtUserLogin;
     // End of variables declaration//GEN-END:variables
 }
