@@ -21,6 +21,8 @@ import altp.view.*;
 import entity.TaiKhoan;
 import jaco.mp3.player.MP3Player;
 import java.awt.Color;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
@@ -46,9 +48,16 @@ public class PlayGameFarme extends javax.swing.JFrame {
     String dapAn = null;
     MP3Player mp3;
     MP3Player mp3Main;
+    MP3Player mp3QuestionA = ShareHelper.musicPlayer("audio/dapAnA.mp3");
+    MP3Player mp3QuestionB = ShareHelper.musicPlayer("audio/dapAnB.mp3");
+    MP3Player mp3QuestionC = ShareHelper.musicPlayer("audio/dapAnC.mp3");
+    MP3Player mp3QuestionD = ShareHelper.musicPlayer("audio/dapAnD.mp3");
+    MP3Player mp3FillQuestion = ShareHelper.musicPlayer("audio/audioQuestion.mp3");
+    MP3Player mp3HelpCall = ShareHelper.musicPlayer("audio/helpCall.mp3");
     boolean check5050 = true;
     boolean checkQuesion = true;
     boolean checkTuVan = true;
+    boolean checkCall = true;
     MainFarme mainFarme;
 
     public PlayGameFarme(String i, MP3Player mp3, MP3Player mp3Main, MainFarme parent) {
@@ -57,14 +66,17 @@ public class PlayGameFarme extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         showMark();
         showTableQuestion(i);
-
+        setVisible();
         mainFarme = parent;
+        this.mp3 = mp3;
+        this.mp3Main = mp3Main;
+    }
+
+    void setVisible() {
         pnlResult.setVisible(false);
         pnlTroGiupHoi.setVisible(false);
         pnlTroGiupTuVan.setVisible(false);
-
-        this.mp3 = mp3;
-        this.mp3Main = mp3Main;
+        lblConsultingTeam.setVisible(false);
     }
 
     void playShowMoney() {
@@ -196,19 +208,20 @@ public class PlayGameFarme extends javax.swing.JFrame {
             @Override
             public void run() {
                 try {
-                    
-                        setStatusTrue();
-                        lblQuestion.setText(cauhoi.getTenCauHoi().toString());
-                        Thread.sleep(2000);
-                        lblA.setText(cauhoi.getA().toString());
-                        Thread.sleep(500);
-                        lblB.setText(cauhoi.getB().toString());
-                        Thread.sleep(500);
-                        lblC.setText(cauhoi.getC().toString());
-                        Thread.sleep(500);
-                        lblD.setText(cauhoi.getD().toString());
-                        Thread.sleep(500);
-                  
+
+                    setStatusTrue();
+                    lblQuestion.setText(cauhoi.getTenCauHoi().toString());
+                    Thread.sleep(2000);
+                    lblA.setText(cauhoi.getA().toString());
+                    Thread.sleep(500);
+                    lblB.setText(cauhoi.getB().toString());
+                    Thread.sleep(500);
+                    lblC.setText(cauhoi.getC().toString());
+                    Thread.sleep(500);
+                    lblD.setText(cauhoi.getD().toString());
+                    Thread.sleep(500);
+                    playTime();
+                    mp3FillQuestion.play();
                 } catch (Exception e) {
                     System.out.println(e);
                 }
@@ -225,9 +238,11 @@ public class PlayGameFarme extends javax.swing.JFrame {
                     if (maCauHoi == 1) {
                         Thread.sleep(5000);
                     }
+                    if(macauhoi == 6){
+                        lblConsultingTeam.setVisible(true);
+                    }
                     dapAn = null;
                     showQuesion(macauhoi);
-                    playTime();
                     if (check5050 == true) {
                         lbl5050Play.setIcon(new ImageIcon(getClass().getResource("/image/5050.png")));
                     } else {
@@ -238,10 +253,15 @@ public class PlayGameFarme extends javax.swing.JFrame {
                     } else {
                         lblQuesion.setIcon(new ImageIcon(getClass().getResource("/image/questionchet.png")));
                     }
-                    if (checkTuVan == true) {
+                    if (checkCall == true) {
                         lblCallPlay.setIcon(new ImageIcon(getClass().getResource("/image/call.png")));
                     } else {
                         lblCallPlay.setIcon(new ImageIcon(getClass().getResource("/image/callchet.png")));
+                    }
+                    if (checkTuVan == true) {
+                        lblConsultingTeam.setIcon(new ImageIcon(getClass().getResource("/image/totuvan.png")));
+                    } else {
+                        lblConsultingTeam.setIcon(new ImageIcon(getClass().getResource("/image/totuvanchet.png")));
                     }
 
                 } catch (Exception e) {
@@ -295,7 +315,6 @@ public class PlayGameFarme extends javax.swing.JFrame {
                                 Thread.sleep(100);
                             }
                         }
-
                     } catch (Exception e) {
                         System.out.println(e);
                     }
@@ -306,6 +325,8 @@ public class PlayGameFarme extends javax.swing.JFrame {
     }
 
     void nhaynhay(String DA) {
+        MP3Player mp3NextQuestion = ShareHelper.musicPlayer("Audio/audioCorrect.mp3");
+        mp3NextQuestion.play();
         Thread t1 = new Thread() {
             @Override
             public void run() {
@@ -506,6 +527,8 @@ public class PlayGameFarme extends javax.swing.JFrame {
     }
 
     void helpQuesion() {
+        MP3Player mp3HelpQuestion = ShareHelper.musicPlayer("Audio/ykienkhangia.mp3");
+        mp3HelpQuestion.play();
         Thread help = new Thread() {
             @Override
             public void run() {
@@ -516,25 +539,25 @@ public class PlayGameFarme extends javax.swing.JFrame {
                         int A = RanDomHelper.ranDomInt(number);
                         for (int i = 0; i <= A; i++) {
                             pgA.setValue(i);
-                            Thread.sleep(10);
+                            Thread.sleep(30);
                         }
                         number = 100 - A;
                         int B = RanDomHelper.ranDomInt(number);
                         for (int i = 0; i <= B; i++) {
                             pgB.setValue(i);
-                            Thread.sleep(10);
+                            Thread.sleep(30);
                         }
                         number = number - B;
                         int C = RanDomHelper.ranDomInt(number);
                         for (int i = 0; i <= C; i++) {
                             pgC.setValue(i);
-                            Thread.sleep(10);
+                            Thread.sleep(30);
                         }
                         number = number - C;
                         int D = number;
                         for (int i = 0; i <= D; i++) {
                             pgD.setValue(i);
-                            Thread.sleep(10);
+                            Thread.sleep(30);
                         }
                     }
                     if (ch.getDapAnDung().equals("B")) {
@@ -542,25 +565,25 @@ public class PlayGameFarme extends javax.swing.JFrame {
                         int B = RanDomHelper.ranDomInt(number);
                         for (int i = 0; i <= B; i++) {
                             pgB.setValue(i);
-                            Thread.sleep(10);
+                            Thread.sleep(50);
                         }
                         number = 100 - B;
                         int A = RanDomHelper.ranDomInt(number);
                         for (int i = 0; i <= A; i++) {
                             pgA.setValue(i);
-                            Thread.sleep(10);
+                            Thread.sleep(30);
                         }
                         number = number - A;
                         int C = RanDomHelper.ranDomInt(number);
                         for (int i = 0; i <= C; i++) {
                             pgC.setValue(i);
-                            Thread.sleep(10);
+                            Thread.sleep(30);
                         }
                         number = number - C;
                         int D = number;
                         for (int i = 0; i <= D; i++) {
                             pgD.setValue(i);
-                            Thread.sleep(10);
+                            Thread.sleep(30);
                         }
                     }
                     if (ch.getDapAnDung().equals("C")) {
@@ -568,25 +591,25 @@ public class PlayGameFarme extends javax.swing.JFrame {
                         int C = RanDomHelper.ranDomInt(number);
                         for (int i = 0; i <= C; i++) {
                             pgC.setValue(i);
-                            Thread.sleep(10);
+                            Thread.sleep(30);
                         }
                         number = 100 - C;
                         int B = RanDomHelper.ranDomInt(number);
                         for (int i = 0; i <= B; i++) {
                             pgB.setValue(i);
-                            Thread.sleep(10);
+                            Thread.sleep(30);
                         }
                         number = number - B;
                         int A = RanDomHelper.ranDomInt(number);
                         for (int i = 0; i <= A; i++) {
                             pgA.setValue(i);
-                            Thread.sleep(10);
+                            Thread.sleep(30);
                         }
                         number = number - A;
                         int D = number;
                         for (int i = 0; i <= D; i++) {
                             pgD.setValue(i);
-                            Thread.sleep(10);
+                            Thread.sleep(30);
                         }
                     }
                     if (ch.getDapAnDung().equals("D")) {
@@ -594,25 +617,25 @@ public class PlayGameFarme extends javax.swing.JFrame {
                         int D = RanDomHelper.ranDomInt(number);
                         for (int i = 0; i <= D; i++) {
                             pgD.setValue(i);
-                            Thread.sleep(10);
+                            Thread.sleep(30);
                         }
                         number = 100 - D;
                         int B = RanDomHelper.ranDomInt(number);
                         for (int i = 0; i <= B; i++) {
                             pgB.setValue(i);
-                            Thread.sleep(10);
+                            Thread.sleep(30);
                         }
                         number = number - B;
                         int C = RanDomHelper.ranDomInt(number);
                         for (int i = 0; i <= C; i++) {
                             pgC.setValue(i);
-                            Thread.sleep(10);
+                            Thread.sleep(30);
                         }
                         number = number - C;
                         int A = number;
                         for (int i = 0; i <= A; i++) {
                             pgA.setValue(i);
-                            Thread.sleep(10);
+                            Thread.sleep(30);
                         }
                     }
 
@@ -631,11 +654,22 @@ public class PlayGameFarme extends javax.swing.JFrame {
         lblDapAn3.setText(ch.getDapAnDung());
     }
 
+    void helpCall() {
+        try {
+            mp3HelpCall.play();
+            Thread.sleep(2000);
+            CauHoi ch = cauhoi;
+            JOptionPane.showMessageDialog(this, "Tôi chắc chắn chọn phương án :" + ch.getDapAnDung());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     void updateUser() {
         if (ShareHelper.USER != null) {
             TaiKhoan taiKhoan = null;
             if (maCauHoi > ShareHelper.USER.getSoCau()) {
-                taiKhoan = new TaiKhoan(ShareHelper.USER.getTenDangNhap(), ShareHelper.USER.getMatKhau(), ShareHelper.USER.isVaiTro(), ShareHelper.USER.getThoiGian(), maCauHoi-1, (ShareHelper.USER.getTien() + monney));
+                taiKhoan = new TaiKhoan(ShareHelper.USER.getTenDangNhap(), ShareHelper.USER.getMatKhau(), ShareHelper.USER.isVaiTro(), ShareHelper.USER.getThoiGian(), maCauHoi - 1, (ShareHelper.USER.getTien() + monney));
             } else {
                 taiKhoan = new TaiKhoan(ShareHelper.USER.getTenDangNhap(), ShareHelper.USER.getMatKhau(), ShareHelper.USER.isVaiTro(), ShareHelper.USER.getThoiGian(), ShareHelper.USER.getSoCau(), (ShareHelper.USER.getTien() + monney));
             }
@@ -708,6 +742,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
         lblCallPlay = new javax.swing.JLabel();
         lblQuesion = new javax.swing.JLabel();
         lblBackPlay = new javax.swing.JLabel();
+        lblConsultingTeam = new javax.swing.JLabel();
         lblBackgroundPlay = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
@@ -759,38 +794,38 @@ public class PlayGameFarme extends javax.swing.JFrame {
         pnlTroGiupTuVan.setPreferredSize(new java.awt.Dimension(580, 410));
         pnlTroGiupTuVan.setLayout(null);
 
-        lblKhanGia1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lblKhanGia1.setForeground(new java.awt.Color(255, 0, 0));
+        lblKhanGia1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblKhanGia1.setForeground(new java.awt.Color(255, 255, 255));
         lblKhanGia1.setText("Khán Giả 1:");
         pnlTroGiupTuVan.add(lblKhanGia1);
         lblKhanGia1.setBounds(50, 90, 190, 30);
 
-        lblKhanGia2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lblKhanGia2.setForeground(new java.awt.Color(255, 0, 0));
+        lblKhanGia2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblKhanGia2.setForeground(new java.awt.Color(255, 255, 255));
         lblKhanGia2.setText("Khán Giả 2:");
         pnlTroGiupTuVan.add(lblKhanGia2);
         lblKhanGia2.setBounds(50, 200, 190, 30);
 
-        lblKhanGia3.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lblKhanGia3.setForeground(new java.awt.Color(255, 0, 0));
+        lblKhanGia3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblKhanGia3.setForeground(new java.awt.Color(255, 255, 255));
         lblKhanGia3.setText("Khán Giả 3:");
         pnlTroGiupTuVan.add(lblKhanGia3);
         lblKhanGia3.setBounds(50, 290, 190, 30);
 
-        lblDapAn1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lblDapAn1.setForeground(new java.awt.Color(255, 0, 0));
+        lblDapAn1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblDapAn1.setForeground(new java.awt.Color(255, 255, 255));
         lblDapAn1.setText(".");
         pnlTroGiupTuVan.add(lblDapAn1);
         lblDapAn1.setBounds(250, 90, 190, 30);
 
-        lblDapAn2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lblDapAn2.setForeground(new java.awt.Color(255, 0, 0));
+        lblDapAn2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblDapAn2.setForeground(new java.awt.Color(255, 255, 255));
         lblDapAn2.setText(".");
         pnlTroGiupTuVan.add(lblDapAn2);
         lblDapAn2.setBounds(250, 200, 190, 30);
 
-        lblDapAn3.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lblDapAn3.setForeground(new java.awt.Color(255, 0, 0));
+        lblDapAn3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblDapAn3.setForeground(new java.awt.Color(255, 255, 255));
         lblDapAn3.setText(".");
         pnlTroGiupTuVan.add(lblDapAn3);
         lblDapAn3.setBounds(250, 290, 190, 30);
@@ -816,38 +851,42 @@ public class PlayGameFarme extends javax.swing.JFrame {
         pnlTroGiupHoi.setPreferredSize(new java.awt.Dimension(580, 410));
         pnlTroGiupHoi.setLayout(null);
 
-        lbltextA.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lbltextA.setForeground(new java.awt.Color(255, 0, 0));
+        lbltextA.setFont(new java.awt.Font("Mongolian Baiti", 1, 36)); // NOI18N
+        lbltextA.setForeground(new java.awt.Color(255, 255, 255));
         lbltextA.setText("A");
         pnlTroGiupHoi.add(lbltextA);
-        lbltextA.setBounds(100, 310, 30, 30);
+        lbltextA.setBounds(100, 320, 30, 30);
 
-        lbltextB.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lbltextB.setForeground(new java.awt.Color(255, 0, 51));
+        lbltextB.setFont(new java.awt.Font("Mongolian Baiti", 1, 36)); // NOI18N
+        lbltextB.setForeground(new java.awt.Color(255, 255, 255));
         lbltextB.setText("B");
         pnlTroGiupHoi.add(lbltextB);
-        lbltextB.setBounds(210, 310, 30, 30);
+        lbltextB.setBounds(210, 320, 30, 30);
 
-        lbltextC.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lbltextC.setForeground(new java.awt.Color(255, 0, 0));
+        lbltextC.setFont(new java.awt.Font("Mongolian Baiti", 1, 36)); // NOI18N
+        lbltextC.setForeground(new java.awt.Color(255, 255, 255));
         lbltextC.setText("C");
         pnlTroGiupHoi.add(lbltextC);
-        lbltextC.setBounds(340, 310, 30, 30);
+        lbltextC.setBounds(330, 320, 30, 30);
 
-        lbltextD.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        lbltextD.setForeground(new java.awt.Color(255, 51, 0));
+        lbltextD.setFont(new java.awt.Font("Mongolian Baiti", 1, 36)); // NOI18N
+        lbltextD.setForeground(new java.awt.Color(255, 255, 255));
         lbltextD.setText("D");
         pnlTroGiupHoi.add(lbltextD);
-        lbltextD.setBounds(440, 300, 30, 40);
+        lbltextD.setBounds(450, 320, 30, 40);
 
+        pgC.setBackground(new java.awt.Color(255, 255, 51));
         pgC.setOrientation(1);
+        pgC.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pgC.setOpaque(true);
         pgC.setPreferredSize(new java.awt.Dimension(50, 19));
         pgC.setStringPainted(true);
         pnlTroGiupHoi.add(pgC);
         pgC.setBounds(320, 100, 50, 200);
 
+        pgB.setBackground(new java.awt.Color(255, 255, 51));
         pgB.setOrientation(1);
+        pgB.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pgB.setOpaque(true);
         pgB.setStringPainted(true);
         pnlTroGiupHoi.add(pgB);
@@ -855,14 +894,18 @@ public class PlayGameFarme extends javax.swing.JFrame {
 
         pgA.setBackground(new java.awt.Color(255, 153, 51));
         pgA.setOrientation(1);
+        pgA.setToolTipText("");
+        pgA.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         pgA.setRequestFocusEnabled(false);
         pgA.setStringPainted(true);
         pnlTroGiupHoi.add(pgA);
         pgA.setBounds(90, 100, 50, 200);
 
+        pgD.setBackground(new java.awt.Color(255, 255, 51));
         pgD.setOrientation(1);
-        pgD.setToolTipText("0");
-        pgD.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        pgD.setToolTipText("");
+        pgD.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pgD.setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
         pgD.setStringPainted(true);
         pnlTroGiupHoi.add(pgD);
         pgD.setBounds(430, 100, 50, 200);
@@ -898,16 +941,23 @@ public class PlayGameFarme extends javax.swing.JFrame {
         lblHome.setBounds(180, 300, 90, 40);
 
         lblShare.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/share.png"))); // NOI18N
+        lblShare.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblShareMouseClicked(evt);
+            }
+        });
         pnlResult.add(lblShare);
         lblShare.setBounds(290, 300, 90, 40);
 
         lblTien.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblTien.setForeground(new java.awt.Color(255, 255, 255));
+        lblTien.setText("Tiền : 0");
         pnlResult.add(lblTien);
         lblTien.setBounds(180, 130, 200, 40);
 
         lblCauHoi.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblCauHoi.setForeground(new java.awt.Color(255, 255, 255));
+        lblCauHoi.setText("Câu hỏi : 0");
         pnlResult.add(lblCauHoi);
         lblCauHoi.setBounds(180, 210, 200, 40);
 
@@ -1045,7 +1095,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
             }
         });
         pnlPlay.add(lblCallPlay);
-        lblCallPlay.setBounds(960, 360, 70, 70);
+        lblCallPlay.setBounds(960, 360, 60, 60);
 
         lblQuesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/question.png"))); // NOI18N
         lblQuesion.setText("jLabel2");
@@ -1065,6 +1115,15 @@ public class PlayGameFarme extends javax.swing.JFrame {
         });
         pnlPlay.add(lblBackPlay);
         lblBackPlay.setBounds(1080, 550, 70, 100);
+
+        lblConsultingTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/totuvan.png"))); // NOI18N
+        lblConsultingTeam.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblConsultingTeamMouseClicked(evt);
+            }
+        });
+        pnlPlay.add(lblConsultingTeam);
+        lblConsultingTeam.setBounds(960, 170, 60, 70);
 
         lblBackgroundPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/background.jpg"))); // NOI18N
         lblBackgroundPlay.setText("fa");
@@ -1093,15 +1152,18 @@ public class PlayGameFarme extends javax.swing.JFrame {
 
     private void lblImagesAnswerAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagesAnswerAMouseClicked
         // TODO add your handling code here:
+        mp3FillQuestion.stop();
         dapAn = "A";
-        
+        mp3QuestionA.play();
         lblImagesAnswerA.setIcon(new ImageIcon(getClass().getResource("/hinh/A.png")));
         check();
     }//GEN-LAST:event_lblImagesAnswerAMouseClicked
 
     private void lblAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAMouseClicked
         // TODO add your handling code here:
+        mp3FillQuestion.stop();
         dapAn = "A";
+        mp3QuestionA.play();
         lblImagesAnswerA.setIcon(new ImageIcon(getClass().getResource("/hinh/A.png")));
         check();
     }//GEN-LAST:event_lblAMouseClicked
@@ -1109,7 +1171,8 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblImagesAnswerBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagesAnswerBMouseClicked
         // TODO add your handling code here:
         dapAn = "B";
-       
+        mp3QuestionB.play();
+        mp3FillQuestion.stop();
         lblImagesAnswerB.setIcon(new ImageIcon(getClass().getResource("/hinh/B.png")));
         check();
     }//GEN-LAST:event_lblImagesAnswerBMouseClicked
@@ -1117,7 +1180,8 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBMouseClicked
         // TODO add your handling code here:
         dapAn = "B";
-      
+        mp3QuestionB.play();
+        mp3FillQuestion.stop();
         lblImagesAnswerB.setIcon(new ImageIcon(getClass().getResource("/hinh/B.png")));
         check();
     }//GEN-LAST:event_lblBMouseClicked
@@ -1125,7 +1189,8 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblImagesAnswerCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagesAnswerCMouseClicked
         // TODO add your handling code here:
         dapAn = "C";
-      
+        mp3QuestionC.play();
+        mp3FillQuestion.stop();
         lblImagesAnswerC.setIcon(new ImageIcon(getClass().getResource("/hinh/C.png")));
         check();
     }//GEN-LAST:event_lblImagesAnswerCMouseClicked
@@ -1133,7 +1198,8 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCMouseClicked
         // TODO add your handling code here:
         dapAn = "C";
-      
+        mp3QuestionC.play();
+        mp3FillQuestion.stop();
         lblImagesAnswerC.setIcon(new ImageIcon(getClass().getResource("/hinh/C.png")));
         check();
     }//GEN-LAST:event_lblCMouseClicked
@@ -1141,7 +1207,8 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblImagesAnswerDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImagesAnswerDMouseClicked
         // TODO add your handling code here:
         dapAn = "D";
-      
+        mp3FillQuestion.stop();
+        mp3QuestionD.play();
         lblImagesAnswerD.setIcon(new ImageIcon(getClass().getResource("/hinh/D.png")));
         check();
     }//GEN-LAST:event_lblImagesAnswerDMouseClicked
@@ -1149,7 +1216,8 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private void lblDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDMouseClicked
         // TODO add your handling code here:
         dapAn = "D";
-     
+        mp3QuestionD.play();
+        mp3FillQuestion.stop();
         lblImagesAnswerD.setIcon(new ImageIcon(getClass().getResource("/hinh/D.png")));
         check();
     }//GEN-LAST:event_lblDMouseClicked
@@ -1208,13 +1276,14 @@ public class PlayGameFarme extends javax.swing.JFrame {
 
     private void lblCallPlayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCallPlayMouseClicked
         // TODO add your handling code here:
-        int a = JOptionPane.showConfirmDialog(this, "Bạn muốn sử đụng trợ giúp tư vấn tại chỗ", "Thong Bao", JOptionPane.YES_NO_OPTION);
+        int a = JOptionPane.showConfirmDialog(this, "Bạn muốn sử dụng gọi điện thoại", "Thong Bao", JOptionPane.YES_NO_OPTION);
         if (a == JOptionPane.YES_OPTION) {
-            pnlTroGiupTuVan.setVisible(true);
-            helpTuVan();
-            checkTuVan = false;
+            mp3FillQuestion.pause();
+            helpCall();
+            checkCall = false;
             lblCallPlay.setIcon(new ImageIcon(getClass().getResource("/image/callchet.png")));
         }
+        mp3FillQuestion.play();
     }//GEN-LAST:event_lblCallPlayMouseClicked
 
     private void lblExitTroGiup1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblExitTroGiup1MouseClicked
@@ -1229,6 +1298,22 @@ public class PlayGameFarme extends javax.swing.JFrame {
             pnlResult.setVisible(true);
         }
     }//GEN-LAST:event_lblBackPlayMouseClicked
+
+    private void lblConsultingTeamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblConsultingTeamMouseClicked
+        // TODO add your handling code here:
+        int a = JOptionPane.showConfirmDialog(this, "Bạn muốn sử đụng trợ giúp tư vấn tại chỗ", "Thong Bao", JOptionPane.YES_NO_OPTION);
+        if (a == JOptionPane.YES_OPTION) {
+            pnlTroGiupTuVan.setVisible(true);
+            helpTuVan();
+            checkTuVan = false;
+            lblConsultingTeam.setIcon(new ImageIcon(getClass().getResource("/image/totuvanchet.png")));
+        }
+    }//GEN-LAST:event_lblConsultingTeamMouseClicked
+
+    private void lblShareMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblShareMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_lblShareMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1302,6 +1387,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
     private javax.swing.JLabel lblC;
     private javax.swing.JLabel lblCallPlay;
     private javax.swing.JLabel lblCauHoi;
+    private javax.swing.JLabel lblConsultingTeam;
     private javax.swing.JLabel lblD;
     private javax.swing.JLabel lblDapAn1;
     private javax.swing.JLabel lblDapAn2;

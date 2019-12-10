@@ -73,6 +73,10 @@ public class MainFarme extends javax.swing.JFrame {
     void login() {
         String name = txtUserLogin.getText();
         String password = txtPasswordLogin.getText();
+        if (name.length() == 0 || password.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Không được để trống !");
+            return;
+        }
         try {
             List<TaiKhoan> list = TaiKhoanDAO.layTaiKhoan(name, password);
             TaiKhoan taiKhoan = list.get(0);
@@ -84,13 +88,26 @@ public class MainFarme extends javax.swing.JFrame {
                     lblBXH.setVisible(true);
                 }
                 if (ShareHelper.USER != null && ShareHelper.USER.isVaiTro() == true) {
+                    pnlLogin.setVisible(false);
                     pnlInsertDatabase.setVisible(true);
                     fillTableQuestion();
                 }
+                if (ShareHelper.USER == null) {
+                    lblDangXuat.setVisible(true);
+                    lblLogin.setVisible(false);
+                }
             }
+            setText();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Thông tin đăng nhập không chính xác!");
         }
+    }
+
+    void setText() {
+        txtUserLogin.setText("");
+        txtPasswordLogin.setText("");
+        txtNameAccout.setText("");
+        txtPasswordAccount.setText("");
     }
 
     void fillTableQuestion() {
@@ -120,31 +137,31 @@ public class MainFarme extends javax.swing.JFrame {
     void updateTable() {
         try {
             for (int i = 0; i < TblGriView.getRowCount(); i++) {
-            Integer stt = (Integer) TblGriView.getValueAt(i, 0);
-            Integer maCauHoi = (Integer) TblGriView.getValueAt(i, 1);
-            String tenCauHoi = (String) TblGriView.getValueAt(i, 2);
-            Integer maChiTietCH = (Integer) TblGriView.getValueAt(i, 3);
-            String A = (String) TblGriView.getValueAt(i, 4);
-            String B = (String) TblGriView.getValueAt(i, 5);
-            String C = (String) TblGriView.getValueAt(i, 6);
-            String D = (String) TblGriView.getValueAt(i, 7);
-            String dapAnDung = (String) TblGriView.getValueAt(i, 8);
-            Boolean isDelete = (Boolean) TblGriView.getValueAt(i, 9);
-            if (isDelete) {
-                CauHoi cauHoi = new CauHoi(stt, maCauHoi, maChiTietCH, dapAnDung);
-                CauHoiDAO.delete(cauHoi);
-                fillTableQuestion();
-                JOptionPane.showMessageDialog(this, "Delete thanh cong !");
-            } else {
-                CauHoi cauHoi = new CauHoi(stt, maCauHoi, tenCauHoi, maChiTietCH, A, B, C, D, dapAnDung);
-                CauHoiDAO.update(cauHoi);
-                fillTableQuestion();
+                Integer stt = (Integer) TblGriView.getValueAt(i, 0);
+                Integer maCauHoi = (Integer) TblGriView.getValueAt(i, 1);
+                String tenCauHoi = (String) TblGriView.getValueAt(i, 2);
+                Integer maChiTietCH = (Integer) TblGriView.getValueAt(i, 3);
+                String A = (String) TblGriView.getValueAt(i, 4);
+                String B = (String) TblGriView.getValueAt(i, 5);
+                String C = (String) TblGriView.getValueAt(i, 6);
+                String D = (String) TblGriView.getValueAt(i, 7);
+                String dapAnDung = (String) TblGriView.getValueAt(i, 8);
+                Boolean isDelete = (Boolean) TblGriView.getValueAt(i, 9);
+                if (isDelete) {
+                    CauHoi cauHoi = new CauHoi(stt, maCauHoi, maChiTietCH, dapAnDung);
+                    CauHoiDAO.delete(cauHoi);
+                    fillTableQuestion();
+                    JOptionPane.showMessageDialog(this, "Update thanh cong !");
+                } else {
+                    CauHoi cauHoi = new CauHoi(stt, maCauHoi, tenCauHoi, maChiTietCH, A, B, C, D, dapAnDung);
+                    CauHoiDAO.update(cauHoi);
+                    fillTableQuestion();
+                    JOptionPane.showMessageDialog(this, "Update thanh cong");
+                }
             }
-        }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Hãy tích vào câu hỏi muốn thay đổi");
         }
-        
+
     }
 
     void deleteAllQuestion() {
@@ -222,6 +239,10 @@ public class MainFarme extends javax.swing.JFrame {
     void Account() {
         String name = txtNameAccout.getText();
         String password = new String(txtPasswordAccount.getPassword());
+        if (name.length() == 0 || password.length() == 0) {
+            JOptionPane.showMessageDialog(this, "Không được để trống !");
+            return;
+        }
         List<TaiKhoan> list = TaiKhoanDAO.layDsTaiKhoan();
         boolean checkTenDangNhap = true;
         for (TaiKhoan tk : list) {
@@ -235,12 +256,15 @@ public class MainFarme extends javax.swing.JFrame {
                 TaiKhoanDAO dao = new TaiKhoanDAO();
                 dao.insert(taiKhoan);
                 JOptionPane.showMessageDialog(this, "Đăng kí thành công!");
+                pnlAccount.setVisible(false);
+                pnlLogin.setVisible(true);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Dang ki that bai");
             }
-        }else{
+            setText();
+        } else {
             JOptionPane.showMessageDialog(this, "Tên đăng nhập đã tồn tại");
-            checkTenDangNhap=true;
+            checkTenDangNhap = true;
         }
 
     }
@@ -992,8 +1016,6 @@ public class MainFarme extends javax.swing.JFrame {
     private void btnAccoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccoutActionPerformed
         // TODO add your handling code here:
         Account();
-        pnlAccount.setVisible(false);
-        pnlLogin.setVisible(true);
     }//GEN-LAST:event_btnAccoutActionPerformed
 
     private void btnLoginAccoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginAccoutActionPerformed
@@ -1005,8 +1027,6 @@ public class MainFarme extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         login();
-        lblDangXuat.setVisible(true);
-        lblLogin.setVisible(false);
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void lblDangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblDangXuatMouseClicked
