@@ -16,7 +16,6 @@ import javax.swing.JOptionPane;
 import entity.TaiKhoan;
 import jaco.mp3.player.MP3Player;
 import java.awt.Color;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -156,6 +155,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
                         }
                         if (i == 0 && dapAn == null) {
                             if (maCauHoi == 1) {
+                                mp3FillQuestion.stop();
                                 Monney();
                             }
                             pnlResult.setVisible(true);
@@ -1220,12 +1220,10 @@ public class PlayGameFarme extends javax.swing.JFrame {
         // TODO add your handling code here:
         int a = JOptionPane.showConfirmDialog(this, "Bạn muốn sử đụng trợ giúp 50:50", "Thong Bao", JOptionPane.YES_NO_OPTION);
         if (a == JOptionPane.YES_OPTION) {
-            mp3FillQuestion.pause();
             help5050();
             check5050 = false;
             lbl5050Play.setIcon(new ImageIcon(getClass().getResource("/image/5050chet.png")));
         }
-        mp3FillQuestion.play();
     }//GEN-LAST:event_lbl5050PlayMouseClicked
 
     private void lblHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHomeMouseClicked
@@ -1292,7 +1290,6 @@ public class PlayGameFarme extends javax.swing.JFrame {
         // TODO add your handling code here:
         int a = JOptionPane.showConfirmDialog(this, "Bạn có muốn dừng cuộc chơi lấy " + monney + " tiền thưởng", "Thong Bao", JOptionPane.YES_NO_OPTION);
         if (a == JOptionPane.YES_OPTION) {
-            mp3FillQuestion.stop();
             pnlResult.setVisible(true);
         }
     }//GEN-LAST:event_lblBackPlayMouseClicked
@@ -1301,13 +1298,11 @@ public class PlayGameFarme extends javax.swing.JFrame {
         // TODO add your handling code here:
         int a = JOptionPane.showConfirmDialog(this, "Bạn muốn sử đụng trợ giúp tư vấn tại chỗ", "Thong Bao", JOptionPane.YES_NO_OPTION);
         if (a == JOptionPane.YES_OPTION) {
-            mp3FillQuestion.pause();
             pnlTroGiupTuVan.setVisible(true);
             helpTuVan();
             checkTuVan = false;
             lblConsultingTeam.setIcon(new ImageIcon(getClass().getResource("/image/totuvanchet.png")));
         }
-        mp3FillQuestion.play();
     }//GEN-LAST:event_lblConsultingTeamMouseClicked
 
     private void lblShareMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblShareMouseClicked
