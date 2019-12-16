@@ -31,17 +31,6 @@ public class CauHoiDAO extends JDBCConnection implements UserDao {
         session.close();
         return list;
     }
-
-//    public static long soCau(int mach) {
-//        Session session = HibernateUtil.getSessionFactory().openSession();
-//        String sql = "select count(*) from CauHoi where maCauHoi = :mach";
-//        session.beginTransaction();
-//        Query query = session.createQuery(sql);
-//        query.setParameter("mach", mach);
-//        long soCau = (long) query.uniqueResult();
-//        return soCau;
-//    }
-    
     public static CauHoi layCauHoi(int mach) {
         List<CauHoi> list = null;
         Session session = HibernateUtil.getSessionFactory().openSession();

@@ -1243,6 +1243,7 @@ public class PlayGameFarme extends javax.swing.JFrame {
             pnlResult.setVisible(false);
             maCauHoi = 1;
         }
+        mp3FillQuestion.stop();
         mp3Main.play();
     }//GEN-LAST:event_lblHomeMouseClicked
 
@@ -1290,6 +1291,8 @@ public class PlayGameFarme extends javax.swing.JFrame {
         // TODO add your handling code here:
         int a = JOptionPane.showConfirmDialog(this, "Bạn có muốn dừng cuộc chơi lấy " + monney + " tiền thưởng", "Thong Bao", JOptionPane.YES_NO_OPTION);
         if (a == JOptionPane.YES_OPTION) {
+            mp3SanSang.stop();
+            mp3FillQuestion.stop();
             pnlResult.setVisible(true);
         }
     }//GEN-LAST:event_lblBackPlayMouseClicked

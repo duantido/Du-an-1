@@ -123,10 +123,6 @@ public class CauHoi  implements java.io.Serializable {
     public void setDapAnDung(String dapAnDung) {
         this.dapAnDung = dapAnDung;
     }
-
-
-
-
 }
 
 

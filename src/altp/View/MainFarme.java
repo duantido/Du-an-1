@@ -42,11 +42,14 @@ public class MainFarme extends javax.swing.JFrame {
         initComponents();
         setSize(1180, 700);
         setLocationRelativeTo(null);
+//        this.Welcome();
         mainPlay = new PlayGameFarme(i, mp3CauHoi, mp3Main, this);
         setVisibleMain();
         mp3Main.play();
     }
-
+    void Welcome(){
+        new WelcomeJDailog(this, true).setVisible(true);
+    }
     public void setting() {
         pnlMain.setVisible(false);
         pnlSetting.setVisible(true);
@@ -381,17 +384,6 @@ public class MainFarme extends javax.swing.JFrame {
             Integer time = Integer.parseInt(txtTime.getText());
             Integer number = Integer.parseInt(txtNumber.getText());
             Integer money = Integer.parseInt(txtMonney.getText());
-            if (name.length() == 0 || pass.length() == 0 || txtTime.getText().length() == 0 || txtMonney.getText().length() == 0) {
-                JOptionPane.showMessageDialog(this, "Không được để trống");
-                return;
-            }
-            List<TaiKhoan> list = TaiKhoanDAO.layDsTaiKhoan();
-            for (TaiKhoan tk : list) {
-                if (name.matches(tk.getTenDangNhap())) {
-                    JOptionPane.showMessageDialog(this, "Tên đăng nhập đã tồn tại !");
-                    return;
-                }
-            }
             TaiKhoan taiKhoan = new TaiKhoan(name, pass, role, time, money, time);
             TaiKhoanDAO dao = new TaiKhoanDAO();
             dao.update(taiKhoan);
@@ -441,6 +433,7 @@ public class MainFarme extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         pnlHome = new javax.swing.JPanel();
         pnlMain = new javax.swing.JPanel();
         lblTongTien = new javax.swing.JLabel();
@@ -558,12 +551,12 @@ public class MainFarme extends javax.swing.JFrame {
         lblTongTien.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblTongTien.setForeground(new java.awt.Color(255, 255, 255));
         pnlMain.add(lblTongTien);
-        lblTongTien.setBounds(540, 50, 80, 20);
+        lblTongTien.setBounds(840, 40, 80, 20);
 
         lblCaoCaoNhat.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblCaoCaoNhat.setForeground(new java.awt.Color(255, 255, 255));
         pnlMain.add(lblCaoCaoNhat);
-        lblCaoCaoNhat.setBounds(750, 50, 60, 20);
+        lblCaoCaoNhat.setBounds(1030, 40, 60, 20);
 
         lblOption.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/option.png"))); // NOI18N
         lblOption.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -682,11 +675,13 @@ public class MainFarme extends javax.swing.JFrame {
         pnlQuanLiNguoiDung.add(txtTime);
         txtTime.setBounds(560, 100, 210, 30);
 
+        buttonGroup1.add(rdoGuest);
         rdoGuest.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         rdoGuest.setText("Người chơi");
         pnlQuanLiNguoiDung.add(rdoGuest);
         rdoGuest.setBounds(560, 30, 91, 23);
 
+        buttonGroup1.add(rdoAdmin);
         rdoAdmin.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         rdoAdmin.setText("Quản lí");
         pnlQuanLiNguoiDung.add(rdoAdmin);
@@ -923,7 +918,7 @@ public class MainFarme extends javax.swing.JFrame {
         lblBackgroundAccout.setBounds(0, 0, 700, 500);
 
         pnlMain.add(pnlAccount);
-        pnlAccount.setBounds(255, 110, 710, 500);
+        pnlAccount.setBounds(250, 110, 710, 500);
 
         pnlBxh.setLayout(null);
 
@@ -1068,14 +1063,14 @@ public class MainFarme extends javax.swing.JFrame {
         lblHightMoney.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/tongtien.png"))); // NOI18N
         lblHightMoney.setText("Tổng số tiền");
         pnlMain.add(lblHightMoney);
-        lblHightMoney.setBounds(490, 20, 140, 36);
+        lblHightMoney.setBounds(800, 10, 140, 36);
 
         lblHightSentences.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblHightSentences.setForeground(new java.awt.Color(255, 255, 255));
         lblHightSentences.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/top.png"))); // NOI18N
         lblHightSentences.setText("Câu cao nhất");
         pnlMain.add(lblHightSentences);
-        lblHightSentences.setBounds(700, 20, 150, 36);
+        lblHightSentences.setBounds(980, 10, 150, 36);
 
         lblPlay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/play.png"))); // NOI18N
         lblPlay.addAncestorListener(new javax.swing.event.AncestorListener() {
@@ -1467,6 +1462,7 @@ public class MainFarme extends javax.swing.JFrame {
     private javax.swing.JButton btnManagePlayers;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnUpdateUser;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAccoutPassword;

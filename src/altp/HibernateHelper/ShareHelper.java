@@ -18,10 +18,6 @@ import javax.swing.ImageIcon;
  */
 public class ShareHelper {
 
-    public static ImageIcon readLogo(String fileName) {
-        File path = new File("/image/", fileName);
-        return new ImageIcon(path.getAbsolutePath());
-    }
     public static MP3Player musicPlayer(String path){
         MP3Player mp3player = new MP3Player(new File(path));
         return mp3player;
