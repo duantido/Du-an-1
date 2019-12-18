@@ -90,27 +90,11 @@ public class CauHoiDAO extends JDBCConnection implements UserDao {
         }
     }
 
-    public static boolean DeleteEachQuestion(Integer stt) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            String hql = "delete from CauHoi where stt = :stt";
-            Query query = session.createQuery(hql);
-            query.setInteger("stt", stt);
-            query.executeUpdate();
-            session.close();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            session.getTransaction().rollback();
-            return false;
-        }
-    }
-
     @Override
     public List<CauHoi> select() {
         return null;
     }
-
+    
     @Override
     public void add(CauHoi user) {
         String sql = "INSERT INTO CauHoi(MaCauHoi,TenCauHoi,MaChiTietCH,A,B,C,D,DapAnDung) VALUES(?,?,?,?,?,?,?,?)";

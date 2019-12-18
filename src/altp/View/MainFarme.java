@@ -42,14 +42,16 @@ public class MainFarme extends javax.swing.JFrame {
         initComponents();
         setSize(1180, 700);
         setLocationRelativeTo(null);
-//        this.Welcome();
+//         this.Welcome();
         mainPlay = new PlayGameFarme(i, mp3CauHoi, mp3Main, this);
         setVisibleMain();
         mp3Main.play();
     }
-    void Welcome(){
+
+    void Welcome() {
         new WelcomeJDailog(this, true).setVisible(true);
     }
+
     public void setting() {
         pnlMain.setVisible(false);
         pnlSetting.setVisible(true);
@@ -149,17 +151,32 @@ public class MainFarme extends javax.swing.JFrame {
             String D = (String) TblGriView.getValueAt(row, 7);
             String dapAnDung = (String) TblGriView.getValueAt(row, 8);
             Boolean isDelete = (Boolean) TblGriView.getValueAt(row, 9);
+            CauHoi cauHoi = new CauHoi(stt, maCauHoi, tenCauHoi, maChiTietCH, A, B, C, D, dapAnDung);
+            CauHoiDAO.update(cauHoi);
+            fillTableQuestion();
+            JOptionPane.showMessageDialog(this, "Update thanh cong");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void deleteOneQuestion() {
+        try {
+            int row = TblGriView.getSelectedRow();
+            Integer stt = (Integer) TblGriView.getValueAt(row, 0);
+            Integer maCauHoi = (Integer) TblGriView.getValueAt(row, 1);
+            String tenCauHoi = (String) TblGriView.getValueAt(row, 2);
+            Integer maChiTietCH = (Integer) TblGriView.getValueAt(row, 3);
+            String dapAnDung = (String) TblGriView.getValueAt(row, 8);
+            Boolean isDelete = (Boolean) TblGriView.getValueAt(row, 9);
+            CauHoi cauHoi = new CauHoi(stt, maCauHoi, maChiTietCH, dapAnDung);
             if (isDelete) {
-                CauHoi cauHoi = new CauHoi(stt, maCauHoi, maChiTietCH, dapAnDung);
                 CauHoiDAO.delete(cauHoi);
                 fillTableQuestion();
-                JOptionPane.showMessageDialog(this, "Update thanh cong !");
-            } else {
-                CauHoi cauHoi = new CauHoi(stt, maCauHoi, tenCauHoi, maChiTietCH, A, B, C, D, dapAnDung);
-                CauHoiDAO.update(cauHoi);
-                fillTableQuestion();
-                JOptionPane.showMessageDialog(this, "Update thanh cong");
             }
+            JOptionPane.showMessageDialog(this, "Update thanh cong");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -182,7 +199,7 @@ public class MainFarme extends javax.swing.JFrame {
         fillTableQuestion();
         JOptionPane.showMessageDialog(this, "Delete thanh cong !");
     }
-
+    
     void importFileExel() {
         try {
             JFileChooser fileChooser = new JFileChooser();
@@ -328,6 +345,7 @@ public class MainFarme extends javax.swing.JFrame {
             lblcau5.setText(list.get(4).getSoCau().toString());
         }
     }
+
     void fillTableUser() {
         DefaultTableModel model = (DefaultTableModel) tblGriViewQuanLiNguoiDung.getModel();
         model.setRowCount(0);
@@ -347,10 +365,10 @@ public class MainFarme extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(model.getRowCount()> 0){
-                tblGriViewQuanLiNguoiDung.setRowSelectionInterval(0, 0);
-                display();
-            }
+        if (model.getRowCount() > 0) {
+            tblGriViewQuanLiNguoiDung.setRowSelectionInterval(0, 0);
+            display();
+        }
     }
 
     void insertUser() {
@@ -479,6 +497,7 @@ public class MainFarme extends javax.swing.JFrame {
         btnDeleteAll = new javax.swing.JButton();
         lblBackInsertData = new javax.swing.JLabel();
         btnManagePlayers = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
         pnlAccount = new javax.swing.JPanel();
         lblTitleDangKi = new javax.swing.JLabel();
         lblBackDangKi = new javax.swing.JLabel();
@@ -787,7 +806,7 @@ public class MainFarme extends javax.swing.JFrame {
             }
         });
         pnlInsertDatabase.add(btnImportFileExel);
-        btnImportFileExel.setBounds(250, 20, 150, 30);
+        btnImportFileExel.setBounds(260, 20, 150, 30);
 
         TblGriView.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -798,7 +817,7 @@ public class MainFarme extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
                 false, true, true, true, true, true, true, true, true, true
@@ -815,10 +834,13 @@ public class MainFarme extends javax.swing.JFrame {
         jScrollPane1.setViewportView(TblGriView);
         if (TblGriView.getColumnModel().getColumnCount() > 0) {
             TblGriView.getColumnModel().getColumn(0).setResizable(false);
+            TblGriView.getColumnModel().getColumn(1).setResizable(false);
+            TblGriView.getColumnModel().getColumn(2).setResizable(false);
+            TblGriView.getColumnModel().getColumn(3).setResizable(false);
         }
 
         pnlInsertDatabase.add(jScrollPane1);
-        jScrollPane1.setBounds(10, 60, 1040, 420);
+        jScrollPane1.setBounds(20, 120, 1040, 360);
 
         btnUpdate.setText("Update");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -827,7 +849,7 @@ public class MainFarme extends javax.swing.JFrame {
             }
         });
         pnlInsertDatabase.add(btnUpdate);
-        btnUpdate.setBounds(420, 20, 130, 30);
+        btnUpdate.setBounds(470, 70, 130, 30);
 
         btnDeleteAll.setText("DeleteAllQuestion");
         btnDeleteAll.addActionListener(new java.awt.event.ActionListener() {
@@ -836,7 +858,7 @@ public class MainFarme extends javax.swing.JFrame {
             }
         });
         pnlInsertDatabase.add(btnDeleteAll);
-        btnDeleteAll.setBounds(580, 20, 130, 30);
+        btnDeleteAll.setBounds(260, 70, 150, 30);
 
         lblBackInsertData.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblBackInsertData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/iconBack.png"))); // NOI18N
@@ -859,7 +881,16 @@ public class MainFarme extends javax.swing.JFrame {
             }
         });
         pnlInsertDatabase.add(btnManagePlayers);
-        btnManagePlayers.setBounds(730, 20, 160, 30);
+        btnManagePlayers.setBounds(740, 40, 160, 30);
+
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+        pnlInsertDatabase.add(btnDelete);
+        btnDelete.setBounds(470, 20, 130, 30);
 
         pnlMain.add(pnlInsertDatabase);
         pnlInsertDatabase.setBounds(30, 40, 1070, 560);
@@ -1411,6 +1442,11 @@ public class MainFarme extends javax.swing.JFrame {
         fillTableUser();
     }//GEN-LAST:event_btnManagePlayersActionPerformed
 
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        deleteOneQuestion();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1454,6 +1490,7 @@ public class MainFarme extends javax.swing.JFrame {
     private javax.swing.JButton btnAddUser;
     private javax.swing.JButton btnBackUser;
     private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnDeleteAll;
     private javax.swing.JButton btnDeleteUser;
     private javax.swing.JButton btnImportFileExel;

@@ -64,6 +64,7 @@ public class WelcomeJDailog extends javax.swing.JDialog {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setUndecorated(true);
         setPreferredSize(new java.awt.Dimension(1180, 700));
 
         pack();
